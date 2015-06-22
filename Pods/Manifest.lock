@@ -1,0 +1,60 @@
+PODS:
+  - AFNetworking (2.5.4):
+    - AFNetworking/NSURLConnection (= 2.5.4)
+    - AFNetworking/NSURLSession (= 2.5.4)
+    - AFNetworking/Reachability (= 2.5.4)
+    - AFNetworking/Security (= 2.5.4)
+    - AFNetworking/Serialization (= 2.5.4)
+    - AFNetworking/UIKit (= 2.5.4)
+  - AFNetworking/NSURLConnection (2.5.4):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/NSURLSession (2.5.4):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (2.5.4)
+  - AFNetworking/Security (2.5.4)
+  - AFNetworking/Serialization (2.5.4)
+  - AFNetworking/UIKit (2.5.4):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
+  - FSCalendar (0.7.0)
+  - JDStatusBarNotification (1.5.2)
+  - MBProgressHUD (0.9.1)
+  - MJExtension (2.3.6)
+  - MJRefresh (2.0.2)
+  - NJKWebViewProgress (0.2.3):
+    - NJKWebViewProgress/Core (= 0.2.3)
+    - NJKWebViewProgress/ProgressView (= 0.2.3)
+  - NJKWebViewProgress/Core (0.2.3)
+  - NJKWebViewProgress/ProgressView (0.2.3)
+  - SDWebImage (3.7.2):
+    - SDWebImage/Core (= 3.7.2)
+  - SDWebImage/Core (3.7.2)
+  - TPKeyboardAvoiding (1.2.6)
+
+DEPENDENCIES:
+  - AFNetworking
+  - FSCalendar
+  - JDStatusBarNotification
+  - MBProgressHUD
+  - MJExtension
+  - MJRefresh
+  - NJKWebViewProgress
+  - SDWebImage
+  - TPKeyboardAvoiding
+
+SPEC CHECKSUMS:
+  AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
+  FSCalendar: 1d4f2e71fcc1ca332de953b0dca655150e57f664
+  JDStatusBarNotification: a36d09ccbb047217572b074a61e7ca10dddc5f0a
+  MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
+  MJExtension: eb9d381740563b520fbabdfa6caf92d666314467
+  MJRefresh: dfaf2303521c1f1ad71f0f9d2fe781ccea3741de
+  NJKWebViewProgress: f481fd424cb5ecc27eacae11b5397db92fba9a4d
+  SDWebImage: 71b7cdc1d1721d6a82ed62889030225f2c249e29
+  TPKeyboardAvoiding: ee4dd35e3bb7bb64bfbda47e7cc9ba872ff10f77
+
+COCOAPODS: 0.37.2

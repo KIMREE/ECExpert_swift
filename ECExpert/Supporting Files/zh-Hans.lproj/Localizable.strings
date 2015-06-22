@@ -1,0 +1,50 @@
+/* 
+  Localizable.strings
+  ECExpert
+
+  Created by Fran on 15/6/11.
+  Copyright (c) 2015年 Fran. All rights reserved.
+*/
+
+
+// AppDelegate
+"There is a new version, do you want to update?" = "检查到新版本,是否更新?";
+"Update later" = "稍后更新";
+"Update now" = "立刻更新";
+"Unable to connect to the network" = "无法连接到网络";
+
+// MainViewController
+"Sure" = "确定";
+"Cancel" = "取消";
+"News" = "资讯";
+"Nearby" = "附近电子烟";
+
+// NewsViewController
+"Open With Safari" = "用Safari打开";
+"Copy link address" = "复制链接";
+
+// NearByViewController
+"Unable to locate" = "无法定位";
+"Your phone is not currently open location service, if you want to open the location service, please refer to the privacy Settings->Privacy->Location, open Location Services" = "你的手机目前未开启定位服务，如欲开启定位服务，请至设定->隐私->定位服务，开启定位服务功能";
+"Please open the location service!" = "请先开启定位服务功能!";
+"Search" = "搜索";
+"km" = "公里";
+"Directions to Here" = "到这里去";
+"Dealer address" = "地址";
+"Dealer name" = "经销商";
+"Contact" = "联系人";
+"Phone" = "电话";
+"Dealer description" = "详情";
+"Destination" = "目的地";
+"Dealer information" = "经销商信息";
+
+// LoginViewController
+"Me" = "我";
+"Customer" = "普通客户";
+"Dealer" = "销售商";
+"Account" = "用户名";
+"Password" = "密码";
+"Remember Password" = "记住密码";
+"FORGOT?" = "忘记密码?";
+"Login" = "登录";
+"Register" = "注册";

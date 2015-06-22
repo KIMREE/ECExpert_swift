@@ -1,0 +1,50 @@
+/* 
+  Localizable.strings
+  ECExpert
+
+  Created by Fran on 15/6/11.
+  Copyright (c) 2015年 Fran. All rights reserved.
+*/
+
+
+// AppDelegate
+"There is a new version, do you want to update?" = "There is a new version, do you want to update?";
+"Update later" = "Update later";
+"Update now" = "Update now";
+"Unable to connect to the network" = "Unable to connect to the network";
+
+// MainViewController
+"Sure" = "Sure";
+"Cancel" = "Cancel";
+"News" = "News";
+"Nearby" = "Nearby";
+
+// NewsViewController
+"Open With Safari" = "Open With Safari";
+"Copy link address" = "Copy link address";
+
+// NearByViewController
+"Unable to locate" = "Unable to locate";
+"Your phone is not currently open location service, if you want to open the location service, please refer to the privacy Settings->Privacy->Location, open Location Services" = "Your phone is not currently open location service, if you want to open the location service, please refer to the privacy Settings->Privacy->Location, open Location Services";
+"Please open the location service!" = "Please open the location service!";
+"Search" = "Search";
+"km" = "km";
+"Directions to Here" = "Directions to Here";
+"Dealer address" = "Dealer address";
+"Dealer name" = "Dealer name";
+"Contact" = "Contact";
+"Phone" = "Phone";
+"Dealer description" = "Dealer description";
+"Destination" = "Destination";
+"Dealer information" = "Dealer information";
+
+// LoginViewController
+"Me" = "Me";
+"Customer" = "Customer";
+"Dealer" = "Dealer";
+"Account" = "Account";
+"Password" = "Password";
+"Remember Password" = "Remember Password";
+"FORGOT?" = "FORGOT?";
+"Login" = "Login";
+"Register" = "Register";
