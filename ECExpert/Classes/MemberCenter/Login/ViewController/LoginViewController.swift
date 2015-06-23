@@ -12,18 +12,23 @@ class LoginViewController: BasicViewController {
     
     private var containerView: UIView!
     
+    // 用户类型，  0 普通用户   1 销售商
     private var segmented: UISegmentedControl!
     
     private var accountField: UITextField!
     private var passwordField: UITextField!
     
+    private var rememberImage: UIImage!
+    private var unRememberImage: UIImage!
+    private var rememberButton: UIButton!
     private var rememberImageView: UIImageView!
-    private var rememberLabel: UILabel!
 
-    private var forgotLabel: UILabel!
+    private var forgotButton: UIButton!
     
     private var loginButton: UIButton!
     private var registerButton: UIButton!
+    
+    private let manager = AFNetworkingFactory.networkingManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +47,7 @@ class LoginViewController: BasicViewController {
     */
     func setUpContainerView(){
         let scrollView = TPKeyboardAvoidingScrollView(frame: getVisibleFrame())
+        scrollView.userInteractionEnabled = true
         self.view.addSubview(scrollView)
         
         let visibleFrame = getVisibleFrame()
@@ -132,26 +138,36 @@ class LoginViewController: BasicViewController {
         let rememberH: CGFloat = 20
         let rememberX = leftRightPadding
         let rememberY = startH + (h5 - rememberH) / 2.0
-        rememberImageView = UIImageView(frame: CGRectMake(rememberX, rememberY, rememberW, rememberH))
-        rememberImageView.image = UIImage(named: "unRememberAccount")
+        rememberImageView = UIImageView(frame: CGRectMake(0, 0, rememberW, rememberH))
         
-        rememberLabel = UILabel(frame: CGRectMake(rememberX + rememberW, rememberY, 0, 0))
+        let rememberLabel = UILabel(frame: CGRectZero)
         rememberLabel.numberOfLines = 1
         rememberLabel.textColor = UIColor.whiteColor()
         rememberLabel.text = i18n("Remember Password")
-        let remembelSize = rememberLabel.sizeThatFits(CGSizeZero)
-        rememberLabel.frame = CGRectMake(rememberX + rememberW, rememberY, remembelSize.width, rememberH)
+        rememberLabel.font = UIFont.systemFontOfSize(14)
+        let remembeSize = rememberLabel.sizeThatFits(CGSizeZero)
+        rememberLabel.frame = CGRectMake(0 + rememberW, 0, remembeSize.width, rememberH)
         
-        containerView.addSubview(rememberImageView)
-        containerView.addSubview(rememberLabel)
+        rememberButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        rememberButton.frame = CGRectMake(rememberX, rememberY, rememberW + remembeSize.width, rememberH)
         
-        forgotLabel = UILabel(frame: CGRectZero)
+        rememberButton.addSubview(rememberImageView)
+        rememberButton.addSubview(rememberLabel)
+        containerView.addSubview(rememberButton)
+        
+        let forgotLabel = UILabel(frame: CGRectZero)
         forgotLabel.numberOfLines = 1
         forgotLabel.textColor = UIColor.whiteColor()
         forgotLabel.text = i18n("FORGOT?")
+        forgotLabel.font = UIFont.systemFontOfSize(14)
         let forgotSize = forgotLabel.sizeThatFits(CGSizeZero)
-        forgotLabel.frame = CGRectMake(w - leftRightPadding - forgotSize.width, rememberY, forgotSize.width, forgotSize.height)
-        containerView.addSubview(forgotLabel)
+        forgotLabel.frame = CGRectMake(0, 0, forgotSize.width, forgotSize.height)
+        
+        forgotButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        forgotButton.frame = CGRectMake(w - leftRightPadding - forgotSize.width, rememberY, forgotSize.width, forgotSize.height)
+        
+        forgotButton.addSubview(forgotLabel)
+        containerView.addSubview(forgotButton)
         
         startH += h5
         // button h6
@@ -200,9 +216,122 @@ class LoginViewController: BasicViewController {
     监控ui界面的各个控件
     */
     func setUpComponentAction(){
+        rememberImage = UIImage(named: "rememberAccount")
+        unRememberImage = UIImage(named: "unRememberAccount")
+        
+        rememberButton.addTarget(self, action: "remember:", forControlEvents: UIControlEvents.TouchUpInside)
+        forgotButton.addTarget(self, action: "forgot:", forControlEvents: UIControlEvents.TouchUpInside)
+        loginButton.addTarget(self, action: "login:", forControlEvents: UIControlEvents.TouchUpInside)
+        registerButton.addTarget(self, action: "register:", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        let loginProof = LocalStroge.sharedInstance().getObject(APP_PATH_LOGIN_PROOF, searchPathDirectory: NSSearchPathDirectory.DocumentDirectory) as? NSDictionary
+        if loginProof != nil{
+            if let userType = loginProof![APP_PATH_LOGIN_PROOF_USERTYPE] as? Int{
+                self.segmented.selectedSegmentIndex = userType
+            }
+            
+            if let account = loginProof![APP_PATH_LOGIN_PROOF_USERNAME] as? String{
+                self.accountField.text = account
+            }
+            
+            if let password = loginProof![APP_PATH_LOGIN_PROOF_PASSWORD] as? String{
+                self.passwordField.text = password
+            }
+            
+            if loginProof![APP_PATH_LOGIN_PROOF_REMEMBER] != nil{
+                let remember = loginProof![APP_PATH_LOGIN_PROOF_REMEMBER] as! Bool
+                if remember{
+                    self.rememberImageView.image = rememberImage
+                }else{
+                    self.rememberImageView.image = unRememberImage
+                }
+                
+            }
+            
+        }else{
+            self.segmented.selectedSegmentIndex = 0
+            self.rememberImageView.image = unRememberImage
+        }
+        
+        
         
     }
     
+    /**
+    记住密码
+    
+    :param: sender <#sender description#>
+    */
+    func remember(sender: AnyObject!){
+        if self.rememberImageView.image == rememberImage {
+            self.rememberImageView.image = unRememberImage
+        }else{
+            self.rememberImageView.image = rememberImage
+        }
+    }
+    
+    /**
+    忘记密码
+    
+    :param: sender <#sender description#>
+    */
+    func forgot(sender: AnyObject!){
+        KMLog("forgot")
+    }
+    
+    /**
+    登录
+    
+    :param: sender <#sender description#>
+    */
+    func login(sender: AnyObject!){
+        let userName = accountField.text
+        let password = passwordField.text
+        let remember = rememberImageView.image == rememberImage
+        let userType = segmented.selectedSegmentIndex
+        
+        let valid = validUserName(userName, password: password)
+        if valid.valid{
+            sendLoginRequest()
+        }else{
+            let alertView = UIAlertView(title: nil, message: valid.errorMsg, delegate: nil, cancelButtonTitle: i18n("Cancel"))
+            alertView.show()
+        }
+    }
+    
+    func validUserName(userName: NSString!, password: NSString!) -> (valid:Bool, errorMsg: String) {
+        var valid = true
+        var errorMsg = ""
+        if userName.length < 5{
+            valid = false
+            errorMsg = i18n("UserName lengh must be greater than or equal to 5 numbers including letters!")
+            return (valid: valid, errorMsg: errorMsg)
+        }
+        
+        if password.length < 5{
+            valid = false
+            errorMsg = i18n("Password lengh must be greater than or equal to 5 numbers including letters!")
+            return (valid: valid, errorMsg: errorMsg)
+        }
+        
+        return (valid: valid, errorMsg: errorMsg)
+    }
+    
+    /**
+    发送登录请求
+    */
+    func sendLoginRequest(){
+        
+    }
+    
+    /**
+    注册
+    
+    :param: sender <#sender description#>
+    */
+    func register(sender: AnyObject!){
+        KMLog("register")
+    }
 
     /*
     // MARK: - Navigation

@@ -58,6 +58,12 @@ let APP_URL_DEALER = "http://www.ecig100.com/api/?action=getDealer" //获取经�
 
 // fileName
 let APP_PATH_LOGIN_PROOF = "user_login_proof"
+let APP_PATH_LOGIN_PROOF_AUTOLOGIN = "autologin"
+let APP_PATH_LOGIN_PROOF_REMEMBER = "remember"
+let APP_PATH_LOGIN_PROOF_USERNAME = "username"
+let APP_PATH_LOGIN_PROOF_PASSWORD = "userpassword"
+let APP_PATH_LOGIN_PROOF_USERTYPE = "usertype"
+
 let APP_PATH_LOGINUSER_INFO = "user_information"
 let APP_PATH_DEALER_INFO = "dealer_information1"
 

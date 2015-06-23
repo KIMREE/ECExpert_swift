@@ -131,20 +131,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - 自动登陆
     func autoLogin(){
         let loginProof = LocalStroge.sharedInstance().getObject(APP_PATH_LOGIN_PROOF, searchPathDirectory: NSSearchPathDirectory.DocumentDirectory) as? NSDictionary
-        if loginProof != nil {
-            let manager = AFNetworkingFactory.networkingManager()
-            manager.POST(APP_URL_LOGIN, parameters: loginProof!, success: { [unowned self,loginProof] (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void  in
-                let basicDic = responseObj as? NSDictionary
-                let code = basicDic?["code"] as? NSInteger
-                if code != nil && code == 1{
-                    let resultInfo = basicDic!["data"] as! Dictionary<String, AnyObject>
-                    KMLog("\(resultInfo.description)")
-                    self.loadLoginUserInfo(loginProof!)
-                }
-                }, failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
-                    KMLog("\(error.localizedDescription)")
-            })
+        if loginProof != nil && loginProof![APP_PATH_LOGIN_PROOF_AUTOLOGIN] != nil{
+            let autoLogin = loginProof![APP_PATH_LOGIN_PROOF_AUTOLOGIN] as! Bool
+            if autoLogin{
+                let manager = AFNetworkingFactory.networkingManager()
+                manager.POST(APP_URL_LOGIN, parameters: loginProof!, success: { [unowned self,loginProof] (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void  in
+                    let basicDic = responseObj as? NSDictionary
+                    let code = basicDic?["code"] as? NSInteger
+                    if code != nil && code == 1{
+                        let resultInfo = basicDic!["data"] as! Dictionary<String, AnyObject>
+                        KMLog("\(resultInfo.description)")
+                        self.loadLoginUserInfo(loginProof!)
+                    }
+                    }, failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                        KMLog("\(error.localizedDescription)")
+                })
+            }
         }
+
     }
     
     // MARK: 获取登录用户的信息

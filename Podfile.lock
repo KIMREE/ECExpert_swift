@@ -30,6 +30,13 @@ PODS:
     - NJKWebViewProgress/ProgressView (= 0.2.3)
   - NJKWebViewProgress/Core (0.2.3)
   - NJKWebViewProgress/ProgressView (0.2.3)
+  - ReactiveCocoa (2.5):
+    - ReactiveCocoa/UI (= 2.5)
+  - ReactiveCocoa/Core (2.5):
+    - ReactiveCocoa/no-arc
+  - ReactiveCocoa/no-arc (2.5)
+  - ReactiveCocoa/UI (2.5):
+    - ReactiveCocoa/Core
   - SDWebImage (3.7.2):
     - SDWebImage/Core (= 3.7.2)
   - SDWebImage/Core (3.7.2)
@@ -43,6 +50,7 @@ DEPENDENCIES:
   - MJExtension
   - MJRefresh
   - NJKWebViewProgress
+  - ReactiveCocoa
   - SDWebImage
   - TPKeyboardAvoiding
 
@@ -54,6 +62,7 @@ SPEC CHECKSUMS:
   MJExtension: eb9d381740563b520fbabdfa6caf92d666314467
   MJRefresh: dfaf2303521c1f1ad71f0f9d2fe781ccea3741de
   NJKWebViewProgress: f481fd424cb5ecc27eacae11b5397db92fba9a4d
+  ReactiveCocoa: e2db045570aa97c695e7aa97c2bcab222ae51f4a
   SDWebImage: 71b7cdc1d1721d6a82ed62889030225f2c249e29
   TPKeyboardAvoiding: ee4dd35e3bb7bb64bfbda47e7cc9ba872ff10f77
 

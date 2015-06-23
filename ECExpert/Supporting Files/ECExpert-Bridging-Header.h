@@ -26,4 +26,7 @@
 
 #import <TPKeyboardAvoiding/TPKeyboardAvoidingScrollView.h>
 
+#import <ReactiveCocoa/RACEXTScope.h> 
+#import <ReactiveCocoa/ReactiveCocoa.h>
+
 #endif

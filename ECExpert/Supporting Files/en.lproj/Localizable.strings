@@ -48,3 +48,5 @@
 "FORGOT?" = "FORGOT?";
 "Login" = "Login";
 "Register" = "Register";
+"UserName lengh must be greater than or equal to 5 numbers including letters!" = "userName lengh must be greater than or equal to 5 numbers including letters!";
+"Password lengh must be greater than or equal to 5 numbers including letters!" = "Password lengh must be greater than or equal to 5 numbers including letters!";

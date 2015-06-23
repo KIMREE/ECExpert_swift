@@ -11,6 +11,7 @@
 		A10C6FCB1B32994E00645E49 /* DealerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10C6FCA1B32994E00645E49 /* DealerHelper.swift */; };
 		A10C6FCD1B32B6D200645E49 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10C6FCC1B32B6D200645E49 /* SearchViewController.swift */; };
 		A10C6FCF1B32B87200645E49 /* DealerDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10C6FCE1B32B87200645E49 /* DealerDetailViewController.swift */; };
+		A10D9BAA1B38EF1100660C36 /* ReactiveCocoa.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10D9BA91B38EF1100660C36 /* ReactiveCocoa.swift */; };
 		A16C1FBB1B298B6900F4AE9F /* LocalStroge.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16C1FBA1B298B6900F4AE9F /* LocalStroge.swift */; };
 		A18E5F871B291425005172E5 /* ECExpertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18E5F861B291425005172E5 /* ECExpertTests.swift */; };
 		A18E5F981B291499005172E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18E5F911B291499005172E5 /* AppDelegate.swift */; };
@@ -54,6 +55,7 @@
 		A10C6FCA1B32994E00645E49 /* DealerHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DealerHelper.swift; sourceTree = "<group>"; };
 		A10C6FCC1B32B6D200645E49 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		A10C6FCE1B32B87200645E49 /* DealerDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DealerDetailViewController.swift; sourceTree = "<group>"; };
+		A10D9BA91B38EF1100660C36 /* ReactiveCocoa.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactiveCocoa.swift; sourceTree = "<group>"; };
 		A16C1FBA1B298B6900F4AE9F /* LocalStroge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalStroge.swift; sourceTree = "<group>"; };
 		A18E5F6E1B291425005172E5 /* ECExpert.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ECExpert.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A18E5F801B291425005172E5 /* ECExpertTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ECExpertTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -200,6 +202,7 @@
 				A16C1FBA1B298B6900F4AE9F /* LocalStroge.swift */,
 				A1FB2E321B2AAF8400A4DDE7 /* UITabBarTransitionAnimation.swift */,
 				A10C6FCA1B32994E00645E49 /* DealerHelper.swift */,
+				A10D9BA91B38EF1100660C36 /* ReactiveCocoa.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -510,6 +513,7 @@
 				A1FD98211B30013F002BFE10 /* KMCalloutAnnotation.swift in Sources */,
 				A18E5FBA1B2924C1005172E5 /* ECExpert-Prefix.swift in Sources */,
 				A1FD98231B300172002BFE10 /* KMCalloutAnnotationView.swift in Sources */,
+				A10D9BAA1B38EF1100660C36 /* ReactiveCocoa.swift in Sources */,
 				A18E5FC21B2937A2005172E5 /* AFNetworkingFactory.swift in Sources */,
 				A18E5FC41B293985005172E5 /* UIAlertView+Block.swift in Sources */,
 				A16C1FBB1B298B6900F4AE9F /* LocalStroge.swift in Sources */,
