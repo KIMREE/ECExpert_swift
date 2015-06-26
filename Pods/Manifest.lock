@@ -24,7 +24,7 @@ PODS:
   - JDStatusBarNotification (1.5.2)
   - MBProgressHUD (0.9.1)
   - MJExtension (2.3.6)
-  - MJRefresh (2.0.2)
+  - MJRefresh (2.0.4)
   - NJKWebViewProgress (0.2.3):
     - NJKWebViewProgress/Core (= 0.2.3)
     - NJKWebViewProgress/ProgressView (= 0.2.3)
@@ -40,7 +40,7 @@ PODS:
   - SDWebImage (3.7.2):
     - SDWebImage/Core (= 3.7.2)
   - SDWebImage/Core (3.7.2)
-  - TPKeyboardAvoiding (1.2.6)
+  - TPKeyboardAvoiding (1.2.7)
 
 DEPENDENCIES:
   - AFNetworking
@@ -60,10 +60,10 @@ SPEC CHECKSUMS:
   JDStatusBarNotification: a36d09ccbb047217572b074a61e7ca10dddc5f0a
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
   MJExtension: eb9d381740563b520fbabdfa6caf92d666314467
-  MJRefresh: dfaf2303521c1f1ad71f0f9d2fe781ccea3741de
+  MJRefresh: ea153717001d3c02444bd22b75c111d2937d2104
   NJKWebViewProgress: f481fd424cb5ecc27eacae11b5397db92fba9a4d
   ReactiveCocoa: e2db045570aa97c695e7aa97c2bcab222ae51f4a
   SDWebImage: 71b7cdc1d1721d6a82ed62889030225f2c249e29
-  TPKeyboardAvoiding: ee4dd35e3bb7bb64bfbda47e7cc9ba872ff10f77
+  TPKeyboardAvoiding: 9375176f625873c9f9246cd42d5fcf9fc5787ae9
 
 COCOAPODS: 0.37.2

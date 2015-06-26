@@ -12,7 +12,10 @@
 		A10C6FCD1B32B6D200645E49 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10C6FCC1B32B6D200645E49 /* SearchViewController.swift */; };
 		A10C6FCF1B32B87200645E49 /* DealerDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10C6FCE1B32B87200645E49 /* DealerDetailViewController.swift */; };
 		A10D9BAA1B38EF1100660C36 /* ReactiveCocoa.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10D9BA91B38EF1100660C36 /* ReactiveCocoa.swift */; };
+		A10D9BAE1B39607900660C36 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10D9BAD1B39607900660C36 /* LoginViewController.swift */; };
+		A10D9BB21B39616400660C36 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10D9BB11B39616400660C36 /* RegisterViewController.swift */; };
 		A16C1FBB1B298B6900F4AE9F /* LocalStroge.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16C1FBA1B298B6900F4AE9F /* LocalStroge.swift */; };
+		A175FA651B3D3D3C0012F110 /* ProductDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A175FA641B3D3D3C0012F110 /* ProductDetailViewController.swift */; };
 		A18E5F871B291425005172E5 /* ECExpertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18E5F861B291425005172E5 /* ECExpertTests.swift */; };
 		A18E5F981B291499005172E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18E5F911B291499005172E5 /* AppDelegate.swift */; };
 		A18E5F9B1B291499005172E5 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A18E5F971B291499005172E5 /* Info.plist */; };
@@ -24,13 +27,26 @@
 		A18E5FC21B2937A2005172E5 /* AFNetworkingFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18E5FC11B2937A2005172E5 /* AFNetworkingFactory.swift */; };
 		A18E5FC41B293985005172E5 /* UIAlertView+Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18E5FC31B293985005172E5 /* UIAlertView+Block.swift */; };
 		A1CB41481B340591005AB9F1 /* dealerLogo@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A1CB41471B340591005AB9F1 /* dealerLogo@2x.jpg */; };
-		A1FA97701B37A56500FCEEA4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FA976F1B37A56500FCEEA4 /* LoginViewController.swift */; };
+		A1F8E6DC1B3A4DBD000F3342 /* UIFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F8E6DB1B3A4DBD000F3342 /* UIFactory.swift */; };
+		A1F8E6E01B3A5FB9000F3342 /* agreement_strings.html in Resources */ = {isa = PBXBuildFile; fileRef = A1F8E6DE1B3A5FB9000F3342 /* agreement_strings.html */; };
+		A1F8E6E11B3A5FB9000F3342 /* agreement_strings_eng.html in Resources */ = {isa = PBXBuildFile; fileRef = A1F8E6DF1B3A5FB9000F3342 /* agreement_strings_eng.html */; };
+		A1F8E6EE1B3AA78D000F3342 /* CustomerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F8E6EC1B3AA78D000F3342 /* CustomerViewController.swift */; };
+		A1F8E6EF1B3AA78D000F3342 /* DealerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F8E6ED1B3AA78D000F3342 /* DealerViewController.swift */; };
+		A1F8E6F21B3AA7C3000F3342 /* MagnetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F8E6F11B3AA7C3000F3342 /* MagnetView.swift */; };
+		A1F8E6F41B3AA7F9000F3342 /* ControlCenterScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F8E6F31B3AA7F9000F3342 /* ControlCenterScrollView.swift */; };
 		A1FB0AA21B2EA318004BDCA9 /* NearByViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FB0AA11B2EA318004BDCA9 /* NearByViewController.swift */; };
 		A1FB156A1B2BBA77003296E4 /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FB15691B2BBA77003296E4 /* NewsViewController.swift */; };
 		A1FB156C1B2BDBFB003296E4 /* UIActionSheet+Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FB156B1B2BDBFB003296E4 /* UIActionSheet+Block.swift */; };
 		A1FB2E311B2A8C6800A4DDE7 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FB2E301B2A8C6800A4DDE7 /* MainViewController.swift */; };
 		A1FB2E331B2AAF8400A4DDE7 /* UITabBarTransitionAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FB2E321B2AAF8400A4DDE7 /* UITabBarTransitionAnimation.swift */; };
 		A1FB2E351B2AC5F900A4DDE7 /* KMNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FB2E341B2AC5F900A4DDE7 /* KMNavigationController.swift */; };
+		A1FB55F61B3BA75300DA5D62 /* ShowQRCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FB55F51B3BA75300DA5D62 /* ShowQRCodeViewController.swift */; };
+		A1FB55FA1B3BA94500DA5D62 /* MDQRCodeGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = A1FB55F91B3BA94500DA5D62 /* MDQRCodeGenerator.m */; };
+		A1FB56161B3BAD8F00DA5D62 /* FeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FB56151B3BAD8F00DA5D62 /* FeedbackViewController.swift */; };
+		A1FB56181B3BD20900DA5D62 /* ScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FB56171B3BD20900DA5D62 /* ScanViewController.swift */; };
+		A1FB561C1B3BF07C00DA5D62 /* TradeRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FB561B1B3BF07C00DA5D62 /* TradeRecordViewController.swift */; };
+		A1FC49DC1B3CEE6D0019A850 /* TradeInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FC49DB1B3CEE6D0019A850 /* TradeInputViewController.swift */; };
+		A1FC49E11B3D27E20019A850 /* ProductModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A1FC49E01B3D27E20019A850 /* ProductModel.m */; };
 		A1FD98211B30013F002BFE10 /* KMCalloutAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FD98201B30013F002BFE10 /* KMCalloutAnnotation.swift */; };
 		A1FD98231B300172002BFE10 /* KMCalloutAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FD98221B300172002BFE10 /* KMCalloutAnnotationView.swift */; };
 		A1FD98251B300A08002BFE10 /* KMAnnotationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FD98241B300A08002BFE10 /* KMAnnotationManager.swift */; };
@@ -56,7 +72,10 @@
 		A10C6FCC1B32B6D200645E49 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		A10C6FCE1B32B87200645E49 /* DealerDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DealerDetailViewController.swift; sourceTree = "<group>"; };
 		A10D9BA91B38EF1100660C36 /* ReactiveCocoa.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactiveCocoa.swift; sourceTree = "<group>"; };
+		A10D9BAD1B39607900660C36 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		A10D9BB11B39616400660C36 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		A16C1FBA1B298B6900F4AE9F /* LocalStroge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalStroge.swift; sourceTree = "<group>"; };
+		A175FA641B3D3D3C0012F110 /* ProductDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductDetailViewController.swift; sourceTree = "<group>"; };
 		A18E5F6E1B291425005172E5 /* ECExpert.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ECExpert.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A18E5F801B291425005172E5 /* ECExpertTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ECExpertTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A18E5F851B291425005172E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -75,13 +94,28 @@
 		A18E5FC11B2937A2005172E5 /* AFNetworkingFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AFNetworkingFactory.swift; sourceTree = "<group>"; };
 		A18E5FC31B293985005172E5 /* UIAlertView+Block.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertView+Block.swift"; sourceTree = "<group>"; };
 		A1CB41471B340591005AB9F1 /* dealerLogo@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "dealerLogo@2x.jpg"; sourceTree = "<group>"; };
-		A1FA976F1B37A56500FCEEA4 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		A1F8E6DB1B3A4DBD000F3342 /* UIFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIFactory.swift; sourceTree = "<group>"; };
+		A1F8E6DE1B3A5FB9000F3342 /* agreement_strings.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = agreement_strings.html; sourceTree = "<group>"; };
+		A1F8E6DF1B3A5FB9000F3342 /* agreement_strings_eng.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = agreement_strings_eng.html; sourceTree = "<group>"; };
+		A1F8E6EC1B3AA78D000F3342 /* CustomerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomerViewController.swift; sourceTree = "<group>"; };
+		A1F8E6ED1B3AA78D000F3342 /* DealerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DealerViewController.swift; sourceTree = "<group>"; };
+		A1F8E6F11B3AA7C3000F3342 /* MagnetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagnetView.swift; sourceTree = "<group>"; };
+		A1F8E6F31B3AA7F9000F3342 /* ControlCenterScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlCenterScrollView.swift; sourceTree = "<group>"; };
 		A1FB0AA11B2EA318004BDCA9 /* NearByViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearByViewController.swift; sourceTree = "<group>"; };
 		A1FB15691B2BBA77003296E4 /* NewsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsViewController.swift; sourceTree = "<group>"; };
 		A1FB156B1B2BDBFB003296E4 /* UIActionSheet+Block.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIActionSheet+Block.swift"; sourceTree = "<group>"; };
 		A1FB2E301B2A8C6800A4DDE7 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		A1FB2E321B2AAF8400A4DDE7 /* UITabBarTransitionAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITabBarTransitionAnimation.swift; sourceTree = "<group>"; };
 		A1FB2E341B2AC5F900A4DDE7 /* KMNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KMNavigationController.swift; sourceTree = "<group>"; };
+		A1FB55F51B3BA75300DA5D62 /* ShowQRCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowQRCodeViewController.swift; sourceTree = "<group>"; };
+		A1FB55F81B3BA94500DA5D62 /* MDQRCodeGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDQRCodeGenerator.h; sourceTree = "<group>"; };
+		A1FB55F91B3BA94500DA5D62 /* MDQRCodeGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDQRCodeGenerator.m; sourceTree = "<group>"; };
+		A1FB56151B3BAD8F00DA5D62 /* FeedbackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackViewController.swift; sourceTree = "<group>"; };
+		A1FB56171B3BD20900DA5D62 /* ScanViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanViewController.swift; sourceTree = "<group>"; };
+		A1FB561B1B3BF07C00DA5D62 /* TradeRecordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TradeRecordViewController.swift; sourceTree = "<group>"; };
+		A1FC49DB1B3CEE6D0019A850 /* TradeInputViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TradeInputViewController.swift; sourceTree = "<group>"; };
+		A1FC49DF1B3D27E20019A850 /* ProductModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductModel.h; sourceTree = "<group>"; };
+		A1FC49E01B3D27E20019A850 /* ProductModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductModel.m; sourceTree = "<group>"; };
 		A1FD98201B30013F002BFE10 /* KMCalloutAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KMCalloutAnnotation.swift; sourceTree = "<group>"; };
 		A1FD98221B300172002BFE10 /* KMCalloutAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KMCalloutAnnotationView.swift; sourceTree = "<group>"; };
 		A1FD98241B300A08002BFE10 /* KMAnnotationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KMAnnotationManager.swift; sourceTree = "<group>"; };
@@ -203,6 +237,7 @@
 				A1FB2E321B2AAF8400A4DDE7 /* UITabBarTransitionAnimation.swift */,
 				A10C6FCA1B32994E00645E49 /* DealerHelper.swift */,
 				A10D9BA91B38EF1100660C36 /* ReactiveCocoa.swift */,
+				A1F8E6DB1B3A4DBD000F3342 /* UIFactory.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -226,6 +261,8 @@
 		A18E5FC01B293489005172E5 /* OC Code Files */ = {
 			isa = PBXGroup;
 			children = (
+				A1FC49DD1B3D27E20019A850 /* Trade */,
+				A1FB55F71B3BA94500DA5D62 /* MDQRCodeGenerator */,
 			);
 			path = "OC Code Files";
 			sourceTree = "<group>";
@@ -233,6 +270,7 @@
 		A1CB41431B33FA5E005AB9F1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A1F8E6DD1B3A5FB9000F3342 /* Html */,
 				A1CB41441B33FA5E005AB9F1 /* NearBy */,
 			);
 			path = Resources;
@@ -246,9 +284,49 @@
 			path = NearBy;
 			sourceTree = "<group>";
 		};
+		A1F8E6DD1B3A5FB9000F3342 /* Html */ = {
+			isa = PBXGroup;
+			children = (
+				A1F8E6DE1B3A5FB9000F3342 /* agreement_strings.html */,
+				A1F8E6DF1B3A5FB9000F3342 /* agreement_strings_eng.html */,
+			);
+			path = Html;
+			sourceTree = "<group>";
+		};
+		A1F8E6EA1B3AA78D000F3342 /* Control Center */ = {
+			isa = PBXGroup;
+			children = (
+				A1F8E6F01B3AA7A0000F3342 /* View */,
+				A1F8E6EB1B3AA78D000F3342 /* ViewController */,
+			);
+			path = "Control Center";
+			sourceTree = "<group>";
+		};
+		A1F8E6EB1B3AA78D000F3342 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				A1F8E6EC1B3AA78D000F3342 /* CustomerViewController.swift */,
+				A1F8E6ED1B3AA78D000F3342 /* DealerViewController.swift */,
+				A1FB56151B3BAD8F00DA5D62 /* FeedbackViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		A1F8E6F01B3AA7A0000F3342 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A1F8E6F11B3AA7C3000F3342 /* MagnetView.swift */,
+				A1F8E6F31B3AA7F9000F3342 /* ControlCenterScrollView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		A1FA976A1B37A4D300FCEEA4 /* MemberCenter */ = {
 			isa = PBXGroup;
 			children = (
+				A1FB56191B3BF04900DA5D62 /* Trade */,
+				A1FB55F31B3BA70800DA5D62 /* QRCode */,
+				A1F8E6EA1B3AA78D000F3342 /* Control Center */,
 				A1FA976B1B37A4D300FCEEA4 /* Login */,
 				A1FA976D1B37A4D300FCEEA4 /* Register */,
 			);
@@ -266,7 +344,7 @@
 		A1FA976C1B37A4D300FCEEA4 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				A1FA976F1B37A56500FCEEA4 /* LoginViewController.swift */,
+				A10D9BAD1B39607900660C36 /* LoginViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -282,6 +360,7 @@
 		A1FA976E1B37A4D300FCEEA4 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				A10D9BB11B39616400660C36 /* RegisterViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -336,6 +415,67 @@
 				A1FB2E341B2AC5F900A4DDE7 /* KMNavigationController.swift */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		A1FB55F31B3BA70800DA5D62 /* QRCode */ = {
+			isa = PBXGroup;
+			children = (
+				A1FB55F41B3BA70800DA5D62 /* ViewController */,
+			);
+			path = QRCode;
+			sourceTree = "<group>";
+		};
+		A1FB55F41B3BA70800DA5D62 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				A1FB55F51B3BA75300DA5D62 /* ShowQRCodeViewController.swift */,
+				A1FB56171B3BD20900DA5D62 /* ScanViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		A1FB55F71B3BA94500DA5D62 /* MDQRCodeGenerator */ = {
+			isa = PBXGroup;
+			children = (
+				A1FB55F81B3BA94500DA5D62 /* MDQRCodeGenerator.h */,
+				A1FB55F91B3BA94500DA5D62 /* MDQRCodeGenerator.m */,
+			);
+			path = MDQRCodeGenerator;
+			sourceTree = "<group>";
+		};
+		A1FB56191B3BF04900DA5D62 /* Trade */ = {
+			isa = PBXGroup;
+			children = (
+				A1FB561A1B3BF04900DA5D62 /* ViewController */,
+			);
+			path = Trade;
+			sourceTree = "<group>";
+		};
+		A1FB561A1B3BF04900DA5D62 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				A1FB561B1B3BF07C00DA5D62 /* TradeRecordViewController.swift */,
+				A1FC49DB1B3CEE6D0019A850 /* TradeInputViewController.swift */,
+				A175FA641B3D3D3C0012F110 /* ProductDetailViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		A1FC49DD1B3D27E20019A850 /* Trade */ = {
+			isa = PBXGroup;
+			children = (
+				A1FC49DE1B3D27E20019A850 /* Model */,
+			);
+			path = Trade;
+			sourceTree = "<group>";
+		};
+		A1FC49DE1B3D27E20019A850 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A1FC49DF1B3D27E20019A850 /* ProductModel.h */,
+				A1FC49E01B3D27E20019A850 /* ProductModel.m */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		A1FD981B1B2FFB72002BFE10 /* View */ = {
@@ -444,8 +584,10 @@
 			files = (
 				A18E5FB61B291F6F005172E5 /* Images.xcassets in Resources */,
 				A1CB41481B340591005AB9F1 /* dealerLogo@2x.jpg in Resources */,
+				A1F8E6E01B3A5FB9000F3342 /* agreement_strings.html in Resources */,
 				A18E5F9B1B291499005172E5 /* Info.plist in Resources */,
 				A18E5FA71B291B42005172E5 /* Localizable.strings in Resources */,
+				A1F8E6E11B3A5FB9000F3342 /* agreement_strings_eng.html in Resources */,
 				A18E5FAA1B291B4B005172E5 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -497,13 +639,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A1FA97701B37A56500FCEEA4 /* LoginViewController.swift in Sources */,
 				A1FD98271B3013A1002BFE10 /* KMAnnotation.swift in Sources */,
 				A1FB156C1B2BDBFB003296E4 /* UIActionSheet+Block.swift in Sources */,
+				A1F8E6EE1B3AA78D000F3342 /* CustomerViewController.swift in Sources */,
 				A1FB2E311B2A8C6800A4DDE7 /* MainViewController.swift in Sources */,
+				A1FB561C1B3BF07C00DA5D62 /* TradeRecordViewController.swift in Sources */,
+				A10D9BB21B39616400660C36 /* RegisterViewController.swift in Sources */,
+				A10D9BAE1B39607900660C36 /* LoginViewController.swift in Sources */,
+				A1FB55FA1B3BA94500DA5D62 /* MDQRCodeGenerator.m in Sources */,
 				A18E5F981B291499005172E5 /* AppDelegate.swift in Sources */,
 				A10C6FCF1B32B87200645E49 /* DealerDetailViewController.swift in Sources */,
 				A10C6FCD1B32B6D200645E49 /* SearchViewController.swift in Sources */,
+				A1F8E6F21B3AA7C3000F3342 /* MagnetView.swift in Sources */,
+				A1FB55F61B3BA75300DA5D62 /* ShowQRCodeViewController.swift in Sources */,
+				A1F8E6DC1B3A4DBD000F3342 /* UIFactory.swift in Sources */,
 				A1FB156A1B2BBA77003296E4 /* NewsViewController.swift in Sources */,
 				A1FD98251B300A08002BFE10 /* KMAnnotationManager.swift in Sources */,
 				A10C6FC91B3261A100645E49 /* KMMapCalloutCellView.swift in Sources */,
@@ -512,10 +661,17 @@
 				A1FB2E331B2AAF8400A4DDE7 /* UITabBarTransitionAnimation.swift in Sources */,
 				A1FD98211B30013F002BFE10 /* KMCalloutAnnotation.swift in Sources */,
 				A18E5FBA1B2924C1005172E5 /* ECExpert-Prefix.swift in Sources */,
+				A1FC49DC1B3CEE6D0019A850 /* TradeInputViewController.swift in Sources */,
 				A1FD98231B300172002BFE10 /* KMCalloutAnnotationView.swift in Sources */,
+				A1F8E6EF1B3AA78D000F3342 /* DealerViewController.swift in Sources */,
+				A1FB56181B3BD20900DA5D62 /* ScanViewController.swift in Sources */,
 				A10D9BAA1B38EF1100660C36 /* ReactiveCocoa.swift in Sources */,
+				A1FC49E11B3D27E20019A850 /* ProductModel.m in Sources */,
 				A18E5FC21B2937A2005172E5 /* AFNetworkingFactory.swift in Sources */,
+				A175FA651B3D3D3C0012F110 /* ProductDetailViewController.swift in Sources */,
 				A18E5FC41B293985005172E5 /* UIAlertView+Block.swift in Sources */,
+				A1F8E6F41B3AA7F9000F3342 /* ControlCenterScrollView.swift in Sources */,
+				A1FB56161B3BAD8F00DA5D62 /* FeedbackViewController.swift in Sources */,
 				A16C1FBB1B298B6900F4AE9F /* LocalStroge.swift in Sources */,
 				A10C6FCB1B32994E00645E49 /* DealerHelper.swift in Sources */,
 				A1FB2E351B2AC5F900A4DDE7 /* KMNavigationController.swift in Sources */,

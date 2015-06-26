@@ -25,8 +25,14 @@
 #import <CoreLocation/CoreLocation.h>
 
 #import <TPKeyboardAvoiding/TPKeyboardAvoidingScrollView.h>
+#import <TPKeyboardAvoiding/TPKeyboardAvoidingTableView.h>
 
 #import <ReactiveCocoa/RACEXTScope.h> 
 #import <ReactiveCocoa/ReactiveCocoa.h>
+
+#import <AVFoundation/AVFoundation.h>
+
+#import "MDQRCodeGenerator.h"
+#import "ProductModel.h"
 
 #endif

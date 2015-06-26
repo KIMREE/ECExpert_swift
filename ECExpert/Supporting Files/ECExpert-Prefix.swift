@@ -39,6 +39,12 @@ func KMLog(format: String){
     KMLog(format, [])
 }
 
+// AppDelegate
+func currentAppDelegate() -> AppDelegate{
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    return appDelegate
+}
+
 // System
 let APP_SYS_DEVICE_VERSION = (UIDevice.currentDevice().systemVersion as NSString).doubleValue
 
@@ -49,12 +55,21 @@ let APP_URL_ITUNES = "https://itunes.apple.com/us/app/dian-zi-yan-zhuan-jia/id94
 
 let APP_URL_LOGIN = "http://www.kimree.com.cn/app/?action=login" // 登录
 let APP_URL_LOGOUT = "http://www.kimree.com.cn/app/?action=logout" // 登出
+let APP_URL_REGISTER = "http://www.kimree.com.cn/app/?action=joinuser" // 注册
 let APP_URL_LOGIN_USERINFO = "http://www.kimree.com.cn/app/?action=getuserinfo" // 获取登录用户信息
 
-let APP_URL_NEWS = "http://m.ecig100.com/"
+let APP_URL_CHECKVIP = "http://www.kimree.com.cn/app/?action=checkvip"  // 根据用户id和会员卡号确定用户合法性
+let APP_URL_TRADE_INPUT = "http://www.kimree.com.cn/app/?action=typetrade"  // 录入交易
+let APP_URL_SCAN_BAR_CODE = "http://www.kimree.com.cn/app/scancode.php?"  // 扫描条形码
 
+let APP_URL_NEWS = "http://m.ecig100.com/"
+let APP_URL_KIMREE = "http://www.kimree.com.cn"
 let APP_URL_DEALER = "http://www.ecig100.com/api/?action=getDealer" //获取经销商及烟酒商信息
 
+let APP_URL_TRADE_RECORD = "http://www.kimree.com.cn/app/?action=selecttrade" // 查看交易记录
+let APP_URL_TRADE_RECORD_DETAIL = "http://www.kimree.com.cn/app/?action=tradeinfo"  // 交易记录详情
+
+let APP_URL_FEEDBACK = "http://www.ecigarfan.com/api/api.php?action=sendask" 
 
 // fileName
 let APP_PATH_LOGIN_PROOF = "user_login_proof"
@@ -63,10 +78,13 @@ let APP_PATH_LOGIN_PROOF_REMEMBER = "remember"
 let APP_PATH_LOGIN_PROOF_USERNAME = "username"
 let APP_PATH_LOGIN_PROOF_PASSWORD = "userpassword"
 let APP_PATH_LOGIN_PROOF_USERTYPE = "usertype"
+let APP_PATH_LOGIN_PROOF_SID = "sid"
 
 let APP_PATH_LOGINUSER_INFO = "user_information"
 let APP_PATH_DEALER_INFO = "dealer_information1"
 
+// notification
+let APP_NOTIFICATION_LOGIN = "login_succes"
 
 
 // frame

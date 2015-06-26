@@ -213,7 +213,7 @@ class SearchViewController: BasicViewController, UITableViewDataSource, UITableV
         if result < 44{
             result = 44
         }
-        return 80
+        return result
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

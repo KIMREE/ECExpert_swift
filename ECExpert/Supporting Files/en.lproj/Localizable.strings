@@ -14,6 +14,7 @@
 "Unable to connect to the network" = "Unable to connect to the network";
 
 // MainViewController
+"Hint" = "Hint";
 "Sure" = "Sure";
 "Cancel" = "Cancel";
 "News" = "News";
@@ -48,5 +49,80 @@
 "FORGOT?" = "FORGOT?";
 "Login" = "Login";
 "Register" = "Register";
-"UserName lengh must be greater than or equal to 5 numbers including letters!" = "userName lengh must be greater than or equal to 5 numbers including letters!";
+"UserName lengh must be greater than or equal to 5 numbers including letters!" = "UserName lengh must be greater than or equal to 5 numbers including letters!";
 "Password lengh must be greater than or equal to 5 numbers including letters!" = "Password lengh must be greater than or equal to 5 numbers including letters!";
+
+// RegisterViewController
+"Customer Register" = "Customer Register";
+"Dealer Register" = "Dealer Register";
+"Confirm your password" = "Confirm your password";
+"Read and Agree" = "Read and Agree";
+"Agreement" = "Agreement";
+"Back" = "Back";
+"Please read and tick the appropriate box below" = "Please read and tick the appropriate box below";
+"The two input password does not match!" = "The two input password does not match!";
+"Customer Center" = "Customer Center";
+"Dealer Center" = "Dealer Center";
+
+// CustomerViewController
+"User" = "User";
+"VIP" = "VIP";
+"Vip Card" = "Vip Card";
+"Boutique" = "Boutique";
+"Experience" = "Experience";
+"Record" = "Record";
+"Feedback" = "Feedback";
+"Show Vip Card" = "Show Vip Card";
+
+// FeedbackViewController
+"Feedback" = "Feedback";
+"Please fill in your questions and suggestions" = "Please fill in your questions and suggestions";
+"Submit" = "Submit";
+"No content submit" = "No content submit";
+"Successful submission!" = "Successful submission!";
+"Failed to connect link to server!" = "Failed to connect link to server!";
+
+// DealerViewController
+"Trading" = "Trading";
+"Trading Record" = "Trading Record";
+
+// TradeRecordViewController
+"My spending record" = "My spending record";
+"Transaction records" = "Transaction records";
+"Distributed gifts record" = "Distributed gifts record";
+"Order Number" = "Order Number";
+"Trade Time" = "Trade Time";
+"Failed to refresh data" = "Failed to refresh data";
+
+// TradeInputViewController
+"Input transactions" = "Input transactions";
+"Buyer" = "Buyer";
+"Goods List" = "Goods List";
+"Gift List" = "Gift List";
+"Remove the selected data?" = "Remove the selected data?";
+"Connection way" = "Connection way";
+"Please select the buyer" = "Please select the buyer";
+"Please select the goods" = "Please select the goods";
+"Please select the gift" = "Please select the gift";
+"Total count" = "Total count";
+"Scan customer VIP card" = "Scan customer VIP card";
+"Scan product bar code" = "Scan product bar code";
+"Invalid two-dimensional code" = "Invalid two-dimensional code";
+"Scan gift bar code" = "Scan gift bar code";
+"Give up the change?" = "Give up the change?";
+"Give up modifying data?" = "Give up modifying data?";
+
+// ProductDetailViewController
+"Product detail" = "Product detail";
+"Gift detail" = "Gift detail";
+"Product name" = "Product name";
+"Product bar code" = "Product bar code";
+"Product count" = "Product count";
+"Brand name" = "Brand name";
+"Specifications and models" = "Specifications and models";
+"Country of origin" = "Country of origin";
+"Assembly country" = "Assembly country";
+
+
+
+

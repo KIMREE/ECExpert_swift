@@ -76,7 +76,7 @@
 #define COCOAPODS_POD_AVAILABLE_MJRefresh
 #define COCOAPODS_VERSION_MAJOR_MJRefresh 2
 #define COCOAPODS_VERSION_MINOR_MJRefresh 0
-#define COCOAPODS_VERSION_PATCH_MJRefresh 2
+#define COCOAPODS_VERSION_PATCH_MJRefresh 4
 
 // NJKWebViewProgress
 #define COCOAPODS_POD_AVAILABLE_NJKWebViewProgress
@@ -136,5 +136,5 @@
 #define COCOAPODS_POD_AVAILABLE_TPKeyboardAvoiding
 #define COCOAPODS_VERSION_MAJOR_TPKeyboardAvoiding 1
 #define COCOAPODS_VERSION_MINOR_TPKeyboardAvoiding 2
-#define COCOAPODS_VERSION_PATCH_TPKeyboardAvoiding 6
+#define COCOAPODS_VERSION_PATCH_TPKeyboardAvoiding 7
 

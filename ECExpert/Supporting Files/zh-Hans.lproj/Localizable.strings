@@ -14,6 +14,7 @@
 "Unable to connect to the network" = "无法连接到网络";
 
 // MainViewController
+"Hint" = "提示";
 "Sure" = "确定";
 "Cancel" = "取消";
 "News" = "资讯";
@@ -50,3 +51,76 @@
 "Register" = "注册";
 "UserName lengh must be greater than or equal to 5 numbers including letters!" = "账户必须是大于等于5位的数字字母组合!";
 "Password lengh must be greater than or equal to 5 numbers including letters!" = "密码必须是大于等于5位的数字字母组合!";
+
+// RegisterViewController
+"Customer Register" = "用户注册";
+"Dealer Register" = "销售商注册";
+"Confirm your password" = "确认你的密码";
+"Read and Agree" = "已阅读并同意";
+"Agreement" = "使用协议";
+"Back" = "返回";
+"Please read and tick the appropriate box below" = "请阅读并勾选单选框";
+"The two input password does not match!" = "两次输入密码不一致";
+"Customer Center" = "会员中心";
+"Dealer Center" = "销售中心";
+
+// CustomerViewController
+"User" = "用户名";
+"VIP" = "会员卡号";
+"Vip Card" = "会员卡";
+"Boutique" = "精品店展示";
+"Experience" = "周边体验店";
+"Record" = "我的记录";
+"Feedback" = "用户反馈";
+"Show Vip Card" = "出示会员卡";
+
+// FeedbackViewController
+"Feedback" = "用户反馈";
+"Please fill in your questions and suggestions" = "请填写你的问题反馈及建议";
+"Submit" = "提交";
+"No content submit" = "没有提交内容";
+"Successful submission!" = "提交成功!";
+"Failed to connect link to server!" = "连接服务器失败";
+
+// DealerViewController
+"Trading" = "录入交易";
+"Trading Record" = "交易记录";
+
+// TradeRecordViewController
+"My spending record" = "我的消费记录";
+"Transaction records" = "交易记录";
+"Distributed gifts record" = "派发赠品记录";
+"Order Number" = "订单号";
+"Trade Time" = "交易时间";
+"Failed to refresh data" = "刷新数据失败";
+
+// TradeInputViewController
+"Input transactions" = "录入交易";
+"Buyer" = "买家";
+"Goods List" = "商品列表";
+"Gift List" = "赠品列表";
+"Remove the selected data?" = "移除选中的数据?";
+"Connection way" = "联系途径";
+"Please select the buyer" = "请选择买家";
+"Please select the goods" = "请选择商品";
+"Please select the gift" = "请选择赠品";
+"Total count" = "总数";
+"Scan customer VIP card" = "扫描客户会员卡";
+"Scan product bar code" = "扫描产品条形码";
+"Invalid two-dimensional code" = "无效的二维码";
+"Scan gift bar code" = "扫描赠品条形码";
+"Give up the change?" = "放弃修改?";
+"Give up modifying data?" = "放弃修改数据?";
+
+// ProductDetailViewController
+"Product detail" = "商品详情";
+"Gift detail" = "赠品详情";
+"Product name" = "商品名称";
+"Product bar code" = "商品条码";
+"Product count" = "商品数量";
+"Brand name" = "品牌名称";
+"Specifications and models" = "规格型号";
+"Country of origin" = "原产国";
+"Assembly country" = "装配国";
+
+

@@ -19,6 +19,17 @@ class BasicViewController: UIViewController {
     // 信息提示框
     var progressHUD: MBProgressHUD?
     
+    // 界面需要登录信息才能展示，默认false
+    var needLogin: Bool = false
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -36,6 +47,13 @@ class BasicViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBarHidden = !showNaavigationBar
+        
+        if needLogin{
+            let loginUserInfo = currentAppDelegate().loginUserInfo
+            if loginUserInfo == nil{
+                NSNotificationCenter.defaultCenter().postNotificationName(APP_NOTIFICATION_LOGIN, object: nil)
+            }
+        }
     }
     
     

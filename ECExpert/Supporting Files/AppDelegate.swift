@@ -130,7 +130,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: - 自动登陆
     func autoLogin(){
-        let loginProof = LocalStroge.sharedInstance().getObject(APP_PATH_LOGIN_PROOF, searchPathDirectory: NSSearchPathDirectory.DocumentDirectory) as? NSDictionary
+        let loginProof = LocalStroge.sharedInstance().getObject(APP_PATH_LOGIN_PROOF, searchPathDirectory: NSSearchPathDirectory.DocumentDirectory) as? NSMutableDictionary
         if loginProof != nil && loginProof![APP_PATH_LOGIN_PROOF_AUTOLOGIN] != nil{
             let autoLogin = loginProof![APP_PATH_LOGIN_PROOF_AUTOLOGIN] as! Bool
             if autoLogin{
@@ -140,7 +140,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     let code = basicDic?["code"] as? NSInteger
                     if code != nil && code == 1{
                         let resultInfo = basicDic!["data"] as! Dictionary<String, AnyObject>
-                        KMLog("\(resultInfo.description)")
+                        
+                        // sid 在每次登录之后都会发生改变
+                        loginProof!.setValue(resultInfo["sid"], forKey: APP_PATH_LOGIN_PROOF_SID)
+                        LocalStroge.sharedInstance().addObject(loginProof, fileName: APP_PATH_LOGIN_PROOF, searchPathDirectory: NSSearchPathDirectory.DocumentDirectory)
+                        
                         self.loadLoginUserInfo(loginProof!)
                     }
                     }, failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
@@ -165,6 +169,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 self.loginUserInfo = resultInfo
                 KMLog("\(resultInfo.description)")
                 LocalStroge.sharedInstance().addObject(resultInfo, fileName: APP_PATH_LOGINUSER_INFO, searchPathDirectory: NSSearchPathDirectory.DocumentDirectory)
+                
+                NSNotificationCenter.defaultCenter().postNotificationName(APP_NOTIFICATION_LOGIN, object: nil)
             }
             }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
                 KMLog("\(error.localizedDescription)")
