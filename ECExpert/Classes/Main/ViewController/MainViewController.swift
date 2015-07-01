@@ -107,23 +107,25 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
         // viewControllers初始化完成之后， 在转场动画中，需要这个数组，用来判断是执行push还是pop
         self.transitionAnimation = UITabBarTransitionAnimation()
         self.transitionAnimation.tabBarSubviewControllers = self.viewControllers
+        
+        self.cleanOtherViewController()
     }
     
     // 移除掉不需要显示的viewcontroller
     private func cleanOtherViewController(){
         let showArray = NSArray(array: self.viewControllers!)
         
-        if !showArray.containsObject(loginNav){
+        if loginNav != nil && !showArray.containsObject(loginNav){
             loginNav = nil
             loginVC = nil
         }
         
-        if !showArray.containsObject(customerNav){
+        if customerNav != nil && !showArray.containsObject(customerNav){
             customerNav = nil
             customerVC = nil
         }
         
-        if !showArray.containsObject(dealerNav){
+        if dealerNav != nil && !showArray.containsObject(dealerNav){
             dealerNav = nil
             dealerVC = nil
         }
@@ -158,6 +160,14 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
     // MARK: - 切换动画
     func tabBarController(tabBarController: UITabBarController, animationControllerForTransitionFromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return self.transitionAnimation
+    }
+    
+    // MARK: - UITabBarControllerDelegate
+    func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
+        if tabBarController.selectedViewController == viewController{
+            return false
+        }
+        return true
     }
 
     override func didReceiveMemoryWarning() {

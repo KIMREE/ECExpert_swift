@@ -25,11 +25,20 @@ class CustomerViewController: BasicViewController {
         
         // 界面需要登录后才能显示
         self.needLogin = true
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Action, target: self.tabBarController, action: "logout")
         
         setUpPageViews()
         setUpPageData()
         setUpTapGesture()
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "setting"), style: UIBarButtonItemStyle.Plain, target: self, action: "settingAction")
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "setUpPageData", name: APP_NOTIFICATION_CHANGE_LOGINUSERINFO, object: nil)
+    }
+
+    
+    func settingAction(){
+        let settingVC = CustomerSettingViewController()
+        self.navigationController?.pushViewController(settingVC, animated: true)
     }
 
     override func didReceiveMemoryWarning() {

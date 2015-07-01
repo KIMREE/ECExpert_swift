@@ -168,7 +168,7 @@ class LoginViewController: BasicViewController {
         forgotButton.frame = CGRectMake(w - leftRightPadding - forgotSize.width, rememberY, forgotSize.width, rememberH)
         
         forgotButton.addSubview(forgotLabel)
-        containerView.addSubview(forgotButton)
+//        containerView.addSubview(forgotButton)
         
         startH += h5
         // button h6
@@ -303,6 +303,7 @@ class LoginViewController: BasicViewController {
                     loginProof.setValue((dic!["data"] as! NSDictionary)["sid"], forKey: APP_PATH_LOGIN_PROOF_SID)
                     LocalStroge.sharedInstance().addObject(loginProof, fileName: APP_PATH_LOGIN_PROOF, searchPathDirectory: NSSearchPathDirectory.DocumentDirectory)
                     
+                    self.loginButton.enabled = true
                     self.loadLoginUserInfo(params)
                     
                 }else{

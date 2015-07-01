@@ -21,11 +21,19 @@ class DealerViewController: BasicViewController {
         super.viewDidLoad()
         
         self.needLogin = true
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Action, target: self.tabBarController, action: "logout")
         
         setUpView()
         setUpViewData()
         setUpViewTapGesture()
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "setting"), style: UIBarButtonItemStyle.Plain, target: self, action: "settingAction")
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "setUpPageData", name: APP_NOTIFICATION_CHANGE_LOGINUSERINFO, object: nil)
+    }
+    
+    func settingAction(){
+        let settingVC = DealerSettingViewController()
+        self.navigationController?.pushViewController(settingVC, animated: true)
     }
 
     override func didReceiveMemoryWarning() {

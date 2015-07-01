@@ -101,6 +101,7 @@ class NearByViewController: BasicViewController, CLLocationManagerDelegate, KMAn
         
         if APP_SYS_DEVICE_VERSION >= 8.0{
             locationManager.requestWhenInUseAuthorization()
+            locationManager.requestAlwaysAuthorization()
         }
     }
     

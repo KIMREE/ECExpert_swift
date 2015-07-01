@@ -34,5 +34,6 @@
 
 #import "MDQRCodeGenerator.h"
 #import "ProductModel.h"
+#import "HeartRateTestViewController.h"
 
 #endif

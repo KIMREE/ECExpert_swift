@@ -278,7 +278,7 @@ class RegisterViewController: BasicViewController {
             return
         }
         
-        if count(password) < 5 || count(rePassword) < 6{
+        if count(password) < 5 || count(rePassword) < 5{
             let alertView = UIAlertView(title: nil, message: i18n("Password lengh must be greater than or equal to 5 numbers including letters!"), delegate: nil, cancelButtonTitle: i18n("Sure"))
             alertView.show()
             return

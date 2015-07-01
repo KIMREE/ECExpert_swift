@@ -46,7 +46,7 @@ class KMNavigationController: UINavigationController {
     override func pushViewController(viewController: UIViewController, animated: Bool) {
         let animation = CATransition()
         animation.delegate = self
-        animation.duration = 0.5
+        animation.duration = 0.3
         animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         animation.type = "cube"
         animation.subtype = kCATransitionFromRight
@@ -57,7 +57,7 @@ class KMNavigationController: UINavigationController {
     override func popViewControllerAnimated(animated: Bool) -> UIViewController? {
         let animation = CATransition()
         animation.delegate = self
-        animation.duration = 0.5
+        animation.duration = 0.3
         animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         animation.type = "cube"
         animation.subtype = kCATransitionFromLeft
@@ -68,7 +68,7 @@ class KMNavigationController: UINavigationController {
     override func popToRootViewControllerAnimated(animated: Bool) -> [AnyObject]? {
         let animation = CATransition()
         animation.delegate = self
-        animation.duration = 0.5
+        animation.duration = 0.3
         animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         animation.type = "cube"
         animation.subtype = kCATransitionFromLeft

@@ -161,9 +161,11 @@ class ProductDetailViewController: BasicViewController, UITableViewDataSource, U
         
         let leftLabel = UILabel(frame: leftView!.bounds)
         leftLabel.numberOfLines = 0
+        leftLabel.textColor = UIColor.whiteColor()
         
         let rightLabel = UILabel(frame: rightView!.bounds)
         rightLabel.numberOfLines = 0
+        rightLabel.textColor = UIColor.whiteColor()
         
         let row = indexPath.row
         

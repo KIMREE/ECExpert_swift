@@ -10,7 +10,7 @@ import UIKit
 
 class UIFactory: NSObject {
     
-    class func labelWithFrame(frame: CGRect, text: String, textColor: UIColor, fontSize: CGFloat, numberOfLines: Int = 0, fontName: String = UILabel().font.fontName, textAlignment: NSTextAlignment = NSTextAlignment.Left) -> UILabel{
+    class func labelWithFrame(frame: CGRect, text: String, textColor: UIColor, fontSize: CGFloat = UILabel().font.pointSize, numberOfLines: Int = 0, fontName: String = UILabel().font.fontName , textAlignment: NSTextAlignment = NSTextAlignment.Left) -> UILabel{
         let label = UILabel()
         label.frame = frame
         label.text = text
@@ -66,6 +66,15 @@ class UIFactory: NSObject {
         magnetView.addSubview(clickView)
         
         return magnetView
+    }
+    
+    class func clearTableViewCell(cell: UITableViewCell){
+        cell.textLabel?.text = ""
+        cell.detailTextLabel?.text = ""
+        cell.imageView?.image = nil
+        for view in cell.contentView.subviews{
+            view.removeFromSuperview()
+        }
     }
        
 }

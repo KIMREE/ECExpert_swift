@@ -45,12 +45,21 @@ func currentAppDelegate() -> AppDelegate{
     return appDelegate
 }
 
+func currentLoginUserInfo() -> Dictionary<String, AnyObject>?{
+    return currentAppDelegate().loginUserInfo
+}
+
+func bundleInfoDictionary() -> [NSObject : AnyObject]?{
+    return NSBundle.mainBundle().infoDictionary
+}
+
 // System
 let APP_SYS_DEVICE_VERSION = (UIDevice.currentDevice().systemVersion as NSString).doubleValue
 
 
 // API_URL
 let APP_URL = "https://itunes.apple.com/lookup?id=948643406"
+let APP_URL_ITUNES_COMMENT = "https://itunes.apple.com/app/id948643406"
 let APP_URL_ITUNES = "https://itunes.apple.com/us/app/dian-zi-yan-zhuan-jia/id948643406?l=zh&ls=1&mt=8"
 
 let APP_URL_LOGIN = "http://www.kimree.com.cn/app/?action=login" // 登录
@@ -69,7 +78,11 @@ let APP_URL_DEALER = "http://www.ecig100.com/api/?action=getDealer" //获取经�
 let APP_URL_TRADE_RECORD = "http://www.kimree.com.cn/app/?action=selecttrade" // 查看交易记录
 let APP_URL_TRADE_RECORD_DETAIL = "http://www.kimree.com.cn/app/?action=tradeinfo"  // 交易记录详情
 
-let APP_URL_FEEDBACK = "http://www.ecigarfan.com/api/api.php?action=sendask" 
+let APP_URL_FEEDBACK = "http://www.ecigarfan.com/api/api.php?action=sendask"
+
+let APP_URL_EDITUSERINFO = "http://www.kimree.com.cn/app/?action=moduser&modway=moduserinfo"       //修改个人信息
+let APP_URL_CHANGEPASSWORD =  "http://www.kimree.com.cn/app/?action=moduser&modway=modpassword"   //更改密码
+let APP_URL_UPLOADUSERHEADER = "http://www.kimree.com.cn/app/?action=moduser&modway=moduserimage"  //修改用户图片
 
 // fileName
 let APP_PATH_LOGIN_PROOF = "user_login_proof"
@@ -81,10 +94,11 @@ let APP_PATH_LOGIN_PROOF_USERTYPE = "usertype"
 let APP_PATH_LOGIN_PROOF_SID = "sid"
 
 let APP_PATH_LOGINUSER_INFO = "user_information"
-let APP_PATH_DEALER_INFO = "dealer_information1"
+let APP_PATH_DEALER_INFO = "dealer_information"
 
 // notification
 let APP_NOTIFICATION_LOGIN = "login_succes"
+let APP_NOTIFICATION_CHANGE_LOGINUSERINFO = "login_user_info_changed"
 
 
 // frame

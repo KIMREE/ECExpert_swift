@@ -11,6 +11,14 @@
 		A10C6FCB1B32994E00645E49 /* DealerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10C6FCA1B32994E00645E49 /* DealerHelper.swift */; };
 		A10C6FCD1B32B6D200645E49 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10C6FCC1B32B6D200645E49 /* SearchViewController.swift */; };
 		A10C6FCF1B32B87200645E49 /* DealerDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10C6FCE1B32B87200645E49 /* DealerDetailViewController.swift */; };
+		A10CDE3F1B40DA46008D71AB /* TradeItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10CDE3E1B40DA46008D71AB /* TradeItemViewController.swift */; };
+		A10CDE451B4128D3008D71AB /* CustomerSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10CDE441B4128D3008D71AB /* CustomerSettingViewController.swift */; };
+		A10CDE471B412A6B008D71AB /* DealerSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10CDE461B412A6B008D71AB /* DealerSettingViewController.swift */; };
+		A10CDE4D1B4136D2008D71AB /* HeartRateTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A10CDE4A1B4136D2008D71AB /* HeartRateTestViewController.m */; };
+		A10CDE4E1B4136D2008D71AB /* WaveformView.m in Sources */ = {isa = PBXBuildFile; fileRef = A10CDE4C1B4136D2008D71AB /* WaveformView.m */; };
+		A10CDE521B4138BD008D71AB /* heartRate@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A10CDE501B4138BD008D71AB /* heartRate@2x.png */; };
+		A10CDE531B4138BD008D71AB /* heartRateBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A10CDE511B4138BD008D71AB /* heartRateBtn@2x.png */; };
+		A10CDE551B4150DF008D71AB /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10CDE541B4150DF008D71AB /* AccountViewController.swift */; };
 		A10D9BAA1B38EF1100660C36 /* ReactiveCocoa.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10D9BA91B38EF1100660C36 /* ReactiveCocoa.swift */; };
 		A10D9BAE1B39607900660C36 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10D9BAD1B39607900660C36 /* LoginViewController.swift */; };
 		A10D9BB21B39616400660C36 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10D9BB11B39616400660C36 /* RegisterViewController.swift */; };
@@ -45,6 +53,7 @@
 		A1FB56161B3BAD8F00DA5D62 /* FeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FB56151B3BAD8F00DA5D62 /* FeedbackViewController.swift */; };
 		A1FB56181B3BD20900DA5D62 /* ScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FB56171B3BD20900DA5D62 /* ScanViewController.swift */; };
 		A1FB561C1B3BF07C00DA5D62 /* TradeRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FB561B1B3BF07C00DA5D62 /* TradeRecordViewController.swift */; };
+		A1FBACBE1B424A980051BCFA /* ItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FBACBD1B424A980051BCFA /* ItemViewController.swift */; };
 		A1FC49DC1B3CEE6D0019A850 /* TradeInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FC49DB1B3CEE6D0019A850 /* TradeInputViewController.swift */; };
 		A1FC49E11B3D27E20019A850 /* ProductModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A1FC49E01B3D27E20019A850 /* ProductModel.m */; };
 		A1FD98211B30013F002BFE10 /* KMCalloutAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FD98201B30013F002BFE10 /* KMCalloutAnnotation.swift */; };
@@ -71,6 +80,16 @@
 		A10C6FCA1B32994E00645E49 /* DealerHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DealerHelper.swift; sourceTree = "<group>"; };
 		A10C6FCC1B32B6D200645E49 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		A10C6FCE1B32B87200645E49 /* DealerDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DealerDetailViewController.swift; sourceTree = "<group>"; };
+		A10CDE3E1B40DA46008D71AB /* TradeItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TradeItemViewController.swift; sourceTree = "<group>"; };
+		A10CDE441B4128D3008D71AB /* CustomerSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomerSettingViewController.swift; sourceTree = "<group>"; };
+		A10CDE461B412A6B008D71AB /* DealerSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DealerSettingViewController.swift; sourceTree = "<group>"; };
+		A10CDE491B4136D2008D71AB /* HeartRateTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeartRateTestViewController.h; sourceTree = "<group>"; };
+		A10CDE4A1B4136D2008D71AB /* HeartRateTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeartRateTestViewController.m; sourceTree = "<group>"; };
+		A10CDE4B1B4136D2008D71AB /* WaveformView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaveformView.h; sourceTree = "<group>"; };
+		A10CDE4C1B4136D2008D71AB /* WaveformView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaveformView.m; sourceTree = "<group>"; };
+		A10CDE501B4138BD008D71AB /* heartRate@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "heartRate@2x.png"; sourceTree = "<group>"; };
+		A10CDE511B4138BD008D71AB /* heartRateBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "heartRateBtn@2x.png"; sourceTree = "<group>"; };
+		A10CDE541B4150DF008D71AB /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		A10D9BA91B38EF1100660C36 /* ReactiveCocoa.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactiveCocoa.swift; sourceTree = "<group>"; };
 		A10D9BAD1B39607900660C36 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		A10D9BB11B39616400660C36 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
@@ -113,6 +132,7 @@
 		A1FB56151B3BAD8F00DA5D62 /* FeedbackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackViewController.swift; sourceTree = "<group>"; };
 		A1FB56171B3BD20900DA5D62 /* ScanViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanViewController.swift; sourceTree = "<group>"; };
 		A1FB561B1B3BF07C00DA5D62 /* TradeRecordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TradeRecordViewController.swift; sourceTree = "<group>"; };
+		A1FBACBD1B424A980051BCFA /* ItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemViewController.swift; sourceTree = "<group>"; };
 		A1FC49DB1B3CEE6D0019A850 /* TradeInputViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TradeInputViewController.swift; sourceTree = "<group>"; };
 		A1FC49DF1B3D27E20019A850 /* ProductModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductModel.h; sourceTree = "<group>"; };
 		A1FC49E01B3D27E20019A850 /* ProductModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductModel.m; sourceTree = "<group>"; };
@@ -149,6 +169,45 @@
 				1C350B37BFDEF9389EC7B0F0 /* Pods.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		A10CDE401B41233C008D71AB /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				A10CDE411B41233C008D71AB /* ViewController */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		A10CDE411B41233C008D71AB /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				A10CDE441B4128D3008D71AB /* CustomerSettingViewController.swift */,
+				A10CDE461B412A6B008D71AB /* DealerSettingViewController.swift */,
+				A10CDE541B4150DF008D71AB /* AccountViewController.swift */,
+				A1FBACBD1B424A980051BCFA /* ItemViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		A10CDE481B4136D2008D71AB /* HeartRateTest */ = {
+			isa = PBXGroup;
+			children = (
+				A10CDE491B4136D2008D71AB /* HeartRateTestViewController.h */,
+				A10CDE4A1B4136D2008D71AB /* HeartRateTestViewController.m */,
+				A10CDE4B1B4136D2008D71AB /* WaveformView.h */,
+				A10CDE4C1B4136D2008D71AB /* WaveformView.m */,
+			);
+			path = HeartRateTest;
+			sourceTree = "<group>";
+		};
+		A10CDE4F1B413875008D71AB /* HeartRateTest */ = {
+			isa = PBXGroup;
+			children = (
+				A10CDE501B4138BD008D71AB /* heartRate@2x.png */,
+				A10CDE511B4138BD008D71AB /* heartRateBtn@2x.png */,
+			);
+			path = HeartRateTest;
 			sourceTree = "<group>";
 		};
 		A18E5F651B291424005172E5 = {
@@ -261,6 +320,7 @@
 		A18E5FC01B293489005172E5 /* OC Code Files */ = {
 			isa = PBXGroup;
 			children = (
+				A10CDE481B4136D2008D71AB /* HeartRateTest */,
 				A1FC49DD1B3D27E20019A850 /* Trade */,
 				A1FB55F71B3BA94500DA5D62 /* MDQRCodeGenerator */,
 			);
@@ -270,6 +330,7 @@
 		A1CB41431B33FA5E005AB9F1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A10CDE4F1B413875008D71AB /* HeartRateTest */,
 				A1F8E6DD1B3A5FB9000F3342 /* Html */,
 				A1CB41441B33FA5E005AB9F1 /* NearBy */,
 			);
@@ -324,6 +385,7 @@
 		A1FA976A1B37A4D300FCEEA4 /* MemberCenter */ = {
 			isa = PBXGroup;
 			children = (
+				A10CDE401B41233C008D71AB /* Setting */,
 				A1FB56191B3BF04900DA5D62 /* Trade */,
 				A1FB55F31B3BA70800DA5D62 /* QRCode */,
 				A1F8E6EA1B3AA78D000F3342 /* Control Center */,
@@ -455,8 +517,9 @@
 			isa = PBXGroup;
 			children = (
 				A1FB561B1B3BF07C00DA5D62 /* TradeRecordViewController.swift */,
-				A1FC49DB1B3CEE6D0019A850 /* TradeInputViewController.swift */,
+				A10CDE3E1B40DA46008D71AB /* TradeItemViewController.swift */,
 				A175FA641B3D3D3C0012F110 /* ProductDetailViewController.swift */,
+				A1FC49DB1B3CEE6D0019A850 /* TradeInputViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -586,7 +649,9 @@
 				A1CB41481B340591005AB9F1 /* dealerLogo@2x.jpg in Resources */,
 				A1F8E6E01B3A5FB9000F3342 /* agreement_strings.html in Resources */,
 				A18E5F9B1B291499005172E5 /* Info.plist in Resources */,
+				A10CDE531B4138BD008D71AB /* heartRateBtn@2x.png in Resources */,
 				A18E5FA71B291B42005172E5 /* Localizable.strings in Resources */,
+				A10CDE521B4138BD008D71AB /* heartRate@2x.png in Resources */,
 				A1F8E6E11B3A5FB9000F3342 /* agreement_strings_eng.html in Resources */,
 				A18E5FAA1B291B4B005172E5 /* InfoPlist.strings in Resources */,
 			);
@@ -639,8 +704,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1FBACBE1B424A980051BCFA /* ItemViewController.swift in Sources */,
 				A1FD98271B3013A1002BFE10 /* KMAnnotation.swift in Sources */,
 				A1FB156C1B2BDBFB003296E4 /* UIActionSheet+Block.swift in Sources */,
+				A10CDE551B4150DF008D71AB /* AccountViewController.swift in Sources */,
+				A10CDE4E1B4136D2008D71AB /* WaveformView.m in Sources */,
 				A1F8E6EE1B3AA78D000F3342 /* CustomerViewController.swift in Sources */,
 				A1FB2E311B2A8C6800A4DDE7 /* MainViewController.swift in Sources */,
 				A1FB561C1B3BF07C00DA5D62 /* TradeRecordViewController.swift in Sources */,
@@ -651,6 +719,7 @@
 				A10C6FCF1B32B87200645E49 /* DealerDetailViewController.swift in Sources */,
 				A10C6FCD1B32B6D200645E49 /* SearchViewController.swift in Sources */,
 				A1F8E6F21B3AA7C3000F3342 /* MagnetView.swift in Sources */,
+				A10CDE471B412A6B008D71AB /* DealerSettingViewController.swift in Sources */,
 				A1FB55F61B3BA75300DA5D62 /* ShowQRCodeViewController.swift in Sources */,
 				A1F8E6DC1B3A4DBD000F3342 /* UIFactory.swift in Sources */,
 				A1FB156A1B2BBA77003296E4 /* NewsViewController.swift in Sources */,
@@ -661,11 +730,14 @@
 				A1FB2E331B2AAF8400A4DDE7 /* UITabBarTransitionAnimation.swift in Sources */,
 				A1FD98211B30013F002BFE10 /* KMCalloutAnnotation.swift in Sources */,
 				A18E5FBA1B2924C1005172E5 /* ECExpert-Prefix.swift in Sources */,
+				A10CDE4D1B4136D2008D71AB /* HeartRateTestViewController.m in Sources */,
 				A1FC49DC1B3CEE6D0019A850 /* TradeInputViewController.swift in Sources */,
 				A1FD98231B300172002BFE10 /* KMCalloutAnnotationView.swift in Sources */,
 				A1F8E6EF1B3AA78D000F3342 /* DealerViewController.swift in Sources */,
 				A1FB56181B3BD20900DA5D62 /* ScanViewController.swift in Sources */,
 				A10D9BAA1B38EF1100660C36 /* ReactiveCocoa.swift in Sources */,
+				A10CDE451B4128D3008D71AB /* CustomerSettingViewController.swift in Sources */,
+				A10CDE3F1B40DA46008D71AB /* TradeItemViewController.swift in Sources */,
 				A1FC49E11B3D27E20019A850 /* ProductModel.m in Sources */,
 				A18E5FC21B2937A2005172E5 /* AFNetworkingFactory.swift in Sources */,
 				A175FA651B3D3D3C0012F110 /* ProductDetailViewController.swift in Sources */,

@@ -33,11 +33,94 @@ class TradeInputViewController: BasicViewController, UITableViewDelegate, UITabl
         self.title = i18n("Input transactions")
         
         setUpView()
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Save, target: self, action: "saveRecord:")
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func saveRecord(sender: AnyObject!){
+        if productArray.count > 0 && customerArray.count > 0{
+            let alertView = UIAlertView(title: "", message: i18n("Determine the input information?"), delegate: nil, cancelButtonTitle: i18n("Cancel"), otherButtonTitles: i18n("Sure"))
+            alertView.showAlertViewWithCompleteBlock({[unowned self] (buttonIndex) -> Void in
+                if buttonIndex == 1{
+                    self.commitAddRecord()
+                }
+            })
+        }else{
+            let alertView = UIAlertView(title: nil, message: i18n("The input information is insufficient, unable to complete the transaction."), delegate: nil, cancelButtonTitle: i18n("Cancel"))
+            alertView.show()
+        }
+    }
+    
+    func commitAddRecord(){
+        let params = NSMutableDictionary()
+        params.setObject((customerArray.firstObject as! NSDictionary).objectForKey("customer_id")!, forKey: "customer_id")
+        params.setObject(currentAppDelegate().loginUserInfo!["dealer_id"]!, forKey: "dealer_id")
+        
+        let tradeProducts = NSMutableArray()
+        for item in productArray{
+            let product = item as! ProductModel
+            let dic = NSMutableDictionary()
+            dic["scanCode"] = product.scanCode
+            dic["totalCount"] = product.totalCount
+            tradeProducts.addObject(dic)
+        }
+        let productJsonData = NSJSONSerialization.dataWithJSONObject(tradeProducts, options: NSJSONWritingOptions.PrettyPrinted, error: nil)
+        if productJsonData != nil{
+            let productJson = NSString(data: productJsonData!, encoding: NSUTF8StringEncoding)
+            params["main_products"] = productJson
+        }
+        
+        let tradeGifts = NSMutableArray()
+        for item in giftArray{
+            let gift = item as! ProductModel
+            let dic = NSMutableDictionary()
+            dic["scanCode"] = gift.scanCode
+            dic["totalCount"] = gift.totalCount
+            tradeGifts.addObject(dic)
+        }
+        let giftJsonData = NSJSONSerialization.dataWithJSONObject(tradeGifts, options: NSJSONWritingOptions.PrettyPrinted, error: nil)
+        if giftJsonData != nil{
+            let giftJson = NSString(data: giftJsonData!, encoding: NSUTF8StringEncoding)
+            params["gift_products"] = giftJson
+        }
+        
+        self.progressHUD?.mode = MBProgressHUDMode.Indeterminate
+        self.progressHUD?.labelText = ""
+        self.progressHUD?.detailsLabelText = ""
+        self.progressHUD?.show(true)
+        manager.POST(APP_URL_TRADE_INPUT, parameters: params, success: {[unowned self] (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+            let dic = responseObj as? NSDictionary
+            let code = dic?["code"] as? NSInteger
+            if code != nil && code == 1{
+                self.progressHUD?.mode = MBProgressHUDMode.Text
+                self.progressHUD?.detailsLabelText = dic!["data"] as! String
+                self.progressHUD?.minShowTime = 2
+                self.progressHUD?.showAnimated(true, whileExecutingBlock: { () -> Void in
+                    
+                }, completionBlock: { () -> Void in
+                    self.navigationController?.popViewControllerAnimated(true)
+                })
+                
+            }else if code != nil && code == 0{
+                self.progressHUD?.mode = MBProgressHUDMode.Text
+                self.progressHUD?.detailsLabelText = dic!["data"] as! String
+                self.hideProgressHUD(2)
+            }else{
+                KMLog("\(dic)")
+                self.hideProgressHUD()
+            }
+            
+            }) {[unowned self] (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                self.progressHUD?.mode = MBProgressHUDMode.Text
+                self.progressHUD?.labelText = i18n("Failed to connect link to server!")
+                self.progressHUD?.detailsLabelText = error.localizedDescription
+                self.hideProgressHUD(2)
+        }
     }
     
     func setUpView(){
@@ -263,7 +346,7 @@ class TradeInputViewController: BasicViewController, UITableViewDelegate, UITabl
                 self.progressHUD?.labelText = ""
                 self.progressHUD?.detailsLabelText = ""
                 self.progressHUD?.show(true)
-                self.manager.POST(APP_URL_SCAN_BAR_CODE, parameters: params, success: { (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+                self.manager.POST(APP_URL_SCAN_BAR_CODE, parameters: params, success: {[unowned self] (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
                     let dic = responseObj as? NSDictionary
                     let code = dic?["code"] as? NSInteger
                     if code != nil && code == 1{
@@ -283,7 +366,7 @@ class TradeInputViewController: BasicViewController, UITableViewDelegate, UITabl
                         KMLog("\(dic)")
                         self.hideProgressHUD()
                     }
-                    }, failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                    }, failure: {[unowned self] (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
                         self.progressHUD?.mode = MBProgressHUDMode.Text
                         self.progressHUD?.labelText = i18n("Failed to connect link to server!")
                         self.progressHUD?.detailsLabelText = error.localizedDescription
@@ -338,6 +421,8 @@ class TradeInputViewController: BasicViewController, UITableViewDelegate, UITabl
             deleteButton!.setImage(UIImage(named: "button_minus"), forState: UIControlState.Normal)
             deleteButton!.addTarget(self, action: "deleteSelectCellDataAction:", forControlEvents: UIControlEvents.TouchUpInside)
             cell?.contentView.addSubview(deleteButton!)
+            
+            cell?.selectionStyle = UITableViewCellSelectionStyle.None
         }
         deleteButton?.hidden = false
         cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
@@ -347,6 +432,7 @@ class TradeInputViewController: BasicViewController, UITableViewDelegate, UITabl
         
         if section == 0{
             if customerArray.count > 0{
+                cell!.accessoryType = UITableViewCellAccessoryType.None
                 let customer = customerArray.firstObject as! NSDictionary
                 var customerName = customer["customer_nickname"] as? String
                 if customerName == nil || customerName!.isEmpty{

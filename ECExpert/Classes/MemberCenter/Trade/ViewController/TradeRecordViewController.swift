@@ -183,6 +183,7 @@ class TradeRecordViewController: BasicViewController, UITableViewDelegate, UITab
             
             cell!.textLabel!.textColor = UIColor.whiteColor()
             cell!.detailTextLabel!.textColor = UIColor.whiteColor()
+            cell?.selectionStyle = UITableViewCellSelectionStyle.None
         }
         
         let cellDic = sectionCellDic.objectForKey(sectionArray.objectAtIndex(indexPath.section))?.objectAtIndex(indexPath.row) as! NSDictionary
@@ -206,6 +207,9 @@ class TradeRecordViewController: BasicViewController, UITableViewDelegate, UITab
         let sectionKey = sectionArray.objectAtIndex(section) as! String
         let cellDic = (sectionCellDic.objectForKey(sectionKey) as! NSArray).objectAtIndex(row) as! NSDictionary
         KMLog("\(cellDic)")
+        
+        let itemVC = TradeItemViewController(tradeRecordItemInfo: cellDic, tradeRecordType: self.tradeRecordType)
+        self.navigationController?.pushViewController(itemVC, animated: true)
     }
 
     /*
