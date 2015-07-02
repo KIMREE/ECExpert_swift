@@ -265,7 +265,7 @@ class CustomerSettingViewController: BasicViewController, UITableViewDelegate, U
         accountImageView.layer.borderWidth = 4
         accountImageView.layer.borderColor = RGBA(255, 255, 255, 0.9).CGColor
         accountImageView.contentMode = UIViewContentMode.ScaleAspectFit
-        accountImageView.sd_setImageWithURL(NSURL(string: imageUrl), placeholderImage: UIImage(named: "customer_headimage"))
+        accountImageView.sd_setImageWithURL(NSURL(string: imageUrl), placeholderImage: UIImage(named: "accountHeader"))
         view.addSubview(accountImageView)
         
         

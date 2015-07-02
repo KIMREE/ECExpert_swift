@@ -108,7 +108,7 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
                 
                 nameLabel.text = "\(name):\(userName)"
                 levelLabel.text = "\(Level):\(userLevel)"
-                photoView.sd_setImageWithURL(NSURL(string: imageUrl), placeholderImage: UIImage(named: "customer_headimage"))
+                photoView.sd_setImageWithURL(NSURL(string: imageUrl), placeholderImage: UIImage(named: "accountHeader"))
                 
                 cell?.contentView.addSubview(firstCellView)
             }else if row == 1{
@@ -185,7 +185,7 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
         photoView.layer.cornerRadius = photoW / 2.0
         photoView.layer.borderWidth = 4
         photoView.layer.borderColor = RGBA(240, 240, 240, 0.8).CGColor
-        photoView.sd_setImageWithURL(NSURL(string: imageUrl), placeholderImage: UIImage(named: "customer_headimage"))
+        photoView.sd_setImageWithURL(NSURL(string: imageUrl), placeholderImage: UIImage(named: "accountHeader"))
         
         tableView.userInteractionEnabled = true
         let tapGesture = UITapGestureRecognizer(target: self, action: "choosePhoto")
