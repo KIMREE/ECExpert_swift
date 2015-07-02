@@ -283,18 +283,15 @@ class TradeItemViewController: BasicViewController , UITableViewDelegate, UITabl
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier(TradeItemViewController.CellIdentifier) as? UITableViewCell
-        if cell == nil{
-            cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: TradeItemViewController.CellIdentifier)
-            cell?.backgroundColor = UIColor.clearColor()
-            cell?.textLabel?.textColor = UIColor.whiteColor()
-            cell?.detailTextLabel?.textColor = UIColor.whiteColor()
-            cell?.selectionStyle = UITableViewCellSelectionStyle.None
+        var cell = UIFactory.tableViewCellForTableView(tableView, cellIdentifier: TradeItemViewController.CellIdentifier, cellType: UITableViewCellStyle.Subtitle) { (tableViewCell: UITableViewCell!) -> Void in
+            
+            tableViewCell!.backgroundColor = UIColor.clearColor()
+            tableViewCell!.textLabel?.textColor = UIColor.whiteColor()
+            tableViewCell!.detailTextLabel?.textColor = UIColor.whiteColor()
+            tableViewCell!.selectionStyle = UITableViewCellSelectionStyle.None
         }
+
         cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
-        cell?.textLabel?.text = ""
-        cell?.detailTextLabel?.text = ""
-        cell?.imageView?.image = nil
         
         let section = indexPath.section
         let row = indexPath.row

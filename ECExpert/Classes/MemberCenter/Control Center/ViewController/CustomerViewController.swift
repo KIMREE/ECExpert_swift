@@ -201,6 +201,7 @@ class CustomerViewController: BasicViewController {
     
     func showProductsTapAction(){
         let webVC = NewsViewController()
+        webVC.title = i18n("Boutique")
         webVC.urlString = APP_URL_KIMREE
         self.navigationController?.pushViewController(webVC, animated: true)
     }

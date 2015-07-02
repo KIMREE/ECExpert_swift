@@ -24,6 +24,10 @@ class SearchViewController: BasicViewController, UITableViewDataSource, UITableV
     
     private var filterKeyArray: NSArray!
     static let cellIdentifier = "CellIdentifier"
+    
+    deinit{
+        KMLog("SearchViewController deinit")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +43,9 @@ class SearchViewController: BasicViewController, UITableViewDataSource, UITableV
         tableViewFrame.origin.y += 44
         tableViewFrame.size.height -= 44
         setUpTableView(tableViewFrame)
+        
+        // 界面加载数据时不允许返回上级界面
+        self.navigationItem.leftBarButtonItem?.enabled = false
     }
 
     override func didReceiveMemoryWarning() {
@@ -146,26 +153,24 @@ class SearchViewController: BasicViewController, UITableViewDataSource, UITableV
         return rowNums
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier(SearchViewController.cellIdentifier) as? UITableViewCell
-        if cell == nil{
-            cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: SearchViewController.cellIdentifier)
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {        
+        var cell = UIFactory.tableViewCellForTableView(tableView, cellIdentifier: SearchViewController.cellIdentifier, cellType: UITableViewCellStyle.Subtitle) {(tableViewCell: UITableViewCell!) -> Void in
             // 调整显示cell imageview下面的分割线
-            cell!.separatorInset = UIEdgeInsetsZero
+            tableViewCell!.separatorInset = UIEdgeInsetsZero
             // 左边图片
-            cell!.imageView!.image = UIImage(named: "dealerSearch")
+            tableViewCell!.imageView!.image = UIImage(named: "dealerSearch")
             // title
-            cell!.textLabel!.numberOfLines = 0
-            cell!.textLabel!.font = UIFont(name: "Arial-BoldItalicMT", size: 14)
+            tableViewCell!.textLabel!.numberOfLines = 0
+            tableViewCell!.textLabel!.font = UIFont(name: "Arial-BoldItalicMT", size: 14)
             // subtitle
-            cell!.detailTextLabel!.textColor = RGB(26,188,156)
-            cell!.detailTextLabel!.font = UIFont.systemFontOfSize(14)
+            tableViewCell!.detailTextLabel!.textColor = RGB(26,188,156)
+            tableViewCell!.detailTextLabel!.font = UIFont.systemFontOfSize(14)
             // select background
-            cell!.selectedBackgroundView = UIView(frame: cell!.frame)
-            cell!.selectedBackgroundView.backgroundColor = RGB(200, 200, 200)
+            tableViewCell!.selectedBackgroundView = UIView(frame: tableViewCell!.frame)
+            tableViewCell!.selectedBackgroundView.backgroundColor = RGB(200, 200, 200)
         }
         
-        let cellInfo = tableViewCellInfoWithIndexPath(indexPath)
+        let cellInfo = self.tableViewCellInfoWithIndexPath(indexPath)
         cell!.textLabel!.text = cellInfo.title
         cell!.detailTextLabel?.text = cellInfo.subtitle
         

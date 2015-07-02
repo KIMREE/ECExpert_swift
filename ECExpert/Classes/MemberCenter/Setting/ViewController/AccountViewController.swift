@@ -79,18 +79,16 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier(AccountViewController.CellIdentifier) as? UITableViewCell
-        if cell == nil{
-            cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: AccountViewController.CellIdentifier)
-            cell?.backgroundColor = UIColor.clearColor()
-            cell?.textLabel?.font = UIFont.systemFontOfSize(15)
-            cell?.textLabel?.textColor = UIColor.whiteColor()
-            cell?.detailTextLabel?.font = UIFont.systemFontOfSize(15)
-            cell?.detailTextLabel?.textColor = UIColor.whiteColor()
-            cell?.selectionStyle = UITableViewCellSelectionStyle.None
+        var cell = UIFactory.tableViewCellForTableView(tableView, cellIdentifier: AccountViewController.CellIdentifier, cellType: UITableViewCellStyle.Value1) { (tableViewCell: UITableViewCell!) -> Void in
+            tableViewCell!.backgroundColor = UIColor.clearColor()
+            tableViewCell!.textLabel?.font = UIFont.systemFontOfSize(15)
+            tableViewCell!.textLabel?.textColor = UIColor.whiteColor()
+            tableViewCell!.detailTextLabel?.font = UIFont.systemFontOfSize(15)
+            tableViewCell!.detailTextLabel?.textColor = UIColor.whiteColor()
+            tableViewCell!.selectionStyle = UITableViewCellSelectionStyle.None
         }
+        
         cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
-        UIFactory.clearTableViewCell(cell!)
         
         let loginUserInfo = currentLoginUserInfo()
         let section = indexPath.section
@@ -102,6 +100,16 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
                 if firstCellView == nil{
                     setUpFirstCellView()
                 }
+                let name = i18n("User Name")
+                let userName = loginUserInfo!["customer_name"] as! String
+                let Level = i18n("Level")
+                let userLevel = loginUserInfo!["customer_degree"] as! String
+                let imageUrl = loginUserInfo!["customer_headimage"] as! String
+                
+                nameLabel.text = "\(name):\(userName)"
+                levelLabel.text = "\(Level):\(userLevel)"
+                photoView.sd_setImageWithURL(NSURL(string: imageUrl), placeholderImage: UIImage(named: "customer_headimage"))
+                
                 cell?.contentView.addSubview(firstCellView)
             }else if row == 1{
                 cell?.textLabel?.text = i18n("Nickname")
@@ -420,6 +428,10 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
             setUpBirthDayPickView()
         }
         
+        if sexPickView != nil{
+            popSexPick()
+        }
+        
         let birth = currentLoginUserInfo()!["customer_birth"] as! String
         if !birth.isEmpty{
             datePick.setDate(dateFormat.dateFromString(birth)!, animated: true)
@@ -517,6 +529,10 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
     func pushSexPick(){
         if sexPickView == nil{
             setUpSexPickView()
+        }
+        
+        if birthDayPickView != nil{
+            popBirthdayPick()
         }
         
         sexPick.selectRow(selectSex, inComponent: 0, animated: true)

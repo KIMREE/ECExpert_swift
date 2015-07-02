@@ -7,6 +7,8 @@
 //
 
 import UIKit
+//import Fabric
+//import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,12 +19,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
+        /**
+        *  崩溃信息监测,详情查看 http://www.infoq.com/cn/articles/crashlytics-crash-statistics-tools
+        */
+//        Fabric.with([Crashlytics()])
+        
         // 初始化window
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         self.window!.backgroundColor = UIColor.whiteColor()
         self.window!.makeKeyAndVisible()
         
-        self.window?.rootViewController = MainViewController()
+        let mainVC = MainViewController()
+        self.window?.rootViewController = mainVC
         
         // 初始化 AppDelegate 中需要使用的 MBProgressHUD
         self.hud = MBProgressHUD()
@@ -48,6 +56,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // 自动登陆
         self.autoLogin()
         
+        // 显示引导图
+        self.showGuideView()
+        
+        // 注册远程推送
+        self.registerAPNS()
+
         return true
     }
     
@@ -73,13 +87,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
+    // MARK: - 显示使用引导图
+    func showGuideView(){
+        let userDefaults = getUserDefaults()
+        let firstLunch = userDefaults.stringForKey(APP_KEY_FIRST_LUNCH)
+        if firstLunch != APP_KEY_FIRST_LUNCH{
+            let guideView = GuideView()
+            guideView.showInView(self.window!)
+            userDefaults.setObject(APP_KEY_FIRST_LUNCH, forKey: APP_KEY_FIRST_LUNCH)
+            userDefaults.synchronize()
+        }
+    }
     
     // MARK: - 获取本地版本号
     /**
     :returns: 应用的本地版本号
     */
     func getLocalVersion() -> Double? {
-        let dic = NSBundle.mainBundle().infoDictionary
+        let dic = bundleInfoDictionary()
         let localVersionString = dic?["CFBundleShortVersionString"] as? NSString
         return localVersionString?.doubleValue
     }
@@ -167,7 +192,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if code != nil && code == 1{
                 let resultInfo = basicDic!["data"] as! Dictionary<String, AnyObject>
                 self.loginUserInfo = resultInfo
-                KMLog("\(resultInfo.description)")
+                KMLog("\(resultInfo as NSDictionary)")
                 LocalStroge.sharedInstance().addObject(resultInfo, fileName: APP_PATH_LOGINUSER_INFO, searchPathDirectory: NSSearchPathDirectory.DocumentDirectory)
                 
                 NSNotificationCenter.defaultCenter().postNotificationName(APP_NOTIFICATION_LOGIN, object: nil)
@@ -177,5 +202,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
+    // MARK: - 注册远程推送
+    func registerAPNS(){
+        let application = UIApplication.sharedApplication()
+        if APP_SYS_DEVICE_VERSION >= 8{
+            let settings = UIUserNotificationSettings(forTypes: UIUserNotificationType.Badge | UIUserNotificationType.Sound | UIUserNotificationType.Alert, categories: nil)
+            application.registerUserNotificationSettings(settings)
+            application.registerForRemoteNotifications()
+        }else{
+            application.registerForRemoteNotificationTypes(UIRemoteNotificationType.Badge | UIRemoteNotificationType.Sound | UIRemoteNotificationType.Alert)
+        }
+    }
+    
+    // MARK: - 远程推送代理
+    func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
+        KMLog("didRegisterUserNotificationSettings : \(notificationSettings)")
+    }
+    
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        let pushToken = deviceToken.description.stringByReplacingOccurrencesOfString("<", withString: "").stringByReplacingOccurrencesOfString(">", withString: "")
+        KMLog("\(deviceToken)    :    \(pushToken)")
+    }
+    
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        KMLog("didReceiveRemoteNotification : \(userInfo)")
+    }
+    
+    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+        KMLog("didFailToRegisterForRemoteNotificationsWithError : \(error.localizedDescription)")
+    }
 }
 

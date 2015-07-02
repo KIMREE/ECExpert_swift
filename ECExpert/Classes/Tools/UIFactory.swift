@@ -68,13 +68,26 @@ class UIFactory: NSObject {
         return magnetView
     }
     
-    class func clearTableViewCell(cell: UITableViewCell){
-        cell.textLabel?.text = ""
-        cell.detailTextLabel?.text = ""
-        cell.imageView?.image = nil
-        for view in cell.contentView.subviews{
-            view.removeFromSuperview()
+    class func tableViewCellForTableView(tableView: UITableView, cellIdentifier: String, cellType: UITableViewCellStyle = UITableViewCellStyle.Subtitle, cleanTextAndImage: Bool = true, cleanCellContentView: Bool = true, cellInitProperties: (tableViewCell: UITableViewCell!) -> Void) -> UITableViewCell!{
+        var cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as? UITableViewCell
+        if cell == nil{
+            cell = UITableViewCell(style: cellType, reuseIdentifier: cellIdentifier)
+            cellInitProperties(tableViewCell: cell!)
         }
+        
+        if cleanTextAndImage{
+            cell!.textLabel?.text = ""
+            cell!.detailTextLabel?.text = ""
+            cell!.imageView?.image = nil
+        }
+        
+        if cleanCellContentView{
+            for view in cell!.contentView.subviews{
+                view.removeFromSuperview()
+            }
+        }
+        
+        return cell!
     }
        
 }

@@ -129,27 +129,27 @@ class ProductDetailViewController: BasicViewController, UITableViewDataSource, U
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier(ProductDetailViewController.CellIdentifier) as? UITableViewCell
-        var leftView = cell?.contentView.viewWithTag(ProductDetailViewController.CellLeftTag)
-        var rightView = cell?.contentView.viewWithTag(ProductDetailViewController.CellRightTag)
-        if cell == nil{
-            cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: ProductDetailViewController.CellIdentifier)
-            cell?.backgroundColor = UIColor.clearColor()
+        var cell = UIFactory.tableViewCellForTableView(tableView, cellIdentifier: ProductDetailViewController.CellIdentifier, cellType: UITableViewCellStyle.Subtitle, cleanCellContentView: false) { (tableViewCell: UITableViewCell!) -> Void in
             
-            let cellFrame = cell!.frame
+            tableViewCell!.backgroundColor = UIColor.clearColor()
+            
+            let cellFrame = tableViewCell!.frame
             let leftFrame = CGRectMake(0, 0, cellFrame.size.width / 2.0, cellFrame.size.height)
-            leftView = UIView(frame: leftFrame)
-            leftView?.tag = ProductDetailViewController.CellLeftTag
-            leftView?.backgroundColor = UIColor.clearColor()
+            let leftView = UIView(frame: leftFrame)
+            leftView.tag = ProductDetailViewController.CellLeftTag
+            leftView.backgroundColor = UIColor.clearColor()
             
             let rightFrame = CGRectMake(0 + leftFrame.size.width , 0, cellFrame.size.width / 2.0, cellFrame.size.height)
-            rightView = UIView(frame: rightFrame)
-            rightView?.tag = ProductDetailViewController.CellRightTag
-            rightView?.backgroundColor = UIColor.clearColor()
+            let rightView = UIView(frame: rightFrame)
+            rightView.tag = ProductDetailViewController.CellRightTag
+            rightView.backgroundColor = UIColor.clearColor()
             
-            cell?.contentView.addSubview(leftView!)
-            cell?.contentView.addSubview(rightView!)
+            tableViewCell!.contentView.addSubview(leftView)
+            tableViewCell!.contentView.addSubview(rightView)
         }
+        
+        var leftView = cell?.contentView.viewWithTag(ProductDetailViewController.CellLeftTag)
+        var rightView = cell?.contentView.viewWithTag(ProductDetailViewController.CellRightTag)
         
         for view in leftView!.subviews{
             view.removeFromSuperview()

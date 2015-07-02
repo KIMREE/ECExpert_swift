@@ -53,9 +53,14 @@ func bundleInfoDictionary() -> [NSObject : AnyObject]?{
     return NSBundle.mainBundle().infoDictionary
 }
 
+func getUserDefaults() -> NSUserDefaults{
+    return NSUserDefaults.standardUserDefaults()
+}
+
 // System
 let APP_SYS_DEVICE_VERSION = (UIDevice.currentDevice().systemVersion as NSString).doubleValue
 
+let APP_KEY_FIRST_LUNCH = "app_is_first_lunch"
 
 // API_URL
 let APP_URL = "https://itunes.apple.com/lookup?id=948643406"
@@ -71,8 +76,9 @@ let APP_URL_CHECKVIP = "http://www.kimree.com.cn/app/?action=checkvip"  // 根�
 let APP_URL_TRADE_INPUT = "http://www.kimree.com.cn/app/?action=typetrade"  // 录入交易
 let APP_URL_SCAN_BAR_CODE = "http://www.kimree.com.cn/app/scancode.php?"  // 扫描条形码
 
-let APP_URL_NEWS = "http://m.ecig100.com/"
-let APP_URL_KIMREE = "http://www.kimree.com.cn"
+let APP_URL_NEWS = "http://m.ecig100.com/" // 咨询
+let APP_URL_KIMREE = "http://m.kimree.com.cn/" // 吉瑞电子烟 主页  不能使用 http://www.kimree.com.cn 这个
+
 let APP_URL_DEALER = "http://www.ecig100.com/api/?action=getDealer" //获取经销商及烟酒商信息
 
 let APP_URL_TRADE_RECORD = "http://www.kimree.com.cn/app/?action=selecttrade" // 查看交易记录

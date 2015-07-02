@@ -175,15 +175,13 @@ class TradeRecordViewController: BasicViewController, UITableViewDelegate, UITab
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableHeaderFooterViewWithIdentifier(TradeRecordViewController.CellIdentifier) as? UITableViewCell
-        if cell == nil{
-            cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: TradeRecordViewController.CellIdentifier)
-            cell!.backgroundColor = UIColor.clearColor()
-            cell!.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+        var cell = UIFactory.tableViewCellForTableView(tableView, cellIdentifier: TradeRecordViewController.CellIdentifier, cellType: UITableViewCellStyle.Subtitle) { (tableViewCell: UITableViewCell!) -> Void in
+            tableViewCell!.backgroundColor = UIColor.clearColor()
+            tableViewCell!.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
             
-            cell!.textLabel!.textColor = UIColor.whiteColor()
-            cell!.detailTextLabel!.textColor = UIColor.whiteColor()
-            cell?.selectionStyle = UITableViewCellSelectionStyle.None
+            tableViewCell!.textLabel!.textColor = UIColor.whiteColor()
+            tableViewCell!.detailTextLabel!.textColor = UIColor.whiteColor()
+            tableViewCell!.selectionStyle = UITableViewCellSelectionStyle.None
         }
         
         let cellDic = sectionCellDic.objectForKey(sectionArray.objectAtIndex(indexPath.section))?.objectAtIndex(indexPath.row) as! NSDictionary

@@ -403,27 +403,50 @@ class TradeInputViewController: BasicViewController, UITableViewDelegate, UITabl
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier(TradeInputViewController.CellIdentifier) as? UITableViewCell
-        var deleteButton = cell?.contentView.viewWithTag(TradeInputViewController.DeleteButtonTag) as? UIButton
-        if cell == nil{
-            cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: TradeInputViewController.CellIdentifier)
-            cell?.backgroundColor = UIColor.clearColor()
-            cell?.textLabel?.textColor = UIColor.whiteColor()
-            cell?.detailTextLabel?.textColor = UIColor.whiteColor()
+        var cell = UIFactory.tableViewCellForTableView(tableView, cellIdentifier: TradeInputViewController.CellIdentifier, cellType: UITableViewCellStyle.Subtitle, cleanCellContentView: false) {[unowned self] (tableViewCell: UITableViewCell!) -> Void in
+            
+            tableViewCell?.backgroundColor = UIColor.clearColor()
+            tableViewCell?.textLabel?.textColor = UIColor.whiteColor()
+            tableViewCell?.detailTextLabel?.textColor = UIColor.whiteColor()
             
             let buttonW: CGFloat = 22
             let buttonH: CGFloat = 22
             let cellHeight = self.tableView(tableView, heightForRowAtIndexPath: indexPath)
-            deleteButton = UIButton.buttonWithType(UIButtonType.Custom) as? UIButton
+            let deleteButton = UIButton.buttonWithType(UIButtonType.Custom) as? UIButton
             deleteButton!.frame = CGRectMake(KM_FRAME_SCREEN_WIDTH - 10 - buttonW - 30, (cellHeight - buttonH) / 2.0, buttonW, buttonH)
             deleteButton!.tag = TradeInputViewController.DeleteButtonTag
             deleteButton!.backgroundColor = UIColor.clearColor()
             deleteButton!.setImage(UIImage(named: "button_minus"), forState: UIControlState.Normal)
             deleteButton!.addTarget(self, action: "deleteSelectCellDataAction:", forControlEvents: UIControlEvents.TouchUpInside)
-            cell?.contentView.addSubview(deleteButton!)
+            tableViewCell?.contentView.addSubview(deleteButton!)
             
-            cell?.selectionStyle = UITableViewCellSelectionStyle.None
+            tableViewCell?.selectionStyle = UITableViewCellSelectionStyle.None
         }
+        
+        
+//        var cell = tableView.dequeueReusableCellWithIdentifier(TradeInputViewController.CellIdentifier) as? UITableViewCell
+//        var deleteButton = cell?.contentView.viewWithTag(TradeInputViewController.DeleteButtonTag) as? UIButton
+//        if cell == nil{
+//            cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: TradeInputViewController.CellIdentifier)
+//            cell?.backgroundColor = UIColor.clearColor()
+//            cell?.textLabel?.textColor = UIColor.whiteColor()
+//            cell?.detailTextLabel?.textColor = UIColor.whiteColor()
+//            
+//            let buttonW: CGFloat = 22
+//            let buttonH: CGFloat = 22
+//            let cellHeight = self.tableView(tableView, heightForRowAtIndexPath: indexPath)
+//            deleteButton = UIButton.buttonWithType(UIButtonType.Custom) as? UIButton
+//            deleteButton!.frame = CGRectMake(KM_FRAME_SCREEN_WIDTH - 10 - buttonW - 30, (cellHeight - buttonH) / 2.0, buttonW, buttonH)
+//            deleteButton!.tag = TradeInputViewController.DeleteButtonTag
+//            deleteButton!.backgroundColor = UIColor.clearColor()
+//            deleteButton!.setImage(UIImage(named: "button_minus"), forState: UIControlState.Normal)
+//            deleteButton!.addTarget(self, action: "deleteSelectCellDataAction:", forControlEvents: UIControlEvents.TouchUpInside)
+//            cell?.contentView.addSubview(deleteButton!)
+//            
+//            cell?.selectionStyle = UITableViewCellSelectionStyle.None
+//        }
+        
+        var deleteButton = cell?.contentView.viewWithTag(TradeInputViewController.DeleteButtonTag) as? UIButton
         deleteButton?.hidden = false
         cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
         

@@ -13,6 +13,9 @@
 "Update now" = "Update now";
 "Unable to connect to the network" = "Unable to connect to the network";
 
+// GuideView
+"Tap to enter" = "Tap to enter";
+
 // MainViewController
 "Hint" = "Hint";
 "Sure" = "Sure";

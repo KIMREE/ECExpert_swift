@@ -30,6 +30,11 @@ class NewsViewController: BasicViewController, UIWebViewDelegate, UIGestureRecog
     private var homeButton: UIBarButtonItem!
     private var browserButton: UIBarButtonItem!
     
+    deinit{
+        KMLog("NewsViewController deinit")
+        toolBar.removeFromSuperview()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.basicTitle = self.title == nil ? (self.tabBarItem.title == nil ? "" : self.tabBarItem.title) : self.title

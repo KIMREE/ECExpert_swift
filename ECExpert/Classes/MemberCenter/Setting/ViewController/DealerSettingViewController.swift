@@ -161,13 +161,11 @@ class DealerSettingViewController: BasicViewController, UITableViewDelegate, UIT
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier(DealerSettingViewController.CellIdentifier) as? UITableViewCell
-        if cell == nil{
-            cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: DealerSettingViewController.CellIdentifier)
-            cell?.backgroundColor = UIColor.clearColor()
-            cell?.textLabel?.textColor = UIColor.whiteColor()
-            cell?.detailTextLabel?.textColor = UIColor.whiteColor()
-            cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+        var cell = UIFactory.tableViewCellForTableView(tableView, cellIdentifier: DealerSettingViewController.CellIdentifier, cellType: UITableViewCellStyle.Subtitle) { (tableViewCell: UITableViewCell!) -> Void in
+            tableViewCell!.backgroundColor = UIColor.clearColor()
+            tableViewCell!.textLabel?.textColor = UIColor.whiteColor()
+            tableViewCell!.detailTextLabel?.textColor = UIColor.whiteColor()
+            tableViewCell!.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
         }
         
         let section = indexPath.section

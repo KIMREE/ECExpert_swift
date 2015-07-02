@@ -13,6 +13,9 @@
 "Update now" = "立刻更新";
 "Unable to connect to the network" = "无法连接到网络";
 
+// GuideView
+"Tap to enter" = "点击进入";
+
 // MainViewController
 "Hint" = "提示";
 "Sure" = "确定";
