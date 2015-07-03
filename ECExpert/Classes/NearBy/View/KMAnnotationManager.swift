@@ -102,4 +102,8 @@ class KMAnnotationManager: NSObject, MKMapViewDelegate {
         KMLog("didDeselectAnnotationView")
     }
     
+    func mapViewDidFinishRenderingMap(mapView: MKMapView!, fullyRendered: Bool) {
+        KMLog("mapViewDidFinishRenderingMap")
+    }
+    
 }

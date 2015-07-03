@@ -36,6 +36,15 @@ class NearByViewController: BasicViewController, CLLocationManagerDelegate, KMAn
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: i18n("Search"), style: UIBarButtonItemStyle.Plain, target: self, action: "search")
         self.navigationItem.rightBarButtonItem?.enabled = true
         
+        let singleTap = UITapGestureRecognizer(target: self, action: "tapPress:")
+        mapView.addGestureRecognizer(singleTap)
+    }
+    
+    func tapPress(gesture: UIGestureRecognizer){
+        let touchPoint = gesture.locationInView(mapView)
+        let touchCoordinate = mapView.convertPoint(touchPoint, toCoordinateFromView: mapView)
+        
+        KMLog("point: \(touchPoint) \ncoordinate latitude: \(touchCoordinate.latitude),longitude: \(touchCoordinate.longitude)")
     }
 
     override func didReceiveMemoryWarning() {

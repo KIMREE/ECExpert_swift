@@ -16,7 +16,7 @@ class CustomerSettingViewController: BasicViewController, UITableViewDelegate, U
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.needLogin = true
         self.title = i18n("Setting")
         

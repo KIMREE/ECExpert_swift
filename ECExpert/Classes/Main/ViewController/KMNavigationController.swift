@@ -31,7 +31,25 @@ class KMNavigationController: UINavigationController {
         self.navigationBar.barTintColor = KM_COLOR_TABBAR_NAVIGATION
         
         // Do any additional setup after loading the view.
+        
+        let swipeGesture = UISwipeGestureRecognizer(target: self, action: "swipeGesture:")
+        swipeGesture.direction = UISwipeGestureRecognizerDirection.Right
+        self.navigationBar.addGestureRecognizer(swipeGesture)
     }
+    
+    func swipeGesture(swipeGesture: UIGestureRecognizer){
+        KMLog("swipeGesture")
+        let firstVC = self.viewControllers.first as! UIViewController
+        let lastVC = self.viewControllers.last as! UIViewController
+        if lastVC != firstVC{
+            if lastVC is BasicViewController{
+                (lastVC as! BasicViewController).goback()
+            }else{
+                self.popViewControllerAnimated(true)
+            }
+        }
+    }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

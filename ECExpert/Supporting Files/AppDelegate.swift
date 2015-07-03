@@ -46,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             style.font = UIFont.systemFontOfSize(12.0)
             return style
         }
-                
+        
         // 检查更新
         self.checkForUpdate()
         

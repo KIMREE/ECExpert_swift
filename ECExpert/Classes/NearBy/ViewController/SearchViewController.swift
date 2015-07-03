@@ -28,7 +28,14 @@ class SearchViewController: BasicViewController, UITableViewDataSource, UITableV
     deinit{
         KMLog("SearchViewController deinit")
     }
-
+    
+    override func goback() {
+        // 如果界面正在加载数据，此时不能goback
+        if self.navigationItem.leftBarButtonItem != nil && self.navigationItem.leftBarButtonItem!.enabled{
+            super.goback()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
