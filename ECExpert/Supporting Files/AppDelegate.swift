@@ -61,7 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // 注册远程推送
         self.registerAPNS()
-
+        
         return true
     }
     

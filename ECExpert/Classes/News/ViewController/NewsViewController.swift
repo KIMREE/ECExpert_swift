@@ -54,6 +54,11 @@ class NewsViewController: BasicViewController, UIWebViewDelegate, UIGestureRecog
         self.view.addGestureRecognizer(singleTap)
         
         self.basicTabBarFrame = self.tabBarController?.tabBar.frame
+        
+        let activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
+        activityIndicator.center = CGPointMake(self.view.frame.size.width / 2.0, self.view.frame.size.height / 2.0)
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
+        activityIndicator.startAnimating()
     }
     
     override func didReceiveMemoryWarning() {
@@ -110,8 +115,8 @@ class NewsViewController: BasicViewController, UIWebViewDelegate, UIGestureRecog
         homeButton = UIBarButtonItem(image: UIImage(named: "homePage"), style: UIBarButtonItemStyle.Plain, target: self, action: "gotoHomePage:")
         stopLoadingButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Stop, target: self, action: "stopLoading:")
         reloadButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Refresh, target: self, action: "reload:")
-        backButton = UIBarButtonItem(image: leftTriangleImage(), style: UIBarButtonItemStyle.Plain, target: self, action: "back:")
-        forwardButton = UIBarButtonItem(image: rightTriangleImage(), style: UIBarButtonItemStyle.Plain, target: self, action: "forward:")
+        backButton = UIBarButtonItem(image: UIFactory.leftTriangleImage(14, height: 16, fillColor: UIColor.whiteColor()), style: UIBarButtonItemStyle.Plain, target: self, action: "back:")
+        forwardButton = UIBarButtonItem(image: UIFactory.rightTriangleImage(14, height: 16, fillColor: UIColor.whiteColor()), style: UIBarButtonItemStyle.Plain, target: self, action: "forward:")
         browserButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Action, target: self, action: "openBrowser:")
         
         backButton.enabled = false
@@ -120,48 +125,6 @@ class NewsViewController: BasicViewController, UIWebViewDelegate, UIGestureRecog
         let space = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
         let array = [homeButton, space, stopLoadingButton, space, backButton, space, forwardButton, space, browserButton]
         self.toolBar.setItems(array, animated: true)
-    }
-    
-    func leftTriangleImage() -> UIImage!{
-        struct SingleImage{
-            static var imageInstance: UIImage?
-            static var token: dispatch_once_t = 0
-        }
-        dispatch_once(&SingleImage.token, { () -> Void in
-            let size = CGSizeMake(14.0, 16.0)
-            UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
-            let path = UIBezierPath()
-            path.moveToPoint(CGPointMake(0.0, 8.0))
-            path.addLineToPoint(CGPointMake(14.0, 0.0))
-            path.addLineToPoint(CGPointMake(14.0, 16.0))
-            path.closePath()
-            path.fill()
-            
-            SingleImage.imageInstance = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
-        })
-        return SingleImage.imageInstance
-    }
-    
-    func rightTriangleImage() -> UIImage!{
-        struct SingleImage{
-            static var imageInstance: UIImage?
-            static var token: dispatch_once_t = 0
-        }
-        dispatch_once(&SingleImage.token, { () -> Void in
-            let size = CGSizeMake(14.0, 16.0)
-            UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
-            let path = UIBezierPath()
-            path.moveToPoint(CGPointMake(0.0, 0.0))
-            path.addLineToPoint(CGPointMake(14.0, 8.0))
-            path.addLineToPoint(CGPointMake(0.0, 16.0))
-            path.closePath()
-            path.fill()
-            
-            SingleImage.imageInstance = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
-        })
-        return SingleImage.imageInstance
     }
     
     // MARK: - webview delegate

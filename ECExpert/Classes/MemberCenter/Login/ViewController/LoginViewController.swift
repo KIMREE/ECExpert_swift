@@ -327,7 +327,6 @@ class LoginViewController: BasicViewController {
     
     // 获取登录用户信息
     func loadLoginUserInfo(params: NSDictionary!){
-//        let manager = AFNetworkingFactory.networkingManager()
         manager.POST(APP_URL_LOGIN_USERINFO, parameters: params, success: {[unowned self] (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
             let basicDic = responseObj as? NSDictionary
             let code = basicDic?["code"] as? NSInteger

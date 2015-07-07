@@ -35,8 +35,6 @@ class DealerDetailViewController: BasicViewController, UITableViewDataSource, UI
         setUpOtherView()
         
         setUpTableView()
-        
-        KMLog("\(dealer)")
     }
 
     override func didReceiveMemoryWarning() {
@@ -78,10 +76,6 @@ class DealerDetailViewController: BasicViewController, UITableViewDataSource, UI
         }
     }
     
-    func reloadTableView(){
-        self.tableView.visibleCells()
-    }
-    
     // MARK: - UITableViewDataSource
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 3
@@ -103,27 +97,17 @@ class DealerDetailViewController: BasicViewController, UITableViewDataSource, UI
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier(DealerDetailViewController.cellIdentifier) as? UITableViewCell
-        if cell == nil{
-            cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: DealerDetailViewController.cellIdentifier)
-            cell!.selectionStyle = UITableViewCellSelectionStyle.None
-            cell!.userInteractionEnabled = true
+        var cell = UIFactory.tableViewCellForTableView(tableView, cellIdentifier: DealerDetailViewController.cellIdentifier, cellType: UITableViewCellStyle.Subtitle, cleanTextAndImage: true, cleanCellContentView: true) { (tableViewCell: UITableViewCell!) -> Void in
+            
+            tableViewCell!.selectionStyle = UITableViewCellSelectionStyle.None
+            tableViewCell!.userInteractionEnabled = true
         }
-
-        // 清空图片
-        cell!.imageView?.image = nil
         
         // 重置 textLabel
-        cell!.textLabel?.text = nil
         cell!.textLabel?.font = UIFont.systemFontOfSize(17)
         
         // 重置 textLabel
-        cell!.detailTextLabel?.text = nil
         cell?.detailTextLabel?.font = UIFont.systemFontOfSize(14)
-        
-        for view in cell!.contentView.subviews{
-            view.removeFromSuperview()
-        }
         
         let section = indexPath.section
         let row = indexPath.row

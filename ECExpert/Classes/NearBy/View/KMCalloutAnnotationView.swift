@@ -47,9 +47,9 @@ class KMCalloutAnnotationView: MKAnnotationView {
             containerView.backgroundColor = fillColor
         }
         
-        let bottomArrowImageViewFrame = CGRectMake((w - bottomArrowW)/2.0, h, bottomArrowW, bottomArrowH)
+        let bottomArrowImageViewFrame = CGRectMake((w - bottomArrowW)/2.0 - 2.0, h, bottomArrowW, bottomArrowH)
         let bottomArrowImageView = UIImageView(frame: bottomArrowImageViewFrame)
-        bottomArrowImageView.image = bottomTriangleImage(bottomArrowW, height: bottomArrowH, fillColor: fillColor!)
+        bottomArrowImageView.image = UIFactory.bottomTriangleImage(bottomArrowW, height: bottomArrowH, fillColor: fillColor!)
         bottomArrowImageView.backgroundColor = UIColor.clearColor()
         
         self.addSubview(bottomArrowImageView)
@@ -74,30 +74,6 @@ class KMCalloutAnnotationView: MKAnnotationView {
     
     func getContainerView() -> UIView?{
         return self.containerView
-    }
-    
-    
-    private func bottomTriangleImage(width: CGFloat, height: CGFloat, fillColor: UIColor) -> UIImage!{
-        struct SingleImage{
-            static var imageInstance: UIImage?
-            static var token: dispatch_once_t = 0
-        }
-        dispatch_once(&SingleImage.token, { () -> Void in
-            let size = CGSizeMake(width, height)
-            UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
-            let path = UIBezierPath()
-            path.lineWidth = 1.0
-            path.moveToPoint(CGPointMake(0.0, 0.0))
-            path.addLineToPoint(CGPointMake(width, 0.0))
-            path.addLineToPoint(CGPointMake(width / 2.0, height))
-            path.closePath()
-            fillColor.setFill()
-            path.fill()
-            
-            SingleImage.imageInstance = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
-        })
-        return SingleImage.imageInstance
     }
     
     override func drawRect(rect: CGRect) {

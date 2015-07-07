@@ -168,6 +168,7 @@ class NearByViewController: BasicViewController, CLLocationManagerDelegate, KMAn
         switch status {
         case .NotDetermined:
             manager.requestWhenInUseAuthorization()
+            manager.requestAlwaysAuthorization()
         case .Restricted, .Denied:
             let alertView = UIAlertView(title: nil, message: i18n("Please open the location service!"), delegate: nil, cancelButtonTitle: i18n("Sure"))
             alertView.showAlertViewWithCompleteBlock({ (buttonIndex) -> Void in

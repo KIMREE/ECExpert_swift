@@ -111,28 +111,7 @@ class SearchViewController: BasicViewController, UITableViewDataSource, UITableV
     func setUpDistanceArray(){
         var unsorted = NSMutableArray()
         if dealerArray != nil && currentLocation.location != nil{
-            for item in dealerArray{
-                let dealer = NSMutableDictionary(dictionary: item as! NSDictionary)
-                let dealerLocation = CLLocation(latitude: (dealer["dealer_lat"] as! NSString).doubleValue, longitude: (dealer["dealer_lng"] as! NSString).doubleValue)
-                let distance = currentLocation.location.distanceFromLocation(dealerLocation)
-                dealer["dealer_distance"] = NSString(format: "%.3f", Double(distance / 1000.0))
-                unsorted.addObject(dealer)
-            }
-            
-            unsorted.sortUsingComparator({ (dic1: AnyObject!, dic2: AnyObject!) -> NSComparisonResult in
-                let dealer1 = dic1 as! NSDictionary
-                let distance1 = (dealer1["dealer_distance"] as! NSString).doubleValue
-                let dealer2 = dic2 as! NSDictionary
-                let distance2 = (dealer2["dealer_distance"] as! NSString).doubleValue
-                if distance1 > distance2{
-                    return NSComparisonResult.OrderedDescending
-                }else if distance1 < distance2{
-                    return NSComparisonResult.OrderedAscending
-                }else{
-                    return NSComparisonResult.OrderedSame
-                }
-            })
-            
+            unsorted = DealerHelper.distanceFromCurrentLocation(currentLocation.location, dealerArray: dealerArray)
             filterKeyArray = ["dealer_name","dealer_desc","dealer_address","dealer_distance"]
         }else{
             unsorted = NSMutableArray(array: dealerArray)
@@ -238,6 +217,8 @@ class SearchViewController: BasicViewController, UITableViewDataSource, UITableV
             
             rootMapViewController.dealerViewController.dealer = dealer
             rootMapViewController.dealerViewController.tableView?.reloadData()
+            
+            KMLog("\(dealer)")
             
             self.navigationController?.pushViewController(rootMapViewController.dealerViewController, animated: true)
         }

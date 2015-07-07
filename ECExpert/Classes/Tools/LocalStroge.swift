@@ -71,7 +71,7 @@ class LocalStroge: NSObject {
     :param: fileName            文件名
     :param: searchPathDirectory 文件所在目录
     
-    :returns: <#return value description#>
+    :returns: 删除文件操作结果
     */
     func deleteFile(fileName: String, searchPathDirectory: NSSearchPathDirectory) -> Bool{
         let filePath = self.getFilePath(fileName, searchPathDirectory: searchPathDirectory)

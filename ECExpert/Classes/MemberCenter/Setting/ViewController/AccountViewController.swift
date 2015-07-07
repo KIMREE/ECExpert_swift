@@ -63,6 +63,19 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
         self.view.addSubview(tableView)
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // 界面不显示时，自动弹回生日和性别选择框
+        if birthDayPickView != nil{
+            popBirthdayPick()
+        }
+        
+        if sexPickView != nil{
+            popSexPick()
+        }
+    }
+    
     // MARK: - UITableViewDataSource
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 3
@@ -295,22 +308,6 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
         })
     }
     
-    /**
-    缩放图片
-    
-    :param: image     被缩放的图片
-    :param: scaleSize 缩放的尺寸
-    
-    :returns: 缩放后的图片
-    */
-    func originImage(image: UIImage, scaleSize: CGSize) -> UIImage{
-        UIGraphicsBeginImageContext(scaleSize)
-        image.drawInRect(CGRectMake(0, 0, scaleSize.width, scaleSize.height))
-        let scaleImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return scaleImage
-    }
-    
     func changeUserPhoto(image: UIImage){
         let imageData = UIImageJPEGRepresentation(image, 1)
         
@@ -368,7 +365,7 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
     // MARK: - UIImagePickerControllerDelegate
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
         var photo = info[UIImagePickerControllerEditedImage] as! UIImage
-        photo = originImage(photo, scaleSize: CGSizeMake(180, 180))
+        photo = UIFactory.originImage(photo, scaleSize: CGSizeMake(180, 180))
         
         self.navigationController?.dismissViewControllerAnimated(true, completion: { () -> Void in
             self.changeUserPhoto(photo)
