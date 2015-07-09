@@ -26,6 +26,11 @@ class FeedbackViewController: BasicViewController, UITextViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        feedbackInfoView.becomeFirstResponder()
+    }
+    
     func setUpView(){
         let visibelFrame = getVisibleFrame()
         let scrollView = TPKeyboardAvoidingScrollView(frame: visibelFrame)

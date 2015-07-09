@@ -90,7 +90,7 @@ class SearchViewController: BasicViewController, UITableViewDataSource, UITableV
         }
         
         // 模拟网络延迟
-        let random = UInt64(arc4random_uniform(3))
+        let random = UInt64(arc4random_uniform(2))
         let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(NSEC_PER_SEC * random))
         
         // 注意： 这里在gcd里面对界面ui有影响，必须在主线程中执行， 如果在after执行过程中销毁了self，程序会崩溃

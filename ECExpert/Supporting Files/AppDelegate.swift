@@ -7,8 +7,8 @@
 //
 
 import UIKit
-//import Fabric
-//import Crashlytics
+import Fabric
+import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         /**
         *  崩溃信息监测,详情查看 http://www.infoq.com/cn/articles/crashlytics-crash-statistics-tools
         */
-//        Fabric.with([Crashlytics()])
+        Fabric.with([Crashlytics()])
         
         // 初始化window
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)

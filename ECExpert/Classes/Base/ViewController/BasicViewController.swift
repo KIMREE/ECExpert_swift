@@ -111,7 +111,7 @@ class BasicViewController: UIViewController {
         self.navigationController?.view.addSubview(self.progressHUD!)
         
         var tapGesture = UITapGestureRecognizer(target: self, action: "hideProgressHUD")
-        self.progressHUD?.addGestureRecognizer(tapGesture)
+//        self.progressHUD?.addGestureRecognizer(tapGesture)
     }
     
     func hideProgressHUD(){

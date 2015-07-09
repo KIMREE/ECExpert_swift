@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Crashlytics
 
 class RegisterViewController: BasicViewController {
     
@@ -34,6 +35,19 @@ class RegisterViewController: BasicViewController {
         self.title = i18n("Register")
         
         setUpContainerView()
+        
+        RAC(self.submitButton, "enabled").assignSignal(RACSignal.combineLatest([accountField.rac_textSignal(), passwordField.rac_textSignal(), rePasswordField.rac_textSignal()]).map({ (tuple: AnyObject!) -> AnyObject! in
+            let tuple   = tuple as! RACTuple
+            let account = tuple.first as! String
+            let pwd     = tuple.second as! String
+            let rePwd   = tuple.third as! String
+            
+            var result = true
+            if count(account) < 5 || count(pwd) < 5 || count(rePwd) < 5 || (pwd != rePwd){
+                result = false
+            }
+            return result
+        }))
     }
 
     override func didReceiveMemoryWarning() {
@@ -313,13 +327,13 @@ class RegisterViewController: BasicViewController {
             }else{
                 self.progressHUD?.mode = MBProgressHUDMode.Text
                 self.progressHUD?.detailsLabelText = (dic?["data"] ?? "") as! String
-                self.progressHUD?.hide(true, afterDelay: 3)
+                self.progressHUD?.hide(true, afterDelay: 2)
             }
             
         }) {[unowned self] (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
             self.progressHUD?.mode = MBProgressHUDMode.Text
             self.progressHUD?.detailsLabelText = error.localizedDescription
-            self.progressHUD?.hide(true, afterDelay: 3)
+            self.progressHUD?.hide(true, afterDelay: 2)
         }
         
     }

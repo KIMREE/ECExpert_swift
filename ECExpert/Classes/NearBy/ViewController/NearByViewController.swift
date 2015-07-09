@@ -77,14 +77,14 @@ class NearByViewController: BasicViewController, CLLocationManagerDelegate, KMAn
         netManager.GET(APP_URL_DEALER, parameters: nil, success: {[unowned self] (operation:AFHTTPRequestOperation!, responseObj:AnyObject!) -> Void in
             let rootDic = responseObj as? NSDictionary
             let code = rootDic?["code"] as? Int
-            if code == 1{
+            if code != nil && code == 1{
                 let remoteDealerArray = DealerHelper.getMapShowDealerArray(rootDic?["data"] as! NSArray)
                 
                 if localDealerArray == nil || !remoteDealerArray.isEqualToArray(localDealerArray as! [AnyObject]){
                     self.dealerArray = NSMutableArray(array: remoteDealerArray)
+                    self.reloadData()
                     LocalStroge.sharedInstance().deleteFile(APP_PATH_DEALER_INFO, searchPathDirectory: NSSearchPathDirectory.CachesDirectory)
                     LocalStroge.sharedInstance().addObject(remoteDealerArray, fileName: APP_PATH_DEALER_INFO, searchPathDirectory: NSSearchPathDirectory.CachesDirectory)
-                    self.reloadData()
                 }
             }
             // 数据逻辑处理完成之后，才允许点击搜索按钮

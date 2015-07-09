@@ -309,13 +309,13 @@ class LoginViewController: BasicViewController {
                 }else{
                     self.progressHUD?.mode = MBProgressHUDMode.Text
                     self.progressHUD?.detailsLabelText = (dic?["data"] ?? "") as! String
-                    self.progressHUD?.hide(true, afterDelay: 3)
+                    self.progressHUD?.hide(true, afterDelay: 2)
                     self.loginButton.enabled = true
                 }
                 }, failure: {[unowned self] (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
                     self.progressHUD?.mode = MBProgressHUDMode.Text
                     self.progressHUD?.detailsLabelText = error.localizedDescription
-                    self.progressHUD?.hide(true, afterDelay: 3)
+                    self.progressHUD?.hide(true, afterDelay: 2)
                     self.loginButton.enabled = true
             })
             
@@ -342,14 +342,14 @@ class LoginViewController: BasicViewController {
             }else{
                 self.progressHUD?.mode = MBProgressHUDMode.Text
                 self.progressHUD?.detailsLabelText = (basicDic?["data"] ?? "") as! String
-                self.progressHUD?.hide(true, afterDelay: 3)
+                self.progressHUD?.hide(true, afterDelay: 2)
             }
             
             self.loginButton.enabled = true
             }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
                 self.progressHUD?.mode = MBProgressHUDMode.Text
                 self.progressHUD?.detailsLabelText = error.localizedDescription
-                self.progressHUD?.hide(true, afterDelay: 3)
+                self.progressHUD?.hide(true, afterDelay: 2)
                 self.loginButton.enabled = true
         }
     }

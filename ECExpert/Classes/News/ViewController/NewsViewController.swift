@@ -182,6 +182,11 @@ class NewsViewController: BasicViewController, UIWebViewDelegate, UIGestureRecog
     
     func webView(webView: UIWebView, didFailLoadWithError error: NSError) {
         KMLog(error.localizedDescription)
+        
+        if self.progressHUD?.hidden == false{
+            self.progressHUD?.hide(true)
+        }
+        
         self.finishLoad()
     }
     

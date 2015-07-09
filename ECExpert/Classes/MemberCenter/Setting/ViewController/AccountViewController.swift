@@ -55,7 +55,11 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
     }
     
     func setUpView(){
-        tableView = UITableView(frame: getVisibleFrame(), style: UITableViewStyle.Grouped)
+        var tableFrame = getVisibleFrame()
+        tableFrame.size.height++
+        tableFrame.origin.y--
+        
+        tableView = UITableView(frame: tableFrame, style: UITableViewStyle.Grouped)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = RGBA(0, 0, 0, 0.3)
@@ -374,18 +378,20 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
     
     // MARK: - birthdayPick
     private func setUpBirthDayPickView(){
-        let frame = CGRectMake(0, KM_FRAME_SCREEN_HEIGHT, KM_FRAME_SCREEN_WIDTH, 310)
+        // There are only three valid heights for UIPickerView (162.0, 180.0 and 216.0)
+        let buttonH: CGFloat = 50
+        let pickH: CGFloat = 216
+        let frame = CGRectMake(0, KM_FRAME_SCREEN_HEIGHT, KM_FRAME_SCREEN_WIDTH, buttonH + pickH + KM_FRAME_VIEW_TABBAR_HEIGHT)
         birthDayPickView = UIView(frame: frame)
         
         let width = frame.size.width
         let height = frame.size.height
         
-        let buttonH: CGFloat = 50
         let buttonW: CGFloat = width / 2.0
         let cancelBtnFrame = CGRectMake(0, 0, buttonW, buttonH)
         let cancelBtn = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         cancelBtn.frame = cancelBtnFrame
-        cancelBtn.backgroundColor = RGB(26,188,156)
+        cancelBtn.backgroundColor = KM_COLOR_TABBAR_NAVIGATION
         cancelBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         cancelBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         cancelBtn.contentEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
@@ -395,14 +401,14 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
         let saveBtnFrame = CGRectMake(0 + buttonW, 0, buttonW, buttonH)
         let saveBtn = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         saveBtn.frame = saveBtnFrame
-        saveBtn.backgroundColor = RGB(26,188,156)
+        saveBtn.backgroundColor = KM_COLOR_TABBAR_NAVIGATION
         saveBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         saveBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Right
         saveBtn.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20)
         saveBtn.setTitle(i18n("Save"), forState: UIControlState.Normal)
         saveBtn.addTarget(self, action: "saveBirthday", forControlEvents: UIControlEvents.TouchUpInside)
         
-        let datePickFrame = CGRectMake(0, 0 + buttonH, width, height - buttonH)
+        let datePickFrame = CGRectMake(0, 0 + buttonH, width, pickH)
         datePick = UIDatePicker()
         datePick.backgroundColor = RGB(236,240,243)
         datePick.datePickerMode = UIDatePickerMode.Date
@@ -413,6 +419,8 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
         datePick.setDate(selectDate!, animated: true)
         datePick.maximumDate = currentDate
         datePick.frame = datePickFrame
+        
+        KMLog("\(datePick.frame)")
         
         birthDayPickView.addSubview(cancelBtn)
         birthDayPickView.addSubview(saveBtn)
@@ -436,6 +444,7 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
         
         var newFrame = birthDayPickView.frame
         newFrame.origin.y = KM_FRAME_SCREEN_HEIGHT - newFrame.size.height
+        
         
         UIView.beginAnimations("pushBirthdayPick", context: nil)
         UIView.setAnimationCurve(UIViewAnimationCurve.EaseInOut)
@@ -482,18 +491,21 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
     
     // MARK: - SexPick
     private func setUpSexPickView(){
-        let frame = CGRectMake(0, KM_FRAME_SCREEN_HEIGHT, KM_FRAME_SCREEN_WIDTH, 240)
+        // There are only three valid heights for UIPickerView (162.0, 180.0 and 216.0)
+        let pickH: CGFloat = 162
+        let buttonH: CGFloat = 50
+        
+        let frame = CGRectMake(0, KM_FRAME_SCREEN_HEIGHT, KM_FRAME_SCREEN_WIDTH, pickH + buttonH + KM_FRAME_VIEW_TABBAR_HEIGHT)
         sexPickView = UIView(frame: frame)
         
         let width = frame.size.width
         let height = frame.size.height
         
-        let buttonH: CGFloat = 50
         let buttonW: CGFloat = width / 2.0
         let cancelBtnFrame = CGRectMake(0, 0, buttonW, buttonH)
         let cancelBtn = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         cancelBtn.frame = cancelBtnFrame
-        cancelBtn.backgroundColor = RGB(26,188,156)
+        cancelBtn.backgroundColor = KM_COLOR_TABBAR_NAVIGATION
         cancelBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         cancelBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         cancelBtn.contentEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
@@ -503,14 +515,14 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
         let saveBtnFrame = CGRectMake(0 + buttonW, 0, buttonW, buttonH)
         let saveBtn = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         saveBtn.frame = saveBtnFrame
-        saveBtn.backgroundColor = RGB(26,188,156)
+        saveBtn.backgroundColor = KM_COLOR_TABBAR_NAVIGATION
         saveBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         saveBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Right
         saveBtn.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20)
         saveBtn.setTitle(i18n("Save"), forState: UIControlState.Normal)
         saveBtn.addTarget(self, action: "saveSex", forControlEvents: UIControlEvents.TouchUpInside)
         
-        let sexPickFrame = CGRectMake(0, 0 + buttonH, width, height - buttonH)
+        let sexPickFrame = CGRectMake(0, 0 + buttonH, width, pickH)
         sexPick = UIPickerView()
         sexPick.backgroundColor = RGB(236,240,243)
         sexPick.delegate = self

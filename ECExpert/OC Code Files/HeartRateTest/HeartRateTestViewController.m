@@ -93,24 +93,25 @@
 
 -(void)testStart
 {
-    
-    if (isBtnOn==YES) {
-        [self timerFired];
-    }else{
+    AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    if(device != nil && [device hasTorch]){
+        if (isBtnOn==YES) {
+            [self timerFired];
+        }else{
 
-        //打开闪光灯
-        [self turnOnLed];
-        [self setupCaptureSession];
-        
-        //加波形图
-        waveView=[[WaveformView alloc] initWithFrame:CGRectMake(0, 80+0.1625*kScreen_Width, kScreen_Width, 0.5775*kScreen_Width)];
-        waveView.backgroundColor=[UIColor clearColor];
-        [self.view addSubview:waveView];
-        
-        isBtnOn=YES;
-        
+            //打开闪光灯
+            [self turnOnLed];
+            [self setupCaptureSession];
+            
+            //加波形图
+            waveView=[[WaveformView alloc] initWithFrame:CGRectMake(0, 80+0.1625*kScreen_Width, kScreen_Width, 0.5775*kScreen_Width)];
+            waveView.backgroundColor=[UIColor clearColor];
+            [self.view addSubview:waveView];
+            
+            isBtnOn=YES;
+            
+        }
     }
-    
 
 }
 

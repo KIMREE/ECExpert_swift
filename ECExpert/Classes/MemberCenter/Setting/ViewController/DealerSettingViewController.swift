@@ -31,7 +31,11 @@ class DealerSettingViewController: BasicViewController, UITableViewDelegate, UIT
     }
     
     func setUpView(){
-        tableView = UITableView(frame: getVisibleFrame(), style: UITableViewStyle.Grouped)
+        var tableFrame = getVisibleFrame()
+        tableFrame.size.height++
+        tableFrame.origin.y--
+        
+        tableView = UITableView(frame: tableFrame, style: UITableViewStyle.Grouped)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = RGBA(0, 0, 0, 0.3)
