@@ -30,6 +30,8 @@ class NewsViewController: BasicViewController, UIWebViewDelegate, UIGestureRecog
     private var homeButton: UIBarButtonItem!
     private var browserButton: UIBarButtonItem!
     
+    private var progressView: UIView!
+    
     deinit{
         KMLog("NewsViewController deinit")
         toolBar.removeFromSuperview()
@@ -152,15 +154,6 @@ class NewsViewController: BasicViewController, UIWebViewDelegate, UIGestureRecog
             return false
         }
         
-        let progressHUD = self.progressHUD
-        if progressHUD!.alpha == 0.0 {
-            progressHUD?.dimBackground = false
-            progressHUD?.minShowTime = 1
-            progressHUD!.mode = MBProgressHUDMode.DeterminateHorizontalBar
-            progressHUD?.progress = 0
-            progressHUD!.show(true)
-        }
-        
         return true
     }
     
@@ -182,10 +175,6 @@ class NewsViewController: BasicViewController, UIWebViewDelegate, UIGestureRecog
     
     func webView(webView: UIWebView, didFailLoadWithError error: NSError) {
         KMLog(error.localizedDescription)
-        
-        if self.progressHUD?.hidden == false{
-            self.progressHUD?.hide(true)
-        }
         
         self.finishLoad()
     }
@@ -268,11 +257,46 @@ class NewsViewController: BasicViewController, UIWebViewDelegate, UIGestureRecog
     
     // MARK: - NJKWebViewProgressDelegate
     func webViewProgress(webViewProgress: NJKWebViewProgress!, updateProgress progress: Float) {
-        let progressHUD = self.progressHUD
-        progressHUD?.progress = progress
-        if progress == 1.0{
-            self.hideProgressHUD(0.1)
+        let progress = CGFloat(progress)
+        var frame = getVisibleFrame()
+        frame.size.height = 5
+        let w = frame.size.width
+        
+        if progressView == nil{
+            progressView = UIView(frame: frame)
+            progressView.backgroundColor = UIColor.clearColor()
+            let subView = UIView(frame: CGRectMake(0, 0, 0, frame.size.height))
+            progressView.addSubview(subView)
         }
+        
+        let subView = progressView.subviews.last as! UIView
+        if progress == 0{
+            self.view.addSubview(progressView)
+            subView.frame = CGRectMake(0, 0, 0, frame.size.height)
+            subView.backgroundColor = UIColor.clearColor()
+        }
+        
+        UIView.animateWithDuration(0.2, animations: { () -> Void in
+            subView.frame.size.width = w * progress
+            
+            var color = subView.backgroundColor
+            if progress <= 0.3{
+                color = RGB(152, 245, 255)
+            }else if progress <= 0.6{
+                color = RGB(230, 230, 250)
+            }else if progress <= 0.9{
+                color = RGB(135, 206, 250)
+            }else{
+                color = KM_COLOR_TABBAR_NAVIGATION
+            }
+            subView.backgroundColor = color
+            
+            }) { (finished: Bool) -> Void in
+                if finished && progress == 1{
+                    self.progressView.removeFromSuperview()
+                }
+        }
+
     }
     
     /*

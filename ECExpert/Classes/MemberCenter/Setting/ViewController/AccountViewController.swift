@@ -419,9 +419,7 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
         datePick.setDate(selectDate!, animated: true)
         datePick.maximumDate = currentDate
         datePick.frame = datePickFrame
-        
-        KMLog("\(datePick.frame)")
-        
+                
         birthDayPickView.addSubview(cancelBtn)
         birthDayPickView.addSubview(saveBtn)
         birthDayPickView.addSubview(datePick)
