@@ -254,7 +254,7 @@ class RegisterViewController: BasicViewController {
         let backButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(10, 10, emptyView.frame.size.width - 10 * 2, bottomH - 10 * 2)
         backButton.setTitle(i18n("Back"), forState: UIControlState.Normal)
-        backButton.backgroundColor = RGB(26,188,156)
+        backButton.backgroundColor = KM_COLOR_TABBAR_NAVIGATION
         backButton.layer.masksToBounds = true
         backButton.layer.cornerRadius = 5
         backButton.addTarget(self, action: "agreementViewBack:", forControlEvents: UIControlEvents.TouchUpInside)

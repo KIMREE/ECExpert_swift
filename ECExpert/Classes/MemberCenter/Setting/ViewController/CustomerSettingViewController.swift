@@ -100,19 +100,19 @@ class CustomerSettingViewController: BasicViewController, UITableViewDelegate, U
         let bottomH: CGFloat = 60
         
         let aboutVC = UIViewController()
-        aboutVC.view.backgroundColor = RGB(26,188,156)
+        aboutVC.view.backgroundColor = UIColor.whiteColor()
         
-        let label = UIFactory.labelWithFrame(CGRectMake(10, 80, KM_FRAME_SCREEN_WIDTH - 10 * 2, 30), text: "电子烟专家", textColor: UIColor.whiteColor(), fontSize: 26, numberOfLines: 0, textAlignment: NSTextAlignment.Center)
+        let label = UIFactory.labelWithFrame(CGRectMake(10, 80, KM_FRAME_SCREEN_WIDTH - 10 * 2, 30), text: "电子烟专家", textColor: UIColor.blackColor(), fontSize: 26, numberOfLines: 0, textAlignment: NSTextAlignment.Center)
         
-        let detailLabel = UIFactory.labelWithFrame(CGRectMake(10, 110, KM_FRAME_SCREEN_WIDTH - 10 * 2, 150), text: "       专注电子烟行业，是全球最大最全的电子烟门户APP。\n       为您提供电子烟行业最权威的新闻、品牌、政策、展会等最新资讯。", textColor: UIColor.whiteColor(), fontSize: 15, numberOfLines: 0, fontName: "Arial-BoldItalicMT")
+        let detailLabel = UIFactory.labelWithFrame(CGRectMake(10, 110, KM_FRAME_SCREEN_WIDTH - 10 * 2, 150), text: "       专注电子烟行业，是全球最大最全的电子烟门户APP。\n       为您提供电子烟行业最权威的新闻、品牌、政策、展会等最新资讯。", textColor: UIColor.blackColor(), fontSize: 15, numberOfLines: 0, fontName: "Arial-BoldItalicMT")
         
         let emptyView = UIView(frame: CGRectMake(0, aboutVC.view.frame.size.height - bottomH, aboutVC.view.frame.size.width, bottomH))
-        emptyView.backgroundColor = RGB(26,188,156)
+        emptyView.backgroundColor = UIColor.whiteColor()
         
         let backButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(10, 10, emptyView.frame.size.width - 10 * 2, bottomH - 10 * 2)
         backButton.setTitle(i18n("Back"), forState: UIControlState.Normal)
-        backButton.backgroundColor = RGB(26,188,156)
+        backButton.backgroundColor = KM_COLOR_TABBAR_NAVIGATION
         backButton.layer.masksToBounds = true
         backButton.layer.cornerRadius = 5
         backButton.layer.borderWidth = 2

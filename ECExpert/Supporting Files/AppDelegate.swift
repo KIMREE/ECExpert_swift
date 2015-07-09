@@ -103,10 +103,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     /**
     :returns: 应用的本地版本号
     */
-    func getLocalVersion() -> Double? {
+    func getLocalVersion() -> String? {
         let dic = bundleInfoDictionary()
-        let localVersionString = dic?["CFBundleShortVersionString"] as? NSString
-        return localVersionString?.doubleValue
+        let localVersionString = dic?["CFBundleShortVersionString"] as? String
+        return localVersionString
     }
     
     // MARK: - 检查更新
@@ -116,11 +116,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let remoteAppInfoDic = responseObj as? Dictionary<String, AnyObject>
             let remoteResultArray = remoteAppInfoDic?["results"] as? Array<AnyObject>
             let remoteAppInfo = remoteResultArray?.last as? Dictionary<String, AnyObject>
-            let remoteVersionString = remoteAppInfo?["version"] as? NSString
-            let remoteVersion = remoteVersionString?.doubleValue
+            let remoteVersionString = remoteAppInfo?["version"] as? String
             let localVersion = self.getLocalVersion()
             
-            if remoteVersion != nil && localVersion != nil && remoteVersion! > localVersion!{
+            if self.needUpdate(localVersion, remoteVersion: remoteVersionString){
                 let alertView = UIAlertView(title: i18n("There is a new version, do you want to update?"), message: "", delegate: nil, cancelButtonTitle: i18n("Update later"), otherButtonTitles: i18n("Update now"))
                 alertView.showAlertViewWithCompleteBlock({ (buttonIndex) -> Void in
                     if buttonIndex == 1 {
@@ -132,6 +131,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
                 KMLog("\(error.localizedDescription)")
         }
+    }
+    
+    /**
+    判断版本是否需要跟新
+    
+    版本号为 xx.xx.xx格式，需要分段进行比较
+    
+    :param: localVersion  本地版本号
+    :param: remoteVersion 远程app store版本号
+    
+    :returns: 是否需要跟新
+    */
+    func needUpdate(localVersion: String?, remoteVersion: String?) -> Bool{
+        var update = false
+        if localVersion != nil && remoteVersion != nil{
+            let local = localVersion!.componentsSeparatedByString(".")
+            let remote = remoteVersion!.componentsSeparatedByString(".")
+            
+            update = false
+            let length = min(local.count, remote.count)
+            for i in 0..<length{
+                let localV = (local[i] as NSString).doubleValue
+                let remoteV = (remote[i] as NSString).doubleValue
+                if remoteV > localV{
+                    update = true
+                    break
+                }
+            }
+            if !update{
+                if remote.count > local.count{
+                    update = true
+                }
+            }
+            
+        }
+        return update
     }
     
     // MARK: - 启动网络连接状况监听
