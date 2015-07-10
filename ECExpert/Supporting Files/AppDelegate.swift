@@ -62,6 +62,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // 注册远程推送
         self.registerAPNS()
         
+        // 处理远程推送消息
+        if launchOptions != nil{
+            var badge = UIApplication.sharedApplication().applicationIconBadgeNumber
+            UIApplication.sharedApplication().applicationIconBadgeNumber = --badge
+
+            let remoteInfo = launchOptions![UIApplicationLaunchOptionsRemoteNotificationKey] as! [NSObject : AnyObject]
+            managerRemoteInfo(remoteInfo)
+        }
+        
         return true
     }
     
@@ -259,12 +268,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         KMLog("\(deviceToken)    :    \(pushToken)")
     }
     
-    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-        KMLog("didReceiveRemoteNotification : \(userInfo)")
-    }
-    
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
         KMLog("didFailToRegisterForRemoteNotificationsWithError : \(error.localizedDescription)")
+    }
+    
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        KMLog("didReceiveRemoteNotification : \(userInfo)")
+        
+        managerRemoteInfo(userInfo)
+    }
+    
+    // 处理远程推送消息
+    func managerRemoteInfo(remoteInfo: [NSObject : AnyObject]){
+        KMLog("\(remoteInfo)")
+//        let alertView = UIAlertView(title: "remote message", message: "\(remoteInfo)", delegate: nil, cancelButtonTitle: "OK")
+//        alertView.showAlertViewWithCompleteBlock { (buttonIndex) -> Void in
+//            
+//        }
+        
     }
 }
 

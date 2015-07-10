@@ -22,6 +22,7 @@
 "Cancel" = "取消";
 "News" = "资讯";
 "Nearby" = "附近电子烟";
+"Confirm log out?" = "确认退出登录？";
 
 // NewsViewController
 "Open With Safari" = "用Safari打开";

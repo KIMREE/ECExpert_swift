@@ -47,7 +47,8 @@ class KMCalloutAnnotationView: MKAnnotationView {
             containerView.backgroundColor = fillColor
         }
         
-        let bottomArrowImageViewFrame = CGRectMake((w - bottomArrowW)/2.0 - 2.0, h, bottomArrowW, bottomArrowH)
+        // 向下的箭头略微上移，将containerView压住
+        let bottomArrowImageViewFrame = CGRectMake((w - bottomArrowW)/2.0 - 2.0, h - 2.0, bottomArrowW, bottomArrowH + 2.0)
         let bottomArrowImageView = UIImageView(frame: bottomArrowImageViewFrame)
         bottomArrowImageView.image = UIFactory.bottomTriangleImage(bottomArrowW, height: bottomArrowH, fillColor: fillColor!)
         bottomArrowImageView.backgroundColor = UIColor.clearColor()

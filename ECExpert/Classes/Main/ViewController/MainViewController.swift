@@ -139,26 +139,32 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
     
     // MARK: - 注销登录
     func logout(){
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        let loginUserInfo = appDelegate.loginUserInfo
-        
-        let params = ["usertype": loginUserInfo!["usertype"] as? Int ?? -1]
-        AFNetworkingFactory.networkingManager().POST(APP_URL_LOGOUT, parameters: params, success: { (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
-            let dic = responseObj as? NSDictionary
-            let code = dic?["code"] as? NSInteger
-            if code != nil && code == 1{
-                appDelegate.loginUserInfo = nil
-                let loginProof = LocalStroge.sharedInstance().getObject(APP_PATH_LOGIN_PROOF, searchPathDirectory: NSSearchPathDirectory.DocumentDirectory) as? NSMutableDictionary
-                loginProof?.setValue(false, forKey: APP_PATH_LOGIN_PROOF_AUTOLOGIN)
-                LocalStroge.sharedInstance().addObject(loginProof, fileName: APP_PATH_LOGIN_PROOF, searchPathDirectory: NSSearchPathDirectory.DocumentDirectory)
+        let alertView = UIAlertView(title: i18n("Logout"), message: i18n("Confirm log out?"), delegate: nil, cancelButtonTitle: i18n("Sure"), otherButtonTitles: i18n("Cancel"))
+        alertView.showAlertViewWithCompleteBlock { (buttonIndex) -> Void in
+            if buttonIndex == 0{
+                let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                let loginUserInfo = appDelegate.loginUserInfo
                 
-                NSNotificationCenter.defaultCenter().postNotificationName(APP_NOTIFICATION_LOGIN, object: nil)
-            }else {
-                KMLog("\(dic)")
-            }
+                let params = ["usertype": loginUserInfo!["usertype"] as? Int ?? -1]
+                AFNetworkingFactory.networkingManager().POST(APP_URL_LOGOUT, parameters: params, success: { (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+                    let dic = responseObj as? NSDictionary
+                    let code = dic?["code"] as? NSInteger
+                    if code != nil && code == 1{
+                        appDelegate.loginUserInfo = nil
+                        let loginProof = LocalStroge.sharedInstance().getObject(APP_PATH_LOGIN_PROOF, searchPathDirectory: NSSearchPathDirectory.DocumentDirectory) as? NSMutableDictionary
+                        loginProof?.setValue(false, forKey: APP_PATH_LOGIN_PROOF_AUTOLOGIN)
+                        LocalStroge.sharedInstance().addObject(loginProof, fileName: APP_PATH_LOGIN_PROOF, searchPathDirectory: NSSearchPathDirectory.DocumentDirectory)
+                        
+                        NSNotificationCenter.defaultCenter().postNotificationName(APP_NOTIFICATION_LOGIN, object: nil)
+                    }else {
+                        KMLog("\(dic)")
+                    }
+                    
+                    }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                        KMLog(error.localizedDescription)
+                }
             
-            }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
-                KMLog(error.localizedDescription)
+            }
         }
     }
     

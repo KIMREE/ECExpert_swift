@@ -22,6 +22,7 @@
 "Cancel" = "Cancel";
 "News" = "News";
 "Nearby" = "Nearby";
+"Confirm log out?" = "Confirm log out?";
 
 // NewsViewController
 "Open With Safari" = "Open With Safari";
