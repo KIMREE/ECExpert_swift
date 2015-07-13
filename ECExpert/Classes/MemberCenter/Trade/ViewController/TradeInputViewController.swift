@@ -277,6 +277,7 @@ class TradeInputViewController: BasicViewController, UITableViewDelegate, UITabl
             }
             
             if product != nil{
+                product?.totalCount++
                 self.productArray.removeObject(product!)
                 self.productArray.insertObject(product!, atIndex: 0)
                 self.tableView.reloadData()

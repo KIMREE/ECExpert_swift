@@ -50,7 +50,7 @@ class RegisterViewController: BasicViewController {
         }))
         
         // TODO: 主动引起崩溃，测试Fabric
-        // Crashlytics.sharedInstance().crash()
+//         Crashlytics.sharedInstance().crash()
     }
 
     override func didReceiveMemoryWarning() {

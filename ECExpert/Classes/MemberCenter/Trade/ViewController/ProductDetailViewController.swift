@@ -64,11 +64,22 @@ class ProductDetailViewController: BasicViewController, UITableViewDataSource, U
         
         setUpView()
         
+        if pageEditType != ProductDetailPageEditType.None{
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Save, target: self, action: "commitChanges")
+        }
+        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func commitChanges(){
+        let totalCount = (textField.text as NSString).integerValue
+        product.totalCount = totalCount
+        fromTableView.reloadData()
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     func setUpView(){
