@@ -36,4 +36,9 @@
 #import "ProductModel.h"
 #import "HeartRateTestViewController.h"
 
+// 日期选择需要下述2个
+#import "FSCalendar.h"
+//#import "FSCalendarHeader.h" 新版里面可以不要
+#import "NSDate+FSExtension.h"
+
 #endif

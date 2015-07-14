@@ -37,6 +37,7 @@
 		A18E5FC21B2937A2005172E5 /* AFNetworkingFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18E5FC11B2937A2005172E5 /* AFNetworkingFactory.swift */; };
 		A18E5FC41B293985005172E5 /* UIAlertView+Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18E5FC31B293985005172E5 /* UIAlertView+Block.swift */; };
 		A1CB41481B340591005AB9F1 /* dealerLogo@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A1CB41471B340591005AB9F1 /* dealerLogo@2x.jpg */; };
+		A1E078821B549E43001E6721 /* DatePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E078811B549E43001E6721 /* DatePickerViewController.swift */; };
 		A1F8E6DC1B3A4DBD000F3342 /* UIFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F8E6DB1B3A4DBD000F3342 /* UIFactory.swift */; };
 		A1F8E6E01B3A5FB9000F3342 /* agreement_strings.html in Resources */ = {isa = PBXBuildFile; fileRef = A1F8E6DE1B3A5FB9000F3342 /* agreement_strings.html */; };
 		A1F8E6E11B3A5FB9000F3342 /* agreement_strings_eng.html in Resources */ = {isa = PBXBuildFile; fileRef = A1F8E6DF1B3A5FB9000F3342 /* agreement_strings_eng.html */; };
@@ -118,6 +119,7 @@
 		A18E5FC11B2937A2005172E5 /* AFNetworkingFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AFNetworkingFactory.swift; sourceTree = "<group>"; };
 		A18E5FC31B293985005172E5 /* UIAlertView+Block.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertView+Block.swift"; sourceTree = "<group>"; };
 		A1CB41471B340591005AB9F1 /* dealerLogo@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "dealerLogo@2x.jpg"; sourceTree = "<group>"; };
+		A1E078811B549E43001E6721 /* DatePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerViewController.swift; sourceTree = "<group>"; };
 		A1F8E6DB1B3A4DBD000F3342 /* UIFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIFactory.swift; sourceTree = "<group>"; };
 		A1F8E6DE1B3A5FB9000F3342 /* agreement_strings.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = agreement_strings.html; sourceTree = "<group>"; };
 		A1F8E6DF1B3A5FB9000F3342 /* agreement_strings_eng.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = agreement_strings_eng.html; sourceTree = "<group>"; };
@@ -291,6 +293,7 @@
 		A18E5F9D1B291692005172E5 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				A1E0787F1B549DCA001E6721 /* DatePicker */,
 				A1FA976A1B37A4D300FCEEA4 /* MemberCenter */,
 				A1FB0A9F1B2E99A9004BDCA9 /* NearBy */,
 				A1FB15671B2BBA56003296E4 /* News */,
@@ -358,6 +361,22 @@
 				A1CB41471B340591005AB9F1 /* dealerLogo@2x.jpg */,
 			);
 			path = NearBy;
+			sourceTree = "<group>";
+		};
+		A1E0787F1B549DCA001E6721 /* DatePicker */ = {
+			isa = PBXGroup;
+			children = (
+				A1E078801B549DCA001E6721 /* ViewController */,
+			);
+			path = DatePicker;
+			sourceTree = "<group>";
+		};
+		A1E078801B549DCA001E6721 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				A1E078811B549E43001E6721 /* DatePickerViewController.swift */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		A1F8E6DD1B3A5FB9000F3342 /* Html */ = {
@@ -746,6 +765,7 @@
 				A10D9BB21B39616400660C36 /* RegisterViewController.swift in Sources */,
 				A10D9BAE1B39607900660C36 /* LoginViewController.swift in Sources */,
 				A1FB55FA1B3BA94500DA5D62 /* MDQRCodeGenerator.m in Sources */,
+				A1E078821B549E43001E6721 /* DatePickerViewController.swift in Sources */,
 				A18E5F981B291499005172E5 /* AppDelegate.swift in Sources */,
 				A10C6FCF1B32B87200645E49 /* DealerDetailViewController.swift in Sources */,
 				A10C6FCD1B32B6D200645E49 /* SearchViewController.swift in Sources */,

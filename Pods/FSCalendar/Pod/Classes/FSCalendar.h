@@ -96,6 +96,9 @@ typedef NS_OPTIONS(NSInteger, FSCalendarCellState) {
 
 - (void)reloadData;
 
+- (void)scrollToDate:(NSDate *)date;
+- (void)scrollToDate:(NSDate *)date animate:(BOOL)animate;
+
 @end
 
 

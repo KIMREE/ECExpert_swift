@@ -16,6 +16,13 @@
 // GuideView
 "Tap to enter" = "Tap to enter";
 
+// DatePickerViewController
+"The selected date must" = "The selected date must";
+">=" = ">=";
+"<=" = "<=";
+"Today" = "Today";
+"Selected Date" = "Selected Date";
+
 // MainViewController
 "Hint" = "Hint";
 "Sure" = "Sure";

@@ -16,6 +16,13 @@
 // GuideView
 "Tap to enter" = "点击进入";
 
+// DatePickerViewController
+"The selected date must" = "选择的日期必须";
+">=" = "大于等于";
+"<=" = "小于等于";
+"Today" = "当前日期";
+"Selected Date" = "选择的日期";
+
 // MainViewController
 "Hint" = "提示";
 "Sure" = "确定";
