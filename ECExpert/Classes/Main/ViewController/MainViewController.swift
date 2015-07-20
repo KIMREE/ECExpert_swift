@@ -65,7 +65,7 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
         self.nearbyVC = NearByViewController()
         self.nearbyNav = self.getNavigation(nearbyVC, imageName: "circum", title: i18n("Nearby"))
 
-        self.tabBar.tintColor = KM_COLOR_TABBAR_NAVIGATION
+        self.tabBar.tintColor = KM_COLOR_MAIN
         
         self.showLoginViewController()
     }

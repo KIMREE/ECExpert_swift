@@ -59,7 +59,7 @@ class FeedbackViewController: BasicViewController, UITextViewDelegate {
         let submitButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         submitButton.frame = CGRectMake(x, feedbackInfoView.frame.origin.y + feedbackH + 10, w, h)
         submitButton.setTitle(i18n("Submit"), forState: UIControlState.Normal)
-        submitButton.backgroundColor = RGB(26,188,156)
+        submitButton.backgroundColor = KM_COLOR_MAIN
         submitButton.layer.cornerRadius = 6
         submitButton.layer.masksToBounds = true
         submitButton.addTarget(self, action: "submit", forControlEvents: UIControlEvents.TouchUpInside)

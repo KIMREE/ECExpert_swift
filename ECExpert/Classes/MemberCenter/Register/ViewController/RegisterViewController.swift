@@ -88,7 +88,6 @@ class RegisterViewController: BasicViewController {
         segmented = UISegmentedControl(frame: CGRectMake(segmentedX, segmentedY, segmentedW, segmentedH))
         segmented.insertSegmentWithTitle(i18n("Customer Register"), atIndex: 0, animated: true)
         segmented.insertSegmentWithTitle(i18n("Dealer Register"), atIndex: 1, animated: true)
-//        segmented.tintColor = RGB(190, 178, 181)
         segmented.tintColor = RGB(163, 134, 130)
         
         segmented.setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()], forState: UIControlState.Selected)
@@ -211,7 +210,8 @@ class RegisterViewController: BasicViewController {
         submitButton.frame = CGRectMake(submitX, submitY, submitW, submitH)
         submitButton.setTitle(i18n("Register"), forState: UIControlState.Normal)
         submitButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        submitButton.setBackgroundImage(UIFactory.imageWithColor(segmented.tintColor, size: submitButton.frame.size), forState: UIControlState.Normal)
+        submitButton.setBackgroundImage(UIFactory.imageWithColor(KM_COLOR_REGISTER, size: submitButton.frame.size), forState: UIControlState.Normal)
+        submitButton.setBackgroundImage(UIFactory.imageWithColor(segmented.tintColor, size: submitButton.frame.size), forState: UIControlState.Disabled)
         submitButton.showsTouchWhenHighlighted = true
         
         containerView.addSubview(submitButton)
@@ -257,7 +257,7 @@ class RegisterViewController: BasicViewController {
         let backButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(10, 10, emptyView.frame.size.width - 10 * 2, bottomH - 10 * 2)
         backButton.setTitle(i18n("Back"), forState: UIControlState.Normal)
-        backButton.backgroundColor = KM_COLOR_TABBAR_NAVIGATION
+        backButton.backgroundColor = KM_COLOR_MAIN
         backButton.layer.masksToBounds = true
         backButton.layer.cornerRadius = 5
         backButton.addTarget(self, action: "agreementViewBack:", forControlEvents: UIControlEvents.TouchUpInside)

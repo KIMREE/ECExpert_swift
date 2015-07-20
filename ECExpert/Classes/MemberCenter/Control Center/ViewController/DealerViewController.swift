@@ -50,7 +50,7 @@ class DealerViewController: BasicViewController {
         
         let headerViewH = h / 3.0
         let headerView = UIView(frame: CGRectMake(x, y, w, headerViewH))
-        headerView.backgroundColor = RGBA(0, 0, 0, 0.5)
+        headerView.backgroundColor = RGBA(0, 0, 0, 0.1)
         
         let imageW: CGFloat = 100
         let imageH: CGFloat = 100
@@ -103,12 +103,12 @@ class DealerViewController: BasicViewController {
         
         rowNum = 0
         let tradeCardFrame = CGRectMake(cardDistance, rowNum * rowHeight + cardDistance / 2.0, rowWidth, cardHeight)
-        let tradeCard = UIFactory.magnetViewWithFrame(tradeCardFrame, backgroundColor: RGB(147, 206, 110), imageName:"trade" , title: i18n("Trading"), clickViewTag: clickViewTag, clickViewWidth: 150)
+        let tradeCard = UIFactory.magnetViewWithFrame(tradeCardFrame, backgroundColor: RGB(59, 88, 158), imageName:"trade" , title: i18n("Trading"), clickViewTag: clickViewTag, clickViewWidth: 150)
         tradeView = tradeCard.viewWithTag(clickViewTag)
         
         rowNum = 1
         let recordCardFrame = CGRectMake(cardDistance, rowNum * rowHeight + cardDistance / 2.0, rowWidth, cardHeight)
-        let recordCard = UIFactory.magnetViewWithFrame(recordCardFrame, backgroundColor: RGB(246, 103, 107), imageName:"traderecord" , title: i18n("Trading Record"), clickViewTag: clickViewTag, clickViewWidth: 150)
+        let recordCard = UIFactory.magnetViewWithFrame(recordCardFrame, backgroundColor: RGB(39, 178, 233), imageName:"traderecord" , title: i18n("Trading Record"), clickViewTag: clickViewTag, clickViewWidth: 150)
         sellRecordView = recordCard.viewWithTag(clickViewTag)
         
         contentView.addSubview(tradeCard)

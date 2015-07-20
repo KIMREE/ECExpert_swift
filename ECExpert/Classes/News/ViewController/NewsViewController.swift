@@ -109,7 +109,7 @@ class NewsViewController: BasicViewController, UIWebViewDelegate, UIGestureRecog
         toolBar.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleTopMargin
         toolBar.barStyle = UIBarStyle.Default
         toolBar.barTintColor = UIColor.whiteColor()
-        toolBar.tintColor = KM_COLOR_TABBAR_NAVIGATION
+        toolBar.tintColor = KM_COLOR_MAIN
         
         //到底部只能放到父视图去，否则无效，
         self.parentViewController?.view.addSubview(toolBar)
@@ -287,12 +287,12 @@ class NewsViewController: BasicViewController, UIWebViewDelegate, UIGestureRecog
             }else if progress <= 0.9{
                 color = RGB(135, 206, 250)
             }else{
-                color = KM_COLOR_TABBAR_NAVIGATION
+                color = KM_COLOR_MAIN
             }
             subView.backgroundColor = color
             
             }) { (finished: Bool) -> Void in
-                if finished && progress == 1{
+                if progress == 1{
                     self.progressView.removeFromSuperview()
                 }
         }

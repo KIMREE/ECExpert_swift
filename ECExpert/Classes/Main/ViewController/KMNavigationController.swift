@@ -28,7 +28,7 @@ class KMNavigationController: UINavigationController {
         // button item 背景色
         self.navigationBar.tintColor = UIColor.whiteColor()
         // 背景色
-        self.navigationBar.barTintColor = KM_COLOR_TABBAR_NAVIGATION
+        self.navigationBar.barTintColor = KM_COLOR_MAIN
         
         // Do any additional setup after loading the view.
         

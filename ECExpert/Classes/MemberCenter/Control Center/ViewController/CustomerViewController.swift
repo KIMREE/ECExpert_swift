@@ -58,7 +58,7 @@ class CustomerViewController: BasicViewController {
         // headerView
         
         let headerView = UIView(frame: CGRectMake(x, y, w, h / 4.0))
-        headerView.backgroundColor = RGBA(0, 0, 0, 0.5)
+        headerView.backgroundColor = RGBA(0, 0, 0, 0.1)
         
         let headerViewH = headerView.frame.size.height
         let imageW: CGFloat = 80

@@ -89,7 +89,7 @@ class LoginViewController: BasicViewController {
         segmented = UISegmentedControl(frame: CGRectMake(segmentedX, segmentedY, segmentedW, segmentedH))
         segmented.insertSegmentWithTitle(i18n("Customer"), atIndex: 0, animated: true)
         segmented.insertSegmentWithTitle(i18n("Dealer"), atIndex: 1, animated: true)
-        segmented.tintColor = RGB(26,188,156)
+        segmented.tintColor = KM_COLOR_MAIN
         segmented.setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()], forState: UIControlState.Selected)
         containerView.addSubview(segmented)
         
@@ -180,7 +180,7 @@ class LoginViewController: BasicViewController {
         registerButton.frame = CGRectMake(leftRightPadding, buttonY, buttonW, buttonH)
         registerButton.setTitle(i18n("Register"), forState: UIControlState.Normal)
         registerButton.showsTouchWhenHighlighted = true
-        registerButton.setBackgroundImage(UIFactory.imageWithColor(RGB(234, 47, 75), size: registerButton.frame.size), forState: UIControlState.Normal)
+        registerButton.setBackgroundImage(UIFactory.imageWithColor(KM_COLOR_REGISTER, size: registerButton.frame.size), forState: UIControlState.Normal)
         registerButton.setBackgroundImage(UIFactory.imageWithColor(UIColor.grayColor(), size: registerButton.frame.size), forState: UIControlState.Highlighted)
         registerButton.layer.masksToBounds = true
         registerButton.layer.cornerRadius = radius
@@ -189,7 +189,7 @@ class LoginViewController: BasicViewController {
         loginButton.frame = CGRectMake(w / 2.0 + leftRightPadding / 2.0, buttonY, buttonW, buttonH)
         loginButton.setTitle(i18n("Login"), forState: UIControlState.Normal)
         loginButton.showsTouchWhenHighlighted = true
-        loginButton.setBackgroundImage(UIFactory.imageWithColor(RGB(42, 179, 233), size: loginButton.frame.size), forState: UIControlState.Normal)
+        loginButton.setBackgroundImage(UIFactory.imageWithColor(KM_COLOR_LOGIN, size: loginButton.frame.size), forState: UIControlState.Normal)
         loginButton.setBackgroundImage(UIFactory.imageWithColor(UIColor.grayColor(), size: loginButton.frame.size), forState: UIControlState.Highlighted)
         loginButton.layer.masksToBounds = true
         loginButton.layer.cornerRadius = radius

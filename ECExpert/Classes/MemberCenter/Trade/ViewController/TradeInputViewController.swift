@@ -45,7 +45,7 @@ class TradeInputViewController: BasicViewController, UITableViewDelegate, UITabl
     func saveRecord(sender: AnyObject!){
         if productArray.count > 0 && customerArray.count > 0{
             let alertView = UIAlertView(title: "", message: i18n("Determine the input information?"), delegate: nil, cancelButtonTitle: i18n("Cancel"), otherButtonTitles: i18n("Sure"))
-            alertView.showAlertViewWithCompleteBlock({[unowned self] (buttonIndex) -> Void in
+            alertView.showAlertViewWithCompleteBlock({ (buttonIndex) -> Void in
                 if buttonIndex == 1{
                     self.commitAddRecord()
                 }
@@ -93,7 +93,7 @@ class TradeInputViewController: BasicViewController, UITableViewDelegate, UITabl
         self.progressHUD?.labelText = ""
         self.progressHUD?.detailsLabelText = ""
         self.progressHUD?.show(true)
-        manager.POST(APP_URL_TRADE_INPUT, parameters: params, success: {[unowned self] (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+        manager.POST(APP_URL_TRADE_INPUT, parameters: params, success: { (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
             let dic = responseObj as? NSDictionary
             let code = dic?["code"] as? NSInteger
             if code != nil && code == 1{
@@ -115,7 +115,7 @@ class TradeInputViewController: BasicViewController, UITableViewDelegate, UITabl
                 self.hideProgressHUD()
             }
             
-            }) {[unowned self] (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+            }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
                 self.progressHUD?.mode = MBProgressHUDMode.Text
                 self.progressHUD?.labelText = i18n("Failed to connect link to server!")
                 self.progressHUD?.detailsLabelText = error.localizedDescription
@@ -215,7 +215,7 @@ class TradeInputViewController: BasicViewController, UITableViewDelegate, UITabl
     
     // MARK: - section header view button action
     func addBuyerAction(){
-        let scanVC = ScanViewController(scanType: ScanType.QRCode) {[unowned self] (scanViewControlelr: ScanViewController, scanResult: String) -> Void in
+        let scanVC = ScanViewController(scanType: ScanType.QRCode) { (scanViewControlelr: ScanViewController, scanResult: String) -> Void in
             scanViewControlelr.goback()
             
             let jsonData = scanResult.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
@@ -227,7 +227,7 @@ class TradeInputViewController: BasicViewController, UITableViewDelegate, UITabl
             self.progressHUD?.detailsLabelText = ""
             self.progressHUD?.show(true)
             if error == nil{
-                self.manager.POST(APP_URL_CHECKVIP, parameters: jsonDic, success: {[unowned self] (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+                self.manager.POST(APP_URL_CHECKVIP, parameters: jsonDic, success: { (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
                     let dic = responseObj as? NSDictionary
                     let code = dic?["code"] as? NSInteger
                     if code != nil && code == 1{
@@ -264,7 +264,7 @@ class TradeInputViewController: BasicViewController, UITableViewDelegate, UITabl
     }
     
     func addProductAction(){
-        let scanVC = ScanViewController(scanType: ScanType.BarCode) {[unowned self] (scanViewControlelr: ScanViewController, scanResult: String) -> Void in
+        let scanVC = ScanViewController(scanType: ScanType.BarCode) { (scanViewControlelr: ScanViewController, scanResult: String) -> Void in
             scanViewControlelr.goback()
             
             var product: ProductModel?
@@ -322,7 +322,7 @@ class TradeInputViewController: BasicViewController, UITableViewDelegate, UITabl
     }
     
     func addGiftAction(){
-        let scanVC = ScanViewController(scanType: ScanType.BarCode) {[unowned self] (scanViewControlelr: ScanViewController, scanResult: String) -> Void in
+        let scanVC = ScanViewController(scanType: ScanType.BarCode) {  (scanViewControlelr: ScanViewController, scanResult: String) -> Void in
             scanViewControlelr.goback()
             
             var product: ProductModel?
@@ -347,7 +347,7 @@ class TradeInputViewController: BasicViewController, UITableViewDelegate, UITabl
                 self.progressHUD?.labelText = ""
                 self.progressHUD?.detailsLabelText = ""
                 self.progressHUD?.show(true)
-                self.manager.POST(APP_URL_SCAN_BAR_CODE, parameters: params, success: {[unowned self] (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+                self.manager.POST(APP_URL_SCAN_BAR_CODE, parameters: params, success: {  (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
                     let dic = responseObj as? NSDictionary
                     let code = dic?["code"] as? NSInteger
                     if code != nil && code == 1{
@@ -367,7 +367,7 @@ class TradeInputViewController: BasicViewController, UITableViewDelegate, UITabl
                         KMLog("\(dic)")
                         self.hideProgressHUD()
                     }
-                    }, failure: {[unowned self] (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                    }, failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
                         self.progressHUD?.mode = MBProgressHUDMode.Text
                         self.progressHUD?.labelText = i18n("Failed to connect link to server!")
                         self.progressHUD?.detailsLabelText = error.localizedDescription
@@ -404,7 +404,7 @@ class TradeInputViewController: BasicViewController, UITableViewDelegate, UITabl
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = UIFactory.tableViewCellForTableView(tableView, cellIdentifier: TradeInputViewController.CellIdentifier, cellType: UITableViewCellStyle.Subtitle, cleanCellContentView: false) {[unowned self] (tableViewCell: UITableViewCell!) -> Void in
+        var cell = UIFactory.tableViewCellForTableView(tableView, cellIdentifier: TradeInputViewController.CellIdentifier, cellType: UITableViewCellStyle.Subtitle, cleanCellContentView: false) {  (tableViewCell: UITableViewCell!) -> Void in
             
             tableViewCell?.backgroundColor = UIColor.clearColor()
             tableViewCell?.textLabel?.textColor = UIColor.whiteColor()

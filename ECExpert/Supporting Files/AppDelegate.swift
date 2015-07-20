@@ -38,6 +38,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.hud!.dimBackground = true
         self.hud!.mode = MBProgressHUDMode.Text
         
+        // 修改状态栏显示电池电量、时间、网络部分标示的颜色
+        // 在 info.plist 中，将 View controller-based status bar appearance 设为 NO
+        // 启动界面也变成白色 ： 在 info.plist 中， Status bar style 设置为 UIStatusBarStyleLightContent
+        // 默认的黑色（UIStatusBarStyleDefault）    白色（UIStatusBarStyleLightContent）
+        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: false)
+        
         //设置状态栏通知样式
         JDStatusBarNotification.setDefaultStyle { (style: JDStatusBarStyle!) -> JDStatusBarStyle! in
             style.barColor = UIColor.blackColor()
@@ -190,7 +196,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 self.hud!.detailsLabelText = i18n("Unable to connect to the network")
                 self.hud!.minShowTime = 2
                 self.hud!.showAnimated(true, whileExecutingBlock: { () -> Void in
-                    
+                    self.hud!.hide(true)
                 })
             }
         }

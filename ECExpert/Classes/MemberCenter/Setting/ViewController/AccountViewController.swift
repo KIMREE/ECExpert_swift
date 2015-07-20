@@ -391,7 +391,7 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
         let cancelBtnFrame = CGRectMake(0, 0, buttonW, buttonH)
         let cancelBtn = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         cancelBtn.frame = cancelBtnFrame
-        cancelBtn.backgroundColor = KM_COLOR_TABBAR_NAVIGATION
+        cancelBtn.backgroundColor = KM_COLOR_MAIN
         cancelBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         cancelBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         cancelBtn.contentEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
@@ -401,7 +401,7 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
         let saveBtnFrame = CGRectMake(0 + buttonW, 0, buttonW, buttonH)
         let saveBtn = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         saveBtn.frame = saveBtnFrame
-        saveBtn.backgroundColor = KM_COLOR_TABBAR_NAVIGATION
+        saveBtn.backgroundColor = KM_COLOR_MAIN
         saveBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         saveBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Right
         saveBtn.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20)
@@ -503,7 +503,7 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
         let cancelBtnFrame = CGRectMake(0, 0, buttonW, buttonH)
         let cancelBtn = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         cancelBtn.frame = cancelBtnFrame
-        cancelBtn.backgroundColor = KM_COLOR_TABBAR_NAVIGATION
+        cancelBtn.backgroundColor = KM_COLOR_MAIN
         cancelBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         cancelBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         cancelBtn.contentEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
@@ -513,7 +513,7 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
         let saveBtnFrame = CGRectMake(0 + buttonW, 0, buttonW, buttonH)
         let saveBtn = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         saveBtn.frame = saveBtnFrame
-        saveBtn.backgroundColor = KM_COLOR_TABBAR_NAVIGATION
+        saveBtn.backgroundColor = KM_COLOR_MAIN
         saveBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         saveBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Right
         saveBtn.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20)

@@ -112,7 +112,7 @@ class CustomerSettingViewController: BasicViewController, UITableViewDelegate, U
         let backButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(10, 10, emptyView.frame.size.width - 10 * 2, bottomH - 10 * 2)
         backButton.setTitle(i18n("Back"), forState: UIControlState.Normal)
-        backButton.backgroundColor = KM_COLOR_TABBAR_NAVIGATION
+        backButton.backgroundColor = KM_COLOR_MAIN
         backButton.layer.masksToBounds = true
         backButton.layer.cornerRadius = 5
         backButton.layer.borderWidth = 2
