@@ -8,21 +8,22 @@
 
 #import <UIKit/UIKit.h>
 
-@class FSCalendarHeader, FSCalendar;
+@class FSCalendarHeader, FSCalendar, FSCalendarAppearance;
 
 @interface FSCalendarHeader : UIView
 
-@property (assign  , nonatomic) CGFloat     minDissolveAlpha;
-@property (assign  , nonatomic) CGFloat     scrollOffset;
-@property (strong  , nonatomic) NSString    *dateFormat;
-@property (strong  , nonatomic) NSDate      *minimumDate;
-@property (strong  , nonatomic) NSDate      *maximumDate;
-
-@property (weak    , nonatomic) UIColor     *titleColor;
-@property (weak    , nonatomic) UIFont      *titleFont;
-
-@property (assign  , nonatomic) UICollectionViewScrollDirection scrollDirection;
+@property (assign, nonatomic) CGFloat scrollOffset;
+@property (assign, nonatomic) UICollectionViewScrollDirection scrollDirection;
+@property (weak  , nonatomic) FSCalendarAppearance *appearance;
 
 - (void)reloadData;
+
+@end
+
+
+@interface FSCalendarHeaderCell : UICollectionViewCell
+
+@property (weak, nonatomic) UILabel *titleLabel;
+@property (readonly, nonatomic) FSCalendarHeader *header;
 
 @end

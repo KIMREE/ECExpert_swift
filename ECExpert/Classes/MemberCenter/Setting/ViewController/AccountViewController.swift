@@ -56,8 +56,6 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
     
     func setUpView(){
         var tableFrame = getVisibleFrame()
-        tableFrame.size.height++
-        tableFrame.origin.y--
         
         tableView = UITableView(frame: tableFrame, style: UITableViewStyle.Grouped)
         tableView.delegate = self
@@ -232,7 +230,7 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 1
+        return CGFloat.min
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

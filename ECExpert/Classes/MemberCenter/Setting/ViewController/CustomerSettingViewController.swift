@@ -40,8 +40,6 @@ class CustomerSettingViewController: BasicViewController, UITableViewDelegate, U
     
     func setUpView(){
         var tableFrame = getVisibleFrame()
-        tableFrame.size.height++
-        tableFrame.origin.y--
         
         tableView = UITableView(frame: tableFrame, style: UITableViewStyle.Grouped)
         tableView.delegate = self
@@ -61,7 +59,7 @@ class CustomerSettingViewController: BasicViewController, UITableViewDelegate, U
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 1
+        return CGFloat.min
     }
     
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -189,6 +187,8 @@ class CustomerSettingViewController: BasicViewController, UITableViewDelegate, U
             tableViewCell.textLabel?.textColor = UIColor.whiteColor()
             tableViewCell.detailTextLabel?.textColor = UIColor.whiteColor()
             tableViewCell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+            
+            tableViewCell!.selectionStyle = UITableViewCellSelectionStyle.None
         }
 
         

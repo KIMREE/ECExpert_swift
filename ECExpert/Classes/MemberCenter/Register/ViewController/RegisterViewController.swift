@@ -48,7 +48,7 @@ class RegisterViewController: BasicViewController {
             }
             return result
         }))
-        
+
         // TODO: 主动引起崩溃，测试Fabric
 //         Crashlytics.sharedInstance().crash()
     }

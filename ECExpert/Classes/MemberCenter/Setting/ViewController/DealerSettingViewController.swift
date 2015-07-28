@@ -32,8 +32,6 @@ class DealerSettingViewController: BasicViewController, UITableViewDelegate, UIT
     
     func setUpView(){
         var tableFrame = getVisibleFrame()
-        tableFrame.size.height++
-        tableFrame.origin.y--
         
         tableView = UITableView(frame: tableFrame, style: UITableViewStyle.Grouped)
         tableView.delegate = self
@@ -49,7 +47,7 @@ class DealerSettingViewController: BasicViewController, UITableViewDelegate, UIT
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 1
+        return CGFloat.min
     }
     
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -170,6 +168,8 @@ class DealerSettingViewController: BasicViewController, UITableViewDelegate, UIT
             tableViewCell!.textLabel?.textColor = UIColor.whiteColor()
             tableViewCell!.detailTextLabel?.textColor = UIColor.whiteColor()
             tableViewCell!.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+            
+            tableViewCell!.selectionStyle = UITableViewCellSelectionStyle.None
         }
         
         let section = indexPath.section

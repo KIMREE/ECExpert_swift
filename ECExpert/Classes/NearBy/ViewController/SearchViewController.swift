@@ -149,6 +149,7 @@ class SearchViewController: BasicViewController, UITableViewDataSource, UITableV
             tableViewCell!.textLabel!.numberOfLines = 0
             tableViewCell!.textLabel!.font = UIFont(name: "Arial-BoldItalicMT", size: 14)
             // subtitle
+            tableViewCell!.detailTextLabel!.numberOfLines = 0
             tableViewCell!.detailTextLabel!.textColor = RGB(26,188,156)
             tableViewCell!.detailTextLabel!.font = UIFont.systemFontOfSize(14)
             // select background

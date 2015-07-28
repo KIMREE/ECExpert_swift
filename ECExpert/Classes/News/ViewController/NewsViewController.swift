@@ -30,7 +30,7 @@ class NewsViewController: BasicViewController, UIWebViewDelegate, UIGestureRecog
     private var homeButton: UIBarButtonItem!
     private var browserButton: UIBarButtonItem!
     
-    private var progressView: UIView!
+    private var progressView: NJKWebViewProgressView!
     
     deinit{
         KMLog("NewsViewController deinit")
@@ -61,6 +61,9 @@ class NewsViewController: BasicViewController, UIWebViewDelegate, UIGestureRecog
         activityIndicator.center = CGPointMake(self.view.frame.size.width / 2.0, self.view.frame.size.height / 2.0)
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
         activityIndicator.startAnimating()
+        
+        // 添加刷新按钮
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Refresh, target: self, action: "reload:")
     }
     
     override func didReceiveMemoryWarning() {
@@ -71,6 +74,12 @@ class NewsViewController: BasicViewController, UIWebViewDelegate, UIGestureRecog
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         self.showTabBar()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        //进入界面一次就刷新一次
+//        webView.reload()
     }
     
     // MARK: - 监控界面点击手势
@@ -99,6 +108,11 @@ class NewsViewController: BasicViewController, UIWebViewDelegate, UIGestureRecog
         self.webView.delegate = self.progressProxy
         self.progressProxy.webViewProxyDelegate = self
         self.progressProxy.progressDelegate = self
+        
+        let progressH: CGFloat = 5
+        let progressFrame = CGRectMake(0, webFrame.origin.y, webFrame.size.width, progressH)
+        progressView = NJKWebViewProgressView(frame: progressFrame)
+        self.view.addSubview(progressView)
     }
     
     // MARK: - 初始化toolBar
@@ -257,46 +271,7 @@ class NewsViewController: BasicViewController, UIWebViewDelegate, UIGestureRecog
     
     // MARK: - NJKWebViewProgressDelegate
     func webViewProgress(webViewProgress: NJKWebViewProgress!, updateProgress progress: Float) {
-        let progress = CGFloat(progress)
-        var frame = getVisibleFrame()
-        frame.size.height = 5
-        let w = frame.size.width
-        
-        if progressView == nil{
-            progressView = UIView(frame: frame)
-            progressView.backgroundColor = UIColor.clearColor()
-            let subView = UIView(frame: CGRectMake(0, 0, 0, frame.size.height))
-            progressView.addSubview(subView)
-        }
-        
-        let subView = progressView.subviews.last as! UIView
-        if progress == 0{
-            self.view.addSubview(progressView)
-            subView.frame = CGRectMake(0, 0, 0, frame.size.height)
-            subView.backgroundColor = UIColor.clearColor()
-        }
-        
-        UIView.animateWithDuration(0.2, animations: { () -> Void in
-            subView.frame.size.width = w * progress
-            
-            var color = subView.backgroundColor
-            if progress <= 0.3{
-                color = RGB(152, 245, 255)
-            }else if progress <= 0.6{
-                color = RGB(230, 230, 250)
-            }else if progress <= 0.9{
-                color = RGB(135, 206, 250)
-            }else{
-                color = KM_COLOR_MAIN
-            }
-            subView.backgroundColor = color
-            
-            }) { (finished: Bool) -> Void in
-                if progress == 1{
-                    self.progressView.removeFromSuperview()
-                }
-        }
-
+        progressView.setProgress(progress, animated: true)
     }
     
     /*

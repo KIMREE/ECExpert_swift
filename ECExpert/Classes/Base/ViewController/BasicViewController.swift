@@ -22,6 +22,20 @@ class BasicViewController: UIViewController {
     // 界面需要登录信息才能展示，默认false
     var needLogin: Bool = false
     
+    // 是否第一次进入界面
+    private var firstEnter = true
+    
+    var backgroundImageView: UIImageView?{
+        get{
+            for view in self.view.subviews{
+                if view is UIImageView{
+                    return view as? UIImageView
+                }
+            }
+            return nil
+        }
+    }
+    
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
@@ -35,6 +49,11 @@ class BasicViewController: UIViewController {
         
         self.navigationController?.navigationBar.translucent = true
         self.tabBarController?.tabBar.translucent = true
+        
+        // 让导航栏全透明
+//        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+//        self.navigationController?.navigationBar.shadowImage = UIImage()
+//        self.navigationController?.navigationBar.barStyle = UIBarStyle.BlackTranslucent
         
         self.view.frame = UIScreen.mainScreen().bounds
         self.navigationController?.navigationBarHidden = !showNaavigationBar
@@ -54,6 +73,16 @@ class BasicViewController: UIViewController {
                 NSNotificationCenter.defaultCenter().postNotificationName(APP_NOTIFICATION_LOGIN, object: nil)
             }
         }
+        
+        if !firstEnter{
+            
+        }
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        firstEnter = false
     }
     
     
@@ -69,6 +98,7 @@ class BasicViewController: UIViewController {
             bacgroundImage = UIImage(named: "background")
         }
         backgroundImageView.image = bacgroundImage
+        
         self.view.insertSubview(backgroundImageView, atIndex: 0)
     }
     

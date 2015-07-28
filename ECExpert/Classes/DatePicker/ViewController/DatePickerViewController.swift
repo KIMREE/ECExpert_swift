@@ -95,18 +95,20 @@ class DatePickerViewController: BasicViewController , FSCalendarDataSource, FSCa
         let vH = visible.origin.y
         let vW = visible.size.width
         let calendarH: CGFloat = visible.size.height *  2 / 3
+        let todayColor = RGB(234, 47, 75)
+        let selectionColor = RGB(42, 179, 233)
         
         fsCalendar = FSCalendar(frame: CGRectMake(0, vH, vW, calendarH))
         
         fsCalendar.dataSource = self
         fsCalendar.delegate = self
-        fsCalendar.headerTitleColor = UIColor.redColor()
-        fsCalendar.headerDateFormat = "yyyy-MMMM"
-        fsCalendar.selectionColor = RGB(42, 179, 233)
+        
+        fsCalendar.appearance.headerTitleColor = UIColor.redColor()
+        fsCalendar.appearance.headerDateFormat = "yyyy-MMMM"
+        fsCalendar.appearance.selectionColor = RGB(42, 179, 233)
+        fsCalendar.appearance.todayColor = RGB(234, 47, 75)
+        
         fsCalendar.firstWeekday = UInt(NSCalendar.currentCalendar().firstWeekday)
-        
-        fsCalendar.todayColor = RGB(234, 47, 75)
-        
         
         fsCalendar.currentDate = NSDate()
         if autoSelectedDate != nil{
@@ -126,7 +128,7 @@ class DatePickerViewController: BasicViewController , FSCalendarDataSource, FSCa
         leftButton.layer.cornerRadius = buttonH / 2.0
         leftButton.layer.masksToBounds = true
         leftButton.setTitle(i18n("Today"), forState: UIControlState.Normal)
-        leftButton.backgroundColor = fsCalendar.todayColor
+        leftButton.backgroundColor = todayColor
         leftButton.addTarget(self, action: "scrollToDateAction:", forControlEvents: UIControlEvents.TouchUpInside)
         
         scrollToTodayButton = leftButton
@@ -138,7 +140,7 @@ class DatePickerViewController: BasicViewController , FSCalendarDataSource, FSCa
         rightButton.layer.cornerRadius = buttonH / 2.0
         rightButton.layer.masksToBounds = true
         rightButton.setTitle(i18n("Selected Date"), forState: UIControlState.Normal)
-        rightButton.backgroundColor = fsCalendar.selectionColor
+        rightButton.backgroundColor = selectionColor
         rightButton.addTarget(self, action: "scrollToDateAction:", forControlEvents: UIControlEvents.TouchUpInside)
         
         scrollToSelectButton = rightButton

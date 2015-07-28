@@ -33,7 +33,8 @@ class NearByViewController: BasicViewController, CLLocationManagerDelegate, KMAn
         self.loadData()
         
         // 数据逻辑处理完成之后，才允许点击搜索按钮
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: i18n("Search"), style: UIBarButtonItemStyle.Plain, target: self, action: "search")
+//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: i18n("Search"), style: UIBarButtonItemStyle.Plain, target: self, action: "search")
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Search, target: self, action: "search")
         self.navigationItem.rightBarButtonItem?.enabled = true
         
         let singleTap = UITapGestureRecognizer(target: self, action: "tapPress:")

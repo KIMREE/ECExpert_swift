@@ -104,6 +104,10 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
             }
         }
         
+//        let dateVC = DatePickerViewController()
+//        let dateNav = self.getNavigation(dateVC, imageName: "Me", title: "Date")
+//        showVCArrays.addObject(dateNav)
+        
         if self.viewControllers == nil || !showVCArrays.isEqualToArray(self.viewControllers!){
             self.viewControllers = showVCArrays as [AnyObject]
         }

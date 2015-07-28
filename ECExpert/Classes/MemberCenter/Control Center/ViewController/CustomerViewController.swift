@@ -112,8 +112,8 @@ class CustomerViewController: BasicViewController {
         let cardHeight: CGFloat = contentView.frame.size.height / 3.0 - cardDistance
         let rowHeight: CGFloat = contentView.frame.size.height / 3.0
         let rowWidth: CGFloat = contentView.frame.size.width - 2 * cardDistance
-        let sizeSmall: CGFloat = 1.0
-        let sizeLarge: CGFloat = 1.2
+        let sizeSmall: CGFloat = 0.618
+        let sizeLarge: CGFloat = 1.0
         let clickViewTag = 11
         
         // rowNum = 0

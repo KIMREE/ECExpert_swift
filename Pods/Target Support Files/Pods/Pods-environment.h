@@ -51,8 +51,8 @@
 // FSCalendar
 #define COCOAPODS_POD_AVAILABLE_FSCalendar
 #define COCOAPODS_VERSION_MAJOR_FSCalendar 0
-#define COCOAPODS_VERSION_MINOR_FSCalendar 7
-#define COCOAPODS_VERSION_PATCH_FSCalendar 0
+#define COCOAPODS_VERSION_MINOR_FSCalendar 9
+#define COCOAPODS_VERSION_PATCH_FSCalendar 2
 
 // JDStatusBarNotification
 #define COCOAPODS_POD_AVAILABLE_JDStatusBarNotification
@@ -69,14 +69,14 @@
 // MJExtension
 #define COCOAPODS_POD_AVAILABLE_MJExtension
 #define COCOAPODS_VERSION_MAJOR_MJExtension 2
-#define COCOAPODS_VERSION_MINOR_MJExtension 3
-#define COCOAPODS_VERSION_PATCH_MJExtension 6
+#define COCOAPODS_VERSION_MINOR_MJExtension 5
+#define COCOAPODS_VERSION_PATCH_MJExtension 3
 
 // MJRefresh
 #define COCOAPODS_POD_AVAILABLE_MJRefresh
 #define COCOAPODS_VERSION_MAJOR_MJRefresh 2
-#define COCOAPODS_VERSION_MINOR_MJRefresh 0
-#define COCOAPODS_VERSION_PATCH_MJRefresh 4
+#define COCOAPODS_VERSION_MINOR_MJRefresh 3
+#define COCOAPODS_VERSION_PATCH_MJRefresh 2
 
 // NJKWebViewProgress
 #define COCOAPODS_POD_AVAILABLE_NJKWebViewProgress
@@ -124,17 +124,17 @@
 #define COCOAPODS_POD_AVAILABLE_SDWebImage
 #define COCOAPODS_VERSION_MAJOR_SDWebImage 3
 #define COCOAPODS_VERSION_MINOR_SDWebImage 7
-#define COCOAPODS_VERSION_PATCH_SDWebImage 2
+#define COCOAPODS_VERSION_PATCH_SDWebImage 3
 
 // SDWebImage/Core
 #define COCOAPODS_POD_AVAILABLE_SDWebImage_Core
 #define COCOAPODS_VERSION_MAJOR_SDWebImage_Core 3
 #define COCOAPODS_VERSION_MINOR_SDWebImage_Core 7
-#define COCOAPODS_VERSION_PATCH_SDWebImage_Core 2
+#define COCOAPODS_VERSION_PATCH_SDWebImage_Core 3
 
 // TPKeyboardAvoiding
 #define COCOAPODS_POD_AVAILABLE_TPKeyboardAvoiding
 #define COCOAPODS_VERSION_MAJOR_TPKeyboardAvoiding 1
 #define COCOAPODS_VERSION_MINOR_TPKeyboardAvoiding 2
-#define COCOAPODS_VERSION_PATCH_TPKeyboardAvoiding 7
+#define COCOAPODS_VERSION_PATCH_TPKeyboardAvoiding 9
 

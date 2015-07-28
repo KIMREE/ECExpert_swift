@@ -48,7 +48,7 @@ class DealerDetailViewController: BasicViewController, UITableViewDataSource, UI
         logoImageView.sd_setImageWithURL(NSURL(string: logoStr), placeholderImage: UIImage(named: "dealerLogo.jpg"))
         
         gotoMapLabel = UILabel(frame: CGRectMake(0, 0, KM_FRAME_SCREEN_WIDTH, 40))
-        gotoMapLabel.backgroundColor = RGB(26,188,156)
+        gotoMapLabel.backgroundColor = KM_COLOR_MAIN
         gotoMapLabel.textColor = UIColor.whiteColor()
         gotoMapLabel.textAlignment = NSTextAlignment.Center
         gotoMapLabel.font = UIFont.systemFontOfSize(13)

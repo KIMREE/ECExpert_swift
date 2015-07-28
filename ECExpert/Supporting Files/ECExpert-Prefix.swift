@@ -19,7 +19,6 @@ func RGB(red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor {
 }
 
 let KM_COLOR_MAIN = RGB(208, 6, 51)
-
 let KM_COLOR_LOGIN = RGB(39, 178, 233)
 let KM_COLOR_REGISTER = RGB(59, 88, 158)
 

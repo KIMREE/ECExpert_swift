@@ -20,6 +20,7 @@
 #import <JDStatusBarNotification/JDStatusBarNotification.h>
 
 #import <NJKWebViewProgress/NJKWebViewProgress.h>
+#import <NJKWebViewProgress/NJKWebViewProgressView.h>
 
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
@@ -38,7 +39,7 @@
 
 // 日期选择需要下述2个
 #import "FSCalendar.h"
-//#import "FSCalendarHeader.h" 新版里面可以不要
 #import "NSDate+FSExtension.h"
+
 
 #endif

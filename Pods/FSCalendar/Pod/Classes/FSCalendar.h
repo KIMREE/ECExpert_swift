@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FSCalendarAppearance.h"
 
 @class FSCalendar;
 
@@ -19,12 +20,8 @@ typedef NS_ENUM(NSInteger, FSCalendarFlow) {
     FSCalendarFlowHorizontal
 };
 
-typedef NS_OPTIONS(NSInteger, FSCalendarCellStyle) {
-    FSCalendarCellStyleCircle      = 0,
-    FSCalendarCellStyleRectangle   = 1
-};
 
-typedef NS_OPTIONS(NSInteger, FSCalendarCellState) {
+typedef NS_ENUM(NSInteger, FSCalendarCellState) {
     FSCalendarCellStateNormal      = 0,
     FSCalendarCellStateSelected    = 1,
     FSCalendarCellStatePlaceholder = 1 << 1,
@@ -45,54 +42,31 @@ typedef NS_OPTIONS(NSInteger, FSCalendarCellState) {
 @protocol FSCalendarDataSource <NSObject>
 
 @optional
-
 - (NSString *)calendar:(FSCalendar *)calendar subtitleForDate:(NSDate *)date;
+- (UIImage *)calendar:(FSCalendar *)calendar imageForDate:(NSDate *)date;
 - (BOOL)calendar:(FSCalendar *)calendar hasEventForDate:(NSDate *)date;
 - (NSDate *)minimumDateForCalendar:(FSCalendar *)calendar;
 - (NSDate *)maximumDateForCalendar:(FSCalendar *)calendar;
 
 @end
 
-@interface FSCalendar : UIView<UIAppearance>
 
-@property (weak,   nonatomic) IBOutlet id<FSCalendarDelegate>   delegate;
-@property (weak,   nonatomic) IBOutlet id<FSCalendarDataSource> dataSource;
+@interface FSCalendar : UIView
+
+@property (weak, nonatomic) IBOutlet id<FSCalendarDelegate>   delegate;
+@property (weak, nonatomic) IBOutlet id<FSCalendarDataSource> dataSource;
 
 @property (strong, nonatomic) NSDate *currentDate;
 @property (strong, nonatomic) NSDate *selectedDate;
 @property (strong, nonatomic) NSDate *currentMonth;
 
 @property (assign, nonatomic) FSCalendarFlow flow;
-@property (assign, nonatomic) IBInspectable NSUInteger           firstWeekday;
-@property (assign, nonatomic) IBInspectable BOOL                 autoAdjustTitleSize;
-@property (assign, nonatomic) IBInspectable CGFloat              headerHeight;
-@property (assign, nonatomic) IBInspectable CGFloat              minDissolvedAlpha UI_APPEARANCE_SELECTOR;
-@property (assign, nonatomic) FSCalendarCellStyle cellStyle      UI_APPEARANCE_SELECTOR;
+@property (assign, nonatomic) IBInspectable NSUInteger firstWeekday;
+@property (assign, nonatomic) IBInspectable CGFloat    headerHeight;
 
-@property (strong, nonatomic) UIFont   *titleFont                UI_APPEARANCE_SELECTOR;
-@property (strong, nonatomic) UIFont   *subtitleFont             UI_APPEARANCE_SELECTOR;
-@property (strong, nonatomic) UIFont   *weekdayFont              UI_APPEARANCE_SELECTOR;
-@property (strong, nonatomic) UIColor  *eventColor               UI_APPEARANCE_SELECTOR;
-@property (strong, nonatomic) UIColor  *weekdayTextColor         UI_APPEARANCE_SELECTOR;
-
-@property (strong, nonatomic) UIColor  *headerTitleColor         UI_APPEARANCE_SELECTOR;
-@property (strong, nonatomic) NSString *headerDateFormat         UI_APPEARANCE_SELECTOR;
-@property (strong, nonatomic) UIFont   *headerTitleFont          UI_APPEARANCE_SELECTOR;
-
-@property (strong, nonatomic) UIColor  *titleDefaultColor        UI_APPEARANCE_SELECTOR;
-@property (strong, nonatomic) UIColor  *titleSelectionColor      UI_APPEARANCE_SELECTOR;
-@property (strong, nonatomic) UIColor  *titleTodayColor          UI_APPEARANCE_SELECTOR;
-@property (strong, nonatomic) UIColor  *titlePlaceholderColor    UI_APPEARANCE_SELECTOR;
-@property (strong, nonatomic) UIColor  *titleWeekendColor        UI_APPEARANCE_SELECTOR;
-
-@property (strong, nonatomic) UIColor  *subtitleDefaultColor     UI_APPEARANCE_SELECTOR;
-@property (strong, nonatomic) UIColor  *subtitleSelectionColor   UI_APPEARANCE_SELECTOR;
-@property (strong, nonatomic) UIColor  *subtitleTodayColor       UI_APPEARANCE_SELECTOR;
-@property (strong, nonatomic) UIColor  *subtitlePlaceholderColor UI_APPEARANCE_SELECTOR;
-@property (strong, nonatomic) UIColor  *subtitleWeekendColor     UI_APPEARANCE_SELECTOR;
-
-@property (strong, nonatomic) UIColor  *selectionColor           UI_APPEARANCE_SELECTOR;
-@property (strong, nonatomic) UIColor  *todayColor               UI_APPEARANCE_SELECTOR;
+@property (readonly, nonatomic) FSCalendarAppearance *appearance;
+@property (readonly, nonatomic) NSDate *minimumDate;
+@property (readonly, nonatomic) NSDate *maximumDate;
 
 - (void)reloadData;
 
