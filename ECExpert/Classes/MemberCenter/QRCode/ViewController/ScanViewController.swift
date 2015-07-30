@@ -65,15 +65,9 @@ class ScanViewController: BasicViewController, AVCaptureMetadataOutputObjectsDel
         // Dispose of any resources that can be recreated.
     }
     
-    func light(){
-        if device != nil && device.hasTorch{
-            device.lockForConfiguration(nil)
-            if device.torchMode == AVCaptureTorchMode.Off{
-                device.torchMode = AVCaptureTorchMode.On
-            }else{
-                device.torchMode = AVCaptureTorchMode.Off
-            }
-        }
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        session.startRunning()
     }
     
     func setUpView(){
@@ -167,9 +161,12 @@ class ScanViewController: BasicViewController, AVCaptureMetadataOutputObjectsDel
         self.view.addSubview(centerView)
         
         timer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: "moveLine:", userInfo: moveLine, repeats: true)
-        session.startRunning()
+        
+        // 在 viewWillAppear 启动扫描
+//        session.startRunning()
     }
     
+    // MARK: 扫描线移动
     func moveLine(timer: NSTimer!){
         let moveView = timer.userInfo as! UIView
         let maxY: CGFloat = height - 10
@@ -192,11 +189,22 @@ class ScanViewController: BasicViewController, AVCaptureMetadataOutputObjectsDel
         }
     }
     
+    // MARK: 闪光灯开关
+    func light(){
+        if device != nil && device.hasTorch{
+            device.lockForConfiguration(nil)
+            if device.torchMode == AVCaptureTorchMode.Off{
+                device.torchMode = AVCaptureTorchMode.On
+            }else{
+                device.torchMode = AVCaptureTorchMode.Off
+            }
+        }
+    }
     
     // MARK: - AVCaptureMetadataOutputObjectsDelegate
     func captureOutput(captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [AnyObject]!, fromConnection connection: AVCaptureConnection!) {
         session.stopRunning()
-        preview.removeFromSuperlayer()
+//        preview.removeFromSuperlayer()
         
         // 取消定时器
         timer.invalidate()
@@ -205,9 +213,14 @@ class ScanViewController: BasicViewController, AVCaptureMetadataOutputObjectsDel
         let result = metadataObjects.first as! AVMetadataMachineReadableCodeObject
         let scanResult = result.stringValue
         
-        if scanCompleteFunc != nil{
-            scanCompleteFunc!(scanViewControlelr: self, scanResult: scanResult)
+        // 延迟 500 毫秒之后在执行，使转场动画更加流畅
+        let delayTime = dispatch_time(DISPATCH_TIME_NOW, (Int64)(500 * NSEC_PER_MSEC))
+        dispatch_after(delayTime, dispatch_get_main_queue()) { () -> Void in
+            if self.scanCompleteFunc != nil{
+                self.scanCompleteFunc!(scanViewControlelr: self, scanResult: scanResult)
+            }
         }
+
     }
 
     /*

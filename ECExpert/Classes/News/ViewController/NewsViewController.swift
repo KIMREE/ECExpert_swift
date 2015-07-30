@@ -50,9 +50,11 @@ class NewsViewController: BasicViewController, UIWebViewDelegate, UIGestureRecog
         
         // 监控界面点击手势
         let singleTap = UITapGestureRecognizer(target: self, action: "singleTapAction")
+        
         // 注意：不做如下处理，无法监控到单击手势
         singleTap.cancelsTouchesInView = false
         singleTap.delegate = self
+        
         self.view.addGestureRecognizer(singleTap)
         
         self.basicTabBarFrame = self.tabBarController?.tabBar.frame
