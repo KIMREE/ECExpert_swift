@@ -55,7 +55,7 @@ class NewsViewController: BasicViewController, UIWebViewDelegate, UIGestureRecog
         singleTap.cancelsTouchesInView = false
         singleTap.delegate = self
         
-        self.view.addGestureRecognizer(singleTap)
+        self.webView.addGestureRecognizer(singleTap)
         
         self.basicTabBarFrame = self.tabBarController?.tabBar.frame
         

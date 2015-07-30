@@ -13,7 +13,7 @@ enum ScanType: Int{
     case QRCode, BarCode
 }
 
-
+// 处理扫描结果的闭包函数， 设置之后，界面关闭需要自己手动调用
 typealias ScanCompleteFunc  = (scanViewControlelr: ScanViewController, scanResult: String) -> Void
 
 class ScanViewController: BasicViewController, AVCaptureMetadataOutputObjectsDelegate {
@@ -218,6 +218,9 @@ class ScanViewController: BasicViewController, AVCaptureMetadataOutputObjectsDel
         dispatch_after(delayTime, dispatch_get_main_queue()) { () -> Void in
             if self.scanCompleteFunc != nil{
                 self.scanCompleteFunc!(scanViewControlelr: self, scanResult: scanResult)
+            }else{
+                KMLog("scan result : \(scanResult)")
+                self.goback()
             }
         }
 
