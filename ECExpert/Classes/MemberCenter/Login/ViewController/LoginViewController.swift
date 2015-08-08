@@ -290,7 +290,7 @@ class LoginViewController: BasicViewController {
             
             loginButton.enabled = false
             let params = ["username": userName, "userpassword": password, "usertype": userType]
-            manager.POST(APP_URL_LOGIN, parameters: params, success: {[unowned self] (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+            manager.POST(APP_URL_LOGIN, parameters: params, success: {(operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
                 let dic = responseObj as? NSDictionary
                 let code = dic?["code"] as? NSInteger
                 if code != nil && code == 1{
@@ -312,7 +312,7 @@ class LoginViewController: BasicViewController {
                     self.progressHUD?.hide(true, afterDelay: 2)
                     self.loginButton.enabled = true
                 }
-                }, failure: {[unowned self] (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                }, failure: {(operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
                     self.progressHUD?.mode = MBProgressHUDMode.Text
                     self.progressHUD?.detailsLabelText = error.localizedDescription
                     self.progressHUD?.hide(true, afterDelay: 2)
@@ -327,11 +327,13 @@ class LoginViewController: BasicViewController {
     
     // 获取登录用户信息
     func loadLoginUserInfo(params: NSDictionary!){
-        manager.POST(APP_URL_LOGIN_USERINFO, parameters: params, success: {[unowned self] (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+        manager.POST(APP_URL_LOGIN_USERINFO, parameters: params, success: {(operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
             let basicDic = responseObj as? NSDictionary
             let code = basicDic?["code"] as? NSInteger
             if code != nil && code == 1{
                 let resultInfo = basicDic!["data"] as! Dictionary<String, AnyObject>
+                KMLog("\(resultInfo as NSDictionary)")
+                
                 (UIApplication.sharedApplication().delegate as! AppDelegate).loginUserInfo = resultInfo
                 LocalStroge.sharedInstance().addObject(resultInfo, fileName: APP_PATH_LOGINUSER_INFO, searchPathDirectory: NSSearchPathDirectory.DocumentDirectory)
                 

@@ -74,6 +74,7 @@
 "The two input password does not match!" = "The two input password does not match!";
 "Customer Center" = "Customer Center";
 "Dealer Center" = "Dealer Center";
+"Registration success!" = "Registration success!";
 
 // CustomerViewController
 "User" = "User";
@@ -186,6 +187,6 @@
 "Successful modification!" = "Successful modification!";
 "Unknown error!" = "Unknown error!";
 
-
-
+// SmokeFriendChatRoomViewController
+"Smoking Friends" = "Smoking Friends";
 

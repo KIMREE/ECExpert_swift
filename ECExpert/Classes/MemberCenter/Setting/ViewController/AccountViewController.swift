@@ -319,7 +319,7 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
         self.progressHUD?.show(true)
         manager.POST(APP_URL_UPLOADUSERHEADER, parameters: nil, constructingBodyWithBlock: { (formData: AFMultipartFormData!) -> Void in
             formData.appendPartWithFileData(imageData, name: "customer_headimage", fileName: "head.jpeg", mimeType: "image/jpeg")
-            }, success: {[unowned self] (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+            }, success: {(operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
                 let dic = responseObj as? NSDictionary
                 let code = dic?["code"] as? NSInteger
                 if code != nil && code == 1{
@@ -334,7 +334,7 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
                     KMLog("\(dic)")
                     self.hideProgressHUD()
                 }
-            }) {[unowned self] (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+            }) {(operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
                 KMLog(error.localizedDescription)
                 self.progressHUD?.mode = MBProgressHUDMode.Text
                 self.progressHUD?.labelText = i18n("Failed to connect link to server!")
@@ -347,7 +347,7 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
     func loadLoginUserInfo(){
         let params = NSMutableDictionary()
         params.setObject(currentLoginUserInfo()!["usertype"]!, forKey: "usertype")
-        manager.POST(APP_URL_LOGIN_USERINFO, parameters: params, success: {[unowned self] (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+        manager.POST(APP_URL_LOGIN_USERINFO, parameters: params, success: { (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
             let basicDic = responseObj as? NSDictionary
             let code = basicDic?["code"] as? NSInteger
             if code != nil && code == 1{
@@ -467,7 +467,7 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
         let birthDay = dateFormat.stringFromDate(datePick.date)
         
         let params = ["customer_nickname": nickName, "customer_birth": birthDay]
-        manager.POST(APP_URL_EDITUSERINFO, parameters: params, success: {[unowned self] (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+        manager.POST(APP_URL_EDITUSERINFO, parameters: params, success: { (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
             let dic = responseObj as? NSDictionary
             let code = dic?["code"] as? NSInteger
             if code != nil && code! == 1{
@@ -568,7 +568,7 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
         let nickName = loginUserInfo!["customer_nickname"] as! String
         
         let params = ["customer_nickname": nickName, "customer_sex": selectSex]
-        manager.POST(APP_URL_EDITUSERINFO, parameters: params, success: {[unowned self] (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+        manager.POST(APP_URL_EDITUSERINFO, parameters: params, success: {(operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
             let dic = responseObj as? NSDictionary
             let code = dic?["code"] as? NSInteger
             if code != nil && code! == 1{

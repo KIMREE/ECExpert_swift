@@ -41,5 +41,10 @@
 #import "FSCalendar.h"
 #import "NSDate+FSExtension.h"
 
+// 融云 SDK
+#import <RongIMKit/RongIMKit.h>
+
+// sha1
+#import <CommonCrypto/CommonHMAC.h>
 
 #endif

@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		A10303451B437EEC00381BB4 /* GuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10303441B437EEC00381BB4 /* GuideView.swift */; };
+		A104B7011B6A070300AD4D95 /* SmokeFriendChatRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A104B7001B6A070300AD4D95 /* SmokeFriendChatRoomViewController.swift */; };
+		A10931F01B6B077E0076BC79 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10931EF1B6B077E0076BC79 /* StringExtension.swift */; };
+		A10931F31B6B26F70076BC79 /* KMUserInfoDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10931F21B6B26F70076BC79 /* KMUserInfoDataSource.swift */; };
+		A10931F91B6B6C600076BC79 /* UserInfoDataSource.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A10931F71B6B6C600076BC79 /* UserInfoDataSource.xcdatamodeld */; };
+		A10931FB1B6B6D1B0076BC79 /* UserInfoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10931FA1B6B6D1B0076BC79 /* UserInfoManager.swift */; };
+		A10931FF1B6B7B020076BC79 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10931FE1B6B7B020076BC79 /* UserInfo.swift */; };
 		A10C6FC91B3261A100645E49 /* KMMapCalloutCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10C6FC81B3261A100645E49 /* KMMapCalloutCellView.swift */; };
 		A10C6FCB1B32994E00645E49 /* DealerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10C6FCA1B32994E00645E49 /* DealerHelper.swift */; };
 		A10C6FCD1B32B6D200645E49 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10C6FCC1B32B6D200645E49 /* SearchViewController.swift */; };
@@ -80,6 +86,12 @@
 		1C350B37BFDEF9389EC7B0F0 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		673780B61EF4992E5FF07FC5 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A10303441B437EEC00381BB4 /* GuideView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideView.swift; sourceTree = "<group>"; };
+		A104B7001B6A070300AD4D95 /* SmokeFriendChatRoomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmokeFriendChatRoomViewController.swift; sourceTree = "<group>"; };
+		A10931EF1B6B077E0076BC79 /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		A10931F21B6B26F70076BC79 /* KMUserInfoDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KMUserInfoDataSource.swift; sourceTree = "<group>"; };
+		A10931F81B6B6C600076BC79 /* UserInfoDataSource.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = UserInfoDataSource.xcdatamodel; sourceTree = "<group>"; };
+		A10931FA1B6B6D1B0076BC79 /* UserInfoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfoManager.swift; sourceTree = "<group>"; };
+		A10931FE1B6B7B020076BC79 /* UserInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		A10C6FC81B3261A100645E49 /* KMMapCalloutCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KMMapCalloutCellView.swift; sourceTree = "<group>"; };
 		A10C6FCA1B32994E00645E49 /* DealerHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DealerHelper.swift; sourceTree = "<group>"; };
 		A10C6FCC1B32B6D200645E49 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -188,6 +200,41 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		A104B6FE1B6A018200AD4D95 /* SmokeFriend */ = {
+			isa = PBXGroup;
+			children = (
+				A10931F11B6B26CA0076BC79 /* Model */,
+				A104B6FF1B6A018200AD4D95 /* ViewController */,
+			);
+			path = SmokeFriend;
+			sourceTree = "<group>";
+		};
+		A104B6FF1B6A018200AD4D95 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				A104B7001B6A070300AD4D95 /* SmokeFriendChatRoomViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		A10931F11B6B26CA0076BC79 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A10931F21B6B26F70076BC79 /* KMUserInfoDataSource.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A10931F61B6B6AFC0076BC79 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				A10931FE1B6B7B020076BC79 /* UserInfo.swift */,
+				A10931F71B6B6C600076BC79 /* UserInfoDataSource.xcdatamodeld */,
+				A10931FA1B6B6D1B0076BC79 /* UserInfoManager.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
 		A10CDE401B41233C008D71AB /* Setting */ = {
 			isa = PBXGroup;
 			children = (
@@ -250,6 +297,7 @@
 		A18E5F701B291425005172E5 /* ECExpert */ = {
 			isa = PBXGroup;
 			children = (
+				A10931F61B6B6AFC0076BC79 /* CoreData */,
 				A1CB41431B33FA5E005AB9F1 /* Resources */,
 				A18E5FC01B293489005172E5 /* OC Code Files */,
 				A18E5F901B291465005172E5 /* Supporting Files */,
@@ -293,6 +341,7 @@
 		A18E5F9D1B291692005172E5 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				A104B6FE1B6A018200AD4D95 /* SmokeFriend */,
 				A1E0787F1B549DCA001E6721 /* DatePicker */,
 				A1FA976A1B37A4D300FCEEA4 /* MemberCenter */,
 				A1FB0A9F1B2E99A9004BDCA9 /* NearBy */,
@@ -315,6 +364,7 @@
 				A10C6FCA1B32994E00645E49 /* DealerHelper.swift */,
 				A10D9BA91B38EF1100660C36 /* ReactiveCocoa.swift */,
 				A1F8E6DB1B3A4DBD000F3342 /* UIFactory.swift */,
+				A10931EF1B6B077E0076BC79 /* StringExtension.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -757,14 +807,19 @@
 				A1FBACBE1B424A980051BCFA /* ItemViewController.swift in Sources */,
 				A1FD98271B3013A1002BFE10 /* KMAnnotation.swift in Sources */,
 				A1FB156C1B2BDBFB003296E4 /* UIActionSheet+Block.swift in Sources */,
+				A10931F31B6B26F70076BC79 /* KMUserInfoDataSource.swift in Sources */,
 				A10CDE551B4150DF008D71AB /* AccountViewController.swift in Sources */,
 				A10CDE4E1B4136D2008D71AB /* WaveformView.m in Sources */,
+				A10931F01B6B077E0076BC79 /* StringExtension.swift in Sources */,
 				A1F8E6EE1B3AA78D000F3342 /* CustomerViewController.swift in Sources */,
+				A10931FF1B6B7B020076BC79 /* UserInfo.swift in Sources */,
 				A1FB2E311B2A8C6800A4DDE7 /* MainViewController.swift in Sources */,
 				A1FB561C1B3BF07C00DA5D62 /* TradeRecordViewController.swift in Sources */,
 				A10D9BB21B39616400660C36 /* RegisterViewController.swift in Sources */,
+				A104B7011B6A070300AD4D95 /* SmokeFriendChatRoomViewController.swift in Sources */,
 				A10D9BAE1B39607900660C36 /* LoginViewController.swift in Sources */,
 				A1FB55FA1B3BA94500DA5D62 /* MDQRCodeGenerator.m in Sources */,
+				A10931F91B6B6C600076BC79 /* UserInfoDataSource.xcdatamodeld in Sources */,
 				A1E078821B549E43001E6721 /* DatePickerViewController.swift in Sources */,
 				A18E5F981B291499005172E5 /* AppDelegate.swift in Sources */,
 				A10C6FCF1B32B87200645E49 /* DealerDetailViewController.swift in Sources */,
@@ -793,6 +848,7 @@
 				A1FC49E11B3D27E20019A850 /* ProductModel.m in Sources */,
 				A18E5FC21B2937A2005172E5 /* AFNetworkingFactory.swift in Sources */,
 				A175FA651B3D3D3C0012F110 /* ProductDetailViewController.swift in Sources */,
+				A10931FB1B6B6D1B0076BC79 /* UserInfoManager.swift in Sources */,
 				A18E5FC41B293985005172E5 /* UIAlertView+Block.swift in Sources */,
 				A1F8E6F41B3AA7F9000F3342 /* ControlCenterScrollView.swift in Sources */,
 				A1FB56161B3BAD8F00DA5D62 /* FeedbackViewController.swift in Sources */,
@@ -1039,6 +1095,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		A10931F71B6B6C600076BC79 /* UserInfoDataSource.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A10931F81B6B6C600076BC79 /* UserInfoDataSource.xcdatamodel */,
+			);
+			currentVersion = A10931F81B6B6C600076BC79 /* UserInfoDataSource.xcdatamodel */;
+			path = UserInfoDataSource.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = A18E5F661B291424005172E5 /* Project object */;
 }

@@ -115,7 +115,7 @@ class ItemViewController: BasicViewController {
             params.setObject(npw1, forKey: "newpassword")
         }
         
-        manager.POST(url, parameters: params, success: {[unowned self] (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+        manager.POST(url, parameters: params, success: {(operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
             let dic = responseObj as? NSDictionary
             let code = dic?["code"] as? NSInteger
             if code != nil && code! == 1{
@@ -136,7 +136,7 @@ class ItemViewController: BasicViewController {
     func loadLoginUserInfo(){
         let params = NSMutableDictionary()
         params.setObject(currentLoginUserInfo()!["usertype"]!, forKey: "usertype")
-        manager.POST(APP_URL_LOGIN_USERINFO, parameters: params, success: {[unowned self] (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+        manager.POST(APP_URL_LOGIN_USERINFO, parameters: params, success: {(operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
             let basicDic = responseObj as? NSDictionary
             let code = basicDic?["code"] as? NSInteger
             if code != nil && code == 1{

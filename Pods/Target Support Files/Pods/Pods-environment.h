@@ -120,6 +120,12 @@
 #define COCOAPODS_VERSION_MINOR_ReactiveCocoa_no_arc 5
 #define COCOAPODS_VERSION_PATCH_ReactiveCocoa_no_arc 0
 
+// RongCloudIMKit
+#define COCOAPODS_POD_AVAILABLE_RongCloudIMKit
+#define COCOAPODS_VERSION_MAJOR_RongCloudIMKit 2
+#define COCOAPODS_VERSION_MINOR_RongCloudIMKit 2
+#define COCOAPODS_VERSION_PATCH_RongCloudIMKit 5
+
 // SDWebImage
 #define COCOAPODS_POD_AVAILABLE_SDWebImage
 #define COCOAPODS_VERSION_MAJOR_SDWebImage 3

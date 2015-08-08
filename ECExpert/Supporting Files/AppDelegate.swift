@@ -25,12 +25,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Fabric.with([Crashlytics()])
         
         // 初始化window
-        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        self.window = UIWindow(frame: KM_FRAME_SCREEN_BOUNDS)
         self.window!.backgroundColor = UIColor.whiteColor()
         self.window!.makeKeyAndVisible()
         
         let mainVC = MainViewController()
         self.window?.rootViewController = mainVC
+        
+        // 初始化融云SDK
+        self.setUpRongCloud()
         
         // 初始化 AppDelegate 中需要使用的 MBProgressHUD
         self.hud = MBProgressHUD()
@@ -166,15 +169,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             update = false
             let length = min(local.count, remote.count)
+            var verEqual = true
             for i in 0..<length{
                 let localV = (local[i] as NSString).doubleValue
                 let remoteV = (remote[i] as NSString).doubleValue
                 if remoteV > localV{
+                    verEqual = false
                     update = true
+                    break
+                }else if remoteV == localV{
+                    verEqual = true
+                    continue
+                }else{
+                    verEqual = false
+                    update = false
                     break
                 }
             }
-            if !update{
+            if verEqual{
                 if remote.count > local.count{
                     update = true
                 }
@@ -236,7 +248,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     */
     func loadLoginUserInfo(params: NSDictionary!){
         let manager = AFNetworkingFactory.networkingManager()
-        manager.POST(APP_URL_LOGIN_USERINFO, parameters: params, success: {[unowned self] (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+        manager.POST(APP_URL_LOGIN_USERINFO, parameters: params, success: { (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
             let basicDic = responseObj as? NSDictionary
             let code = basicDic?["code"] as? NSInteger
             if code != nil && code == 1{
@@ -271,6 +283,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         let pushToken = deviceToken.description.stringByReplacingOccurrencesOfString("<", withString: "").stringByReplacingOccurrencesOfString(">", withString: "")
+        RCIMClient.sharedRCIMClient().setDeviceToken(pushToken)
+        
         KMLog("\(deviceToken)    :    \(pushToken)")
     }
     
@@ -291,6 +305,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        alertView.showAlertViewWithCompleteBlock { (buttonIndex) -> Void in
 //            
 //        }
+        
+    }
+    
+    // MARK: 初始化融云SDK
+    func setUpRongCloud(){
+        RCIM.sharedRCIM().initWithAppKey(APP_RONG_CLOUD_KEY)
+        
+        // 判断聊天室是否存在
+        AFNetworkingFactory.rongCloudNetTool().POST(APP_RONG_CLOUD_URL_QUERY_CHATROOM, parameters: ["chatroomId":APP_RONG_CLOUD_CHATROOM_ID], success: { (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+            let root = responseObj as? NSDictionary
+            let code = root?["code"] as? NSInteger
+            if code != nil && code == 200{
+                let chatRoomArray = root!["chatRooms"] as! NSArray
+                if chatRoomArray.count == 0 {
+                    self.createChatRoom(APP_RONG_CLOUD_CHATROOM_ID, chatroomName: APP_RONG_CLOUD_CHATROOM_NAME)
+                }else{
+                    KMLog("query chatroom ok!")
+                }
+            }
+            
+            }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                KMLog("\(error.localizedDescription)")
+        }
+    }
+    
+    private func createChatRoom(chatroomId: String, chatroomName: String){
+        // 创建聊天室
+        AFNetworkingFactory.rongCloudNetTool().POST(APP_RONG_CLOUD_URL_CREATE_CHATROOM, parameters: ["chatroom[\(chatroomId)]":chatroomName], success: { (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+            let root = responseObj as? NSDictionary
+            let code = root?["code"] as? NSInteger
+            if code != nil && code == 200{
+                KMLog("create chatroom ok!")
+            }
+            
+            }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                KMLog("\(error.localizedDescription)")
+        }
         
     }
 }

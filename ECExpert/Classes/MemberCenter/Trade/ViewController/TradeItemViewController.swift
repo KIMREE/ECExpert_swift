@@ -56,7 +56,7 @@ class TradeItemViewController: BasicViewController , UITableViewDelegate, UITabl
         self.progressHUD?.labelText = ""
         self.progressHUD?.detailsLabelText = ""
         self.progressHUD?.show(true)
-        manager.POST(APP_URL_TRADE_RECORD_DETAIL, parameters: params , success: {[unowned self] (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+        manager.POST(APP_URL_TRADE_RECORD_DETAIL, parameters: params , success: { (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
             let dic = responseObj as? NSDictionary
             let code = dic?["code"] as? NSInteger
             if code != nil && code == 1{
@@ -111,7 +111,7 @@ class TradeItemViewController: BasicViewController , UITableViewDelegate, UITabl
                 self.hideProgressHUD()
             }
             
-            }) {[unowned self] (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+            }) {(operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
                 self.progressHUD?.mode = MBProgressHUDMode.Text
                 self.progressHUD?.labelText = i18n("Failed to connect link to server!")
                 self.progressHUD?.detailsLabelText = error.localizedDescription
@@ -174,7 +174,7 @@ class TradeItemViewController: BasicViewController , UITableViewDelegate, UITabl
             self.progressHUD?.labelText = ""
             self.progressHUD?.detailsLabelText = ""
             self.progressHUD?.show(true)
-            manager.POST(APP_URL_SCAN_BAR_CODE, parameters: params, success: {[unowned self] (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+            manager.POST(APP_URL_SCAN_BAR_CODE, parameters: params, success: { (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
                 let dic = responseObj as? NSDictionary
                 let code = dic?["code"] as? NSInteger
                 if code != nil && code == 1{
@@ -206,7 +206,7 @@ class TradeItemViewController: BasicViewController , UITableViewDelegate, UITabl
                     self.hideProgressHUD()
                 }
                 
-                }, failure: {[unowned self] (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                }, failure: {(operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
                     self.progressHUD?.mode = MBProgressHUDMode.Text
                     self.progressHUD?.labelText = i18n("Failed to connect link to server!")
                     self.progressHUD?.detailsLabelText = error.localizedDescription

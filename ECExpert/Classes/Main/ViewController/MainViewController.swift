@@ -25,6 +25,11 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
     var dealerVC: DealerViewController!
     var dealerNav: KMNavigationController!
     
+    var emptyVC: KMNavigationController!
+    var chatVC: SmokeFriendChatRoomViewController!
+    var chatNav: KMNavigationController!
+    private var canBeginChat = false
+    
     private var transitionAnimation: UITabBarTransitionAnimation!
 
     override func viewDidLoad() {
@@ -86,6 +91,14 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
             loginVC.view = nil
             showVCArrays = [newsNav! , nearbyNav!, loginNav!]
         }else{
+            
+            // 连接RongCloud
+            self.connectRongCloud()
+            
+            // 只要登录状态发生变化，都要重新初始化聊天室
+            chatVC = SmokeFriendChatRoomViewController(conversationType: RCConversationType.ConversationType_CHATROOM, targetId: APP_RONG_CLOUD_CHATROOM_ID)
+            chatNav = self.getNavigation(chatVC, imageName: "chatroom", title: i18n("Smoking Friends"))
+            
             let usertype = loginUserInfo!["usertype"] as! Int
             if usertype == 0{
                 if customerVC == nil{
@@ -102,6 +115,13 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
                 dealerVC.view = nil
                 showVCArrays = [newsNav! , nearbyNav!, dealerNav!]
             }
+            
+            if emptyVC == nil{
+                emptyVC = self.getNavigation(UIViewController(), imageName: "chatroom", title: i18n("Smoking Friends"))
+            }
+            
+            // TODO : 烟友会还未正式决定上架
+            showVCArrays.addObject(emptyVC)
         }
         
 //        let dateVC = DatePickerViewController()
@@ -114,10 +134,70 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
         self.selectedIndex = selectedIndex
         
         // viewControllers初始化完成之后， 在转场动画中，需要这个数组，用来判断是执行push还是pop
-        self.transitionAnimation = UITabBarTransitionAnimation()
-        self.transitionAnimation.tabBarSubviewControllers = self.viewControllers
+        self.transitionAnimation = UITabBarTransitionAnimation(tabBarSubviewControllers: self.viewControllers!)
         
         self.cleanOtherViewController()
+    }
+    
+    //
+    func connectRongCloud(){
+        canBeginChat = false
+        
+        let loginUserInfo = (UIApplication.sharedApplication().delegate as! AppDelegate).loginUserInfo
+        var userId = ""
+        var name = ""
+        var portraitUri = ""
+        
+        if loginUserInfo != nil{
+            let userType = loginUserInfo!["usertype"] as! NSInteger
+            if userType == 0{
+                let customerId = loginUserInfo!["customer_id"] as! String
+                let customerVip = loginUserInfo!["customer_vip"] as! String
+                
+                userId = "\(customerId)_\(customerVip)_0"
+                
+                name = loginUserInfo!["customer_nickname"] as! String
+                if (loginUserInfo!["customer_nickname"] as! String).isEmpty{
+                    name = loginUserInfo!["customer_name"] as! String
+                }
+                
+                portraitUri = loginUserInfo!["customer_headimage"] as! String
+                
+            }else if userType == 1{
+                let dealerId = loginUserInfo!["dealer_id"] as! String
+                name = loginUserInfo!["dealer_name"] as! String
+                
+                userId = "\(dealerId)_\(name)_1"
+            }
+        }
+        
+        // 获取token
+        AFNetworkingFactory.rongCloudNetTool().POST(APP_RONG_CLOUD_URL_GET_TOKEN, parameters: ["userId":userId], success: { (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+            let root = responseObj as? NSDictionary
+            let code = root?["code"] as? NSInteger
+            if code != nil && code == 200{
+                let token = root!["token"] as! String
+                self.connectRongCloud(token)
+            }
+            
+            }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                KMLog("\(error.localizedDescription)")
+        }
+        
+        RCIM.sharedRCIM().currentUserInfo = RCUserInfo(userId: userId, name: name, portrait: portraitUri)
+        RCIM.sharedRCIM().userInfoDataSource = KMUserInfoDataSource.shareDataSource()
+    }
+    
+    // 连接RongCloud
+    private func connectRongCloud(token: String){
+        RCIM.sharedRCIM().connectWithToken(token, success: { (userId: String!) -> Void in
+            KMLog("\(userId)")
+            self.canBeginChat = true
+            }, error: { (status: RCConnectErrorCode) -> Void in
+                KMLog("\(status)")
+            }) { () -> Void in
+                KMLog("nothing")
+        }
     }
     
     // 移除掉不需要显示的viewcontroller
@@ -179,10 +259,22 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
     
     // MARK: - UITabBarControllerDelegate
     func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
+        var canEnter = true
         if tabBarController.selectedViewController == viewController{
-            return false
+            canEnter = false
         }
-        return true
+        
+        // 如果要进入聊天室， 需要根据 canBeginChat 判断是否能进入, 使用模态视图打开聊天室
+        if emptyVC != nil && viewController == emptyVC{
+            if canBeginChat{
+                self.presentViewController(chatNav, animated: true, completion: { () -> Void in
+                    
+                })
+            }
+            
+            canEnter = false
+        }
+        return canEnter
     }
 
 

@@ -10,3 +10,6 @@ pod "JDStatusBarNotification"
 pod "NJKWebViewProgress"
 pod "TPKeyboardAvoiding"
 pod "ReactiveCocoa"
+
+# IMKit 界面组件库
+pod "RongCloudIMKit"

@@ -80,7 +80,7 @@ class TradeRecordViewController: BasicViewController, UITableViewDelegate, UITab
         self.progressHUD?.detailsLabelText = ""
         self.progressHUD?.show(true)
         
-        manager.POST(APP_URL_TRADE_RECORD, parameters: params, success: { [unowned self](operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+        manager.POST(APP_URL_TRADE_RECORD, parameters: params, success: {(operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
             let dic = responseObj as? NSDictionary
             let code = dic?["code"] as? NSInteger
             if code != nil && code == 1{
@@ -96,7 +96,7 @@ class TradeRecordViewController: BasicViewController, UITableViewDelegate, UITab
             self.tableView.footer.endRefreshing()
             self.progressHUD?.hide(true)
             
-            }) { [unowned self](operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+            }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
             self.progressHUD?.hide(true)
             self.tableView.footer.endRefreshing()
         }

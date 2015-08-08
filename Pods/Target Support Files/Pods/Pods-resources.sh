@@ -59,9 +59,17 @@ install_resource()
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "MJRefresh/MJRefresh/MJRefresh.bundle"
+  install_resource "RongCloudIMKit/Rong_Cloud_iOS_SDK_v2.2.5/RongCloud.bundle"
+  install_resource "RongCloudIMKit/Rong_Cloud_iOS_SDK_v2.2.5/en.lproj"
+  install_resource "RongCloudIMKit/Rong_Cloud_iOS_SDK_v2.2.5/zh-Hans.lproj"
+  install_resource "RongCloudIMKit/Rong_Cloud_iOS_SDK_v2.2.5/Emoji.plist"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "MJRefresh/MJRefresh/MJRefresh.bundle"
+  install_resource "RongCloudIMKit/Rong_Cloud_iOS_SDK_v2.2.5/RongCloud.bundle"
+  install_resource "RongCloudIMKit/Rong_Cloud_iOS_SDK_v2.2.5/en.lproj"
+  install_resource "RongCloudIMKit/Rong_Cloud_iOS_SDK_v2.2.5/zh-Hans.lproj"
+  install_resource "RongCloudIMKit/Rong_Cloud_iOS_SDK_v2.2.5/Emoji.plist"
 fi
 
 rsync -avr --copy-links --no-relative --exclude '*/.svn/*' --files-from="$RESOURCES_TO_COPY" / "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"

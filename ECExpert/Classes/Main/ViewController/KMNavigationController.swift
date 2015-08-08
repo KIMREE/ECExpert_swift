@@ -26,9 +26,15 @@ class KMNavigationController: UINavigationController {
         super.viewDidLoad()
         
         // button item 背景色
-        self.navigationBar.tintColor = UIColor.whiteColor()
+//        self.navigationBar.tintColor = UIColor.whiteColor()
+        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
         // 背景色
-        self.navigationBar.barTintColor = KM_COLOR_MAIN
+//        self.navigationBar.barTintColor = KM_COLOR_MAIN
+        UINavigationBar.appearance().barTintColor = KM_COLOR_MAIN
+        
+        var titleTextDic: [String: AnyObject] = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+//        self.navigationBar.titleTextAttributes = titleTextDic
+        UINavigationBar.appearance().titleTextAttributes = titleTextDic
         
         // Do any additional setup after loading the view.
         

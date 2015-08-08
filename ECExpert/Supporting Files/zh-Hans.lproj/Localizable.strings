@@ -74,6 +74,7 @@
 "The two input password does not match!" = "两次输入密码不一致";
 "Customer Center" = "会员中心";
 "Dealer Center" = "销售中心";
+"Registration success!" = "注册成功!";
 
 // CustomerViewController
 "User" = "用户名";
@@ -186,7 +187,7 @@
 "Successful modification!" = "修改成功!";
 "Unknown error!" = "未知错误!";
 
-
-
+// SmokeFriendChatRoomViewController
+"Smoking Friends" = "烟友会";
 
 

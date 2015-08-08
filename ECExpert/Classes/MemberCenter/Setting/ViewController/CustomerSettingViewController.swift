@@ -100,6 +100,10 @@ class CustomerSettingViewController: BasicViewController, UITableViewDelegate, U
         let aboutVC = UIViewController()
         aboutVC.view.backgroundColor = UIColor.whiteColor()
         
+        let statusBar = UIView(frame: CGRectMake(0, 0, KM_FRAME_SCREEN_WIDTH, KM_FRAME_VIEW_STATUSBAR_HEIGHT))
+        statusBar.backgroundColor = KM_COLOR_MAIN
+        aboutVC.view.addSubview(statusBar)
+        
         let label = UIFactory.labelWithFrame(CGRectMake(10, 80, KM_FRAME_SCREEN_WIDTH - 10 * 2, 30), text: "电子烟专家", textColor: UIColor.blackColor(), fontSize: 26, numberOfLines: 0, textAlignment: NSTextAlignment.Center)
         
         let detailLabel = UIFactory.labelWithFrame(CGRectMake(10, 110, KM_FRAME_SCREEN_WIDTH - 10 * 2, 150), text: "       专注电子烟行业，是全球最大最全的电子烟门户APP。\n       为您提供电子烟行业最权威的新闻、品牌、政策、展会等最新资讯。", textColor: UIColor.blackColor(), fontSize: 15, numberOfLines: 0, fontName: "Arial-BoldItalicMT")
@@ -110,7 +114,7 @@ class CustomerSettingViewController: BasicViewController, UITableViewDelegate, U
         let backButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(10, 10, emptyView.frame.size.width - 10 * 2, bottomH - 10 * 2)
         backButton.setTitle(i18n("Back"), forState: UIControlState.Normal)
-        backButton.backgroundColor = KM_COLOR_MAIN
+        backButton.backgroundColor = KM_COLOR_BUTTON_MAIN
         backButton.layer.masksToBounds = true
         backButton.layer.cornerRadius = 5
         backButton.layer.borderWidth = 2
@@ -136,9 +140,9 @@ class CustomerSettingViewController: BasicViewController, UITableViewDelegate, U
     
     func clearCacche(){
         let alertView = UIAlertView(title: "", message: i18n("Confirm to clear the cache?"), delegate: nil, cancelButtonTitle: i18n("Cancel"), otherButtonTitles: i18n("Sure"))
-        alertView.showAlertViewWithCompleteBlock {[unowned self] (buttonIndex) -> Void in
+        alertView.showAlertViewWithCompleteBlock {(buttonIndex) -> Void in
             if buttonIndex == 1{
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {[unowned self] () -> Void in
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() -> Void in
                     let cachePath = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.CachesDirectory, NSSearchPathDomainMask.UserDomainMask, true).first as! String
                     let files = NSFileManager.defaultManager().subpathsAtPath(cachePath)
                     if files != nil{
@@ -151,7 +155,7 @@ class CustomerSettingViewController: BasicViewController, UITableViewDelegate, U
                     }
                     LocalStroge.sharedInstance().deleteFile(APP_PATH_DEALER_INFO, searchPathDirectory: NSSearchPathDirectory.CachesDirectory)
                     
-                    dispatch_sync(dispatch_get_main_queue(), {[unowned self] () -> Void in
+                    dispatch_sync(dispatch_get_main_queue(), {() -> Void in
                         self.progressHUD?.mode = MBProgressHUDMode.Text
                         self.progressHUD?.labelText = ""
                         self.progressHUD?.detailsLabelText = i18n("Clean up success!")

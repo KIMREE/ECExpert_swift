@@ -110,8 +110,6 @@ class BasicViewController: UIViewController {
     :returns:
     */
     private func initNavigationBar(){
-        var titleTextDic: [String: AnyObject] = [NSForegroundColorAttributeName: UIColor.whiteColor()]
-        self.navigationController?.navigationBar.titleTextAttributes = titleTextDic
         
         // 当前ViewController 不是 root NavigationController
         let rootViewController: UIViewController? = self.navigationController?.viewControllers.first as? UIViewController

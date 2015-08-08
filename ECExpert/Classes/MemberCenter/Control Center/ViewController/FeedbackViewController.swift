@@ -31,6 +31,11 @@ class FeedbackViewController: BasicViewController, UITextViewDelegate {
         feedbackInfoView.becomeFirstResponder()
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.view.endEditing(true)
+    }
+    
     func setUpView(){
         let visibelFrame = getVisibleFrame()
         let scrollView = TPKeyboardAvoidingScrollView(frame: visibelFrame)
@@ -59,7 +64,7 @@ class FeedbackViewController: BasicViewController, UITextViewDelegate {
         let submitButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         submitButton.frame = CGRectMake(x, feedbackInfoView.frame.origin.y + feedbackH + 10, w, h)
         submitButton.setTitle(i18n("Submit"), forState: UIControlState.Normal)
-        submitButton.backgroundColor = KM_COLOR_MAIN
+        submitButton.backgroundColor = KM_COLOR_BUTTON_MAIN
         submitButton.layer.cornerRadius = 6
         submitButton.layer.masksToBounds = true
         submitButton.addTarget(self, action: "submit", forControlEvents: UIControlEvents.TouchUpInside)
@@ -85,7 +90,7 @@ class FeedbackViewController: BasicViewController, UITextViewDelegate {
         }
         
         let params = ["question_content": feedbackInfo]
-        AFNetworkingFactory.networkingManager().POST(APP_URL_FEEDBACK, parameters: params, success: {[unowned self] (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+        AFNetworkingFactory.networkingManager().POST(APP_URL_FEEDBACK, parameters: params, success: { (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
             let dic = responseObj as? NSDictionary
             let code = dic?["code"] as? NSInteger
             if code != nil && code == 1{

@@ -75,7 +75,7 @@ class NearByViewController: BasicViewController, CLLocationManagerDelegate, KMAn
         }
         
         // 检测数据更新
-        netManager.GET(APP_URL_DEALER, parameters: nil, success: {[unowned self] (operation:AFHTTPRequestOperation!, responseObj:AnyObject!) -> Void in
+        netManager.GET(APP_URL_DEALER, parameters: nil, success: {(operation:AFHTTPRequestOperation!, responseObj:AnyObject!) -> Void in
             let rootDic = responseObj as? NSDictionary
             let code = rootDic?["code"] as? Int
             if code != nil && code == 1{
@@ -90,7 +90,7 @@ class NearByViewController: BasicViewController, CLLocationManagerDelegate, KMAn
             }
             // 数据逻辑处理完成之后，才允许点击搜索按钮
 //            self.navigationItem.rightBarButtonItem?.enabled = true
-            }) {[unowned self] (operation:AFHTTPRequestOperation!, error: NSError!) -> Void in
+            }) {(operation:AFHTTPRequestOperation!, error: NSError!) -> Void in
                 KMLog("\(error.localizedDescription)")
                 // 数据逻辑处理完成之后，才允许点击搜索按钮
 //                self.navigationItem.rightBarButtonItem?.enabled = true

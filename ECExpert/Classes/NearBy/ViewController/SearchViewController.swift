@@ -94,7 +94,7 @@ class SearchViewController: BasicViewController, UITableViewDataSource, UITableV
         let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(NSEC_PER_SEC * random))
         
         // 注意： 这里在gcd里面对界面ui有影响，必须在主线程中执行， 如果在after执行过程中销毁了self，程序会崩溃
-        dispatch_after(delay, dispatch_get_main_queue()) {[unowned self] () -> Void in
+        dispatch_after(delay, dispatch_get_main_queue()) {() -> Void in
             let totalPageNo: Int = self.tableViewDataArray.count % self.pageSize == 0 ?  self.tableViewDataArray.count / self.pageSize : self.tableViewDataArray.count % self.pageSize + 1
             if self.pageNo < totalPageNo{
                 self.pageNo++

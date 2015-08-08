@@ -83,7 +83,7 @@ class ScanViewController: BasicViewController, AVCaptureMetadataOutputObjectsDel
             self.progressHUD?.minShowTime = 2
             self.progressHUD?.showAnimated(true, whileExecutingBlock: { () -> Void in
                 
-            }, completionBlock: { [unowned self]() -> Void in
+            }, completionBlock: { () -> Void in
                 self.navigationController?.popViewControllerAnimated(true)
             })
             return

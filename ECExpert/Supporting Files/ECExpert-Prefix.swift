@@ -22,6 +22,7 @@ let KM_COLOR_MAIN = RGB(208, 6, 51)
 let KM_COLOR_LOGIN = RGB(39, 178, 233)
 let KM_COLOR_REGISTER = RGB(59, 88, 158)
 
+let KM_COLOR_BUTTON_MAIN = RGB(207, 35, 73)
 
 // 国际化
 func i18n(key: String) -> String{
@@ -31,9 +32,9 @@ func i18n(key: String) -> String{
 // 日志
 func KMLog(format: String, args: CVarArgType...){
     #if DEBUG
-    NSLogv(format, getVaList(args))
+        NSLogv(format, getVaList(args))
     #else
-    // NO LOG
+        // NO LOG
     #endif
 }
 
@@ -101,6 +102,8 @@ let APP_PATH_LOGIN_PROOF_PASSWORD = "userpassword"
 let APP_PATH_LOGIN_PROOF_USERTYPE = "usertype"
 let APP_PATH_LOGIN_PROOF_SID = "sid"
 
+let APP_PATH_CHAT_USERINFO = "chat_userinfo.db"
+
 let APP_PATH_LOGINUSER_INFO = "user_information"
 let APP_PATH_DEALER_INFO = "dealer_information"
 
@@ -119,3 +122,21 @@ let KM_FRAME_VIEW_STATUSBAR_HEIGHT: CGFloat = 20.0
 let KM_FRAME_VIEW_TOOLBAR_HEIGHT: CGFloat = 49.0
 
 
+// RongCloud
+let APP_RONG_CLOUD_CHATROOM_ID = "kimree_chatroom_01"
+let APP_RONG_CLOUD_CHATROOM_NAME = "smoking friends"
+
+let APP_RONG_CLOUD_KEY = "p5tvi9dst01m4"
+let APP_RONG_CLOUD_SECRET = "jcMGRnmPUJoMx"
+
+let APP_RONG_CLOUD_URL_BASE = "https://api.cn.ronghub.com"
+let APP_RONG_CLOUD_URL_GET_TOKEN = "/user/getToken.json"
+let APP_RONG_CLOUD_URL_QUERY_CHATROOM = "/chatroom/query.json"
+let APP_RONG_CLOUD_URL_CREATE_CHATROOM = "/chatroom/create.json"
+
+
+let APP_RONG_CLOUD_CUSTOMER_ID_START = "customer"
+let APP_RONG_CLOUD_DEALER_ID_START = "dealer"
+
+// CoreData
+let APP_CORE_DATA_ENTITY_NAME_USERINFO = "UserInfo"

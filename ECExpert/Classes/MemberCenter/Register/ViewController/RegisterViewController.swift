@@ -240,8 +240,8 @@ class RegisterViewController: BasicViewController {
     
     func showAgreement(sender: AnyObject!){
         let agreementVC = UIViewController()
-        agreementVC.view.backgroundColor = UIColor.whiteColor()
-        
+        agreementVC.view.backgroundColor = KM_COLOR_MAIN
+
         let statusH: CGFloat = 20
         let bottomH: CGFloat = 60
         let webView = UIWebView(frame: CGRectMake(0, 0 + statusH, agreementVC.view.frame.size.width, agreementVC.view.frame.size.height - statusH - bottomH))
@@ -257,7 +257,7 @@ class RegisterViewController: BasicViewController {
         let backButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(10, 10, emptyView.frame.size.width - 10 * 2, bottomH - 10 * 2)
         backButton.setTitle(i18n("Back"), forState: UIControlState.Normal)
-        backButton.backgroundColor = KM_COLOR_MAIN
+        backButton.backgroundColor = KM_COLOR_BUTTON_MAIN
         backButton.layer.masksToBounds = true
         backButton.layer.cornerRadius = 5
         backButton.addTarget(self, action: "agreementViewBack:", forControlEvents: UIControlEvents.TouchUpInside)
@@ -312,7 +312,7 @@ class RegisterViewController: BasicViewController {
         progressHUD?.labelText = ""
         progressHUD?.detailsLabelText = ""
         progressHUD?.show(true)
-        AFNetworkingFactory.networkingManager().POST(APP_URL_REGISTER, parameters: params, success: {[unowned self] (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+        AFNetworkingFactory.networkingManager().POST(APP_URL_REGISTER, parameters: params, success: {(operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
             let dic = responseObj as? NSDictionary
             let code = dic?["code"] as? NSInteger
             if code != nil && code == 1{
@@ -325,6 +325,7 @@ class RegisterViewController: BasicViewController {
                 LocalStroge.sharedInstance().addObject(loginProof, fileName: APP_PATH_LOGIN_PROOF, searchPathDirectory: NSSearchPathDirectory.DocumentDirectory)
                 self.progressHUD?.hide(true)
                 
+                JDStatusBarNotification.showWithStatus(i18n("Registration success!"), dismissAfter: 2)
                 self.navigationController?.popViewControllerAnimated(true)
                 
             }else{
@@ -333,7 +334,7 @@ class RegisterViewController: BasicViewController {
                 self.progressHUD?.hide(true, afterDelay: 2)
             }
             
-        }) {[unowned self] (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+        }) {(operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
             self.progressHUD?.mode = MBProgressHUDMode.Text
             self.progressHUD?.detailsLabelText = error.localizedDescription
             self.progressHUD?.hide(true, afterDelay: 2)
