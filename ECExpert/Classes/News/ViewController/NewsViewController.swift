@@ -49,7 +49,7 @@ class NewsViewController: BasicViewController, UIWebViewDelegate, UIGestureRecog
         self.setUpToolBar()
         
         // 监控界面点击手势
-        let singleTap = UITapGestureRecognizer(target: self, action: "singleTapAction")
+        let singleTap = UITapGestureRecognizer(target: self, action: "singleTapAction:")
         
         // 注意：不做如下处理，无法监控到单击手势
         singleTap.cancelsTouchesInView = false
@@ -80,12 +80,10 @@ class NewsViewController: BasicViewController, UIWebViewDelegate, UIGestureRecog
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        //进入界面一次就刷新一次
-//        webView.reload()
     }
     
     // MARK: - 监控界面点击手势
-    func singleTapAction(){
+    func singleTapAction(gestureRecognizer: UIGestureRecognizer){
         self.clickLinkToOpenURL = true
     }
     
