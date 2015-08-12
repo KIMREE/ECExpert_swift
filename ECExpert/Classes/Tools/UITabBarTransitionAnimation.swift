@@ -47,12 +47,12 @@ class UITabBarTransitionAnimation:NSObject, UIViewControllerAnimatedTransitionin
             toTransform = CGAffineTransformMakeTranslation(0,0)
         }
         
-        UIView.animateWithDuration(transitionDuration(transitionContext), animations: { () -> Void in
+        UIView.animateWithDuration(transitionDuration(transitionContext), delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
             fromViewController!.view.transform = fromTransform
             toViewController!.view.transform = toTransform
-            }) { (completed: Bool) -> Void in
-                fromViewController!.view.transform = CGAffineTransformIdentity
-                transitionContext.completeTransition(true)
+        }) { (completed: Bool) -> Void in
+            fromViewController!.view.transform = CGAffineTransformIdentity
+            transitionContext.completeTransition(true)
         }
     }
 }
