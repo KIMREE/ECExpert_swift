@@ -40,7 +40,7 @@ class BasicViewController: UIViewController {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
@@ -90,7 +90,7 @@ class BasicViewController: UIViewController {
     /**
     初始化背景视图
     
-    :returns:
+    - returns:
     */
     private func initBackgroundImageView(){
         let backgroundImageView = UIImageView(frame: self.view.frame)
@@ -107,12 +107,12 @@ class BasicViewController: UIViewController {
     /**
     初始化navigationBar
     
-    :returns:
+    - returns:
     */
     private func initNavigationBar(){
         
         // 当前ViewController 不是 root NavigationController
-        let rootViewController: UIViewController? = self.navigationController?.viewControllers.first as? UIViewController
+        let rootViewController: UIViewController? = self.navigationController?.viewControllers.first
         if rootViewController != self {
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "goback"), style: UIBarButtonItemStyle.Plain, target: self, action: "goback")
         }
@@ -131,14 +131,14 @@ class BasicViewController: UIViewController {
     /**
     初始化 progressHUD
     
-    :returns:
+    - returns:
     */
     private func initMBProgressHUD(){
         self.progressHUD = MBProgressHUD()
         self.progressHUD?.dimBackground = true
         self.navigationController?.view.addSubview(self.progressHUD!)
         
-        var tapGesture = UITapGestureRecognizer(target: self, action: "hideProgressHUD")
+//        var tapGesture = UITapGestureRecognizer(target: self, action: "hideProgressHUD")
 //        self.progressHUD?.addGestureRecognizer(tapGesture)
     }
     
@@ -152,9 +152,9 @@ class BasicViewController: UIViewController {
     
     // MARK: - 获取界面可视部分frame
     func getVisibleFrame() -> CGRect{
-        var x: CGFloat = 0.0
+        let x: CGFloat = 0.0
         var y: CGFloat = 0.0
-        var w: CGFloat = KM_FRAME_SCREEN_WIDTH
+        let w: CGFloat = KM_FRAME_SCREEN_WIDTH
         var h: CGFloat = KM_FRAME_SCREEN_HEIGHT
         
         // status bar

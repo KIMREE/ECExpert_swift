@@ -17,38 +17,38 @@ class MagnetView: UIView {
         super.init(frame: frame)
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         super.touchesBegan(touches, withEvent: event)
         if originFrame == nil{
             originFrame = self.frame
         }
         
-        let touch = touches.first as! UITouch
+        let touch = touches.first!
         startPoint = touch.locationInView(self.window)
         
-        let superView = self.superview
-        superview?.bringSubviewToFront(self)
+        let sv = self.superview
+        sv?.bringSubviewToFront(self)
     }
     
-    override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
         super.touchesMoved(touches, withEvent: event)
-        let touch = touches.first as! UITouch
+        let touch = touches.first!
         let currentPoint = touch.locationInView(self.window)
         
-        var moveToFrame = CGRectMake(originFrame.origin.x + (currentPoint.x - startPoint.x), originFrame.origin.y + (currentPoint.y - startPoint.y), originFrame.size.width, originFrame.size.height)
+        let moveToFrame = CGRectMake(originFrame.origin.x + (currentPoint.x - startPoint.x), originFrame.origin.y + (currentPoint.y - startPoint.y), originFrame.size.width, originFrame.size.height)
         self.frame = moveToFrame
     }
     
-    override func touchesCancelled(touches: Set<NSObject>!, withEvent event: UIEvent!) {
+    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
         super.touchesCancelled(touches, withEvent: event)
         resetView()
     }
     
-    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         super.touchesEnded(touches, withEvent: event)
         resetView()
     }

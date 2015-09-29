@@ -30,7 +30,7 @@ class TradeItemViewController: BasicViewController , UITableViewDelegate, UITabl
         super.init(nibName: nil, bundle: nil)
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -56,7 +56,11 @@ class TradeItemViewController: BasicViewController , UITableViewDelegate, UITabl
         self.progressHUD?.labelText = ""
         self.progressHUD?.detailsLabelText = ""
         self.progressHUD?.show(true)
-        manager.POST(APP_URL_TRADE_RECORD_DETAIL, parameters: params , success: { (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+        manager.POST(APP_URL_TRADE_RECORD_DETAIL, parameters: params , success: { [weak self](operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+            if self == nil{
+                return
+            }
+            let blockSelf = self!
             let dic = responseObj as? NSDictionary
             let code = dic?["code"] as? NSInteger
             if code != nil && code == 1{
@@ -66,12 +70,12 @@ class TradeItemViewController: BasicViewController , UITableViewDelegate, UITabl
                 customerDic.setObject(data["customer_id"]!, forKey: "customer_id")
                 customerDic.setObject(data["customer_nickname"]!, forKey: "customer_nickname")
                 customerDic.setObject(data["customer_vip"]!, forKey: "customer_vip")
-                self.customerArray.addObject(customerDic)
+                blockSelf.customerArray.addObject(customerDic)
                 
                 let dealerDic = NSMutableDictionary()
                 dealerDic.setObject(data["dealer_id"]!, forKey: "dealer_id")
                 dealerDic.setObject(data["dealer_company"]!, forKey: "dealer_company")
-                self.dealerArray.addObject(dealerDic)
+                blockSelf.dealerArray.addObject(dealerDic)
                 
                 let products = data["products"] as? NSArray
                 if products != nil{
@@ -81,7 +85,7 @@ class TradeItemViewController: BasicViewController , UITableViewDelegate, UITabl
                         model.scanCode = product["productcode"] as! String
                         model.totalCount = (product["productnum"] as! NSString).integerValue
                         model.productNameZH = product["productname"] as! String
-                        self.productArray.addObject(model)
+                        blockSelf.productArray.addObject(model)
                     }
                 }
                 
@@ -93,29 +97,33 @@ class TradeItemViewController: BasicViewController , UITableViewDelegate, UITabl
                         model.scanCode = product["giftcode"] as! String
                         model.totalCount = (product["giftnum"] as! NSString).integerValue
                         model.productNameZH = product["giftname"] as! String
-                        self.giftArray.addObject(model)
+                        blockSelf.giftArray.addObject(model)
                     }
                 }
                 
-                if self.tableView != nil{
-                    self.tableView.reloadData()
+                if blockSelf.tableView != nil{
+                    blockSelf.tableView.reloadData()
                 }
-                self.hideProgressHUD()
+                blockSelf.hideProgressHUD()
                 
             }else if code != nil && code == 0{
-                self.progressHUD?.mode = MBProgressHUDMode.Text
-                self.progressHUD?.detailsLabelText = dic!["data"] as! String
-                self.hideProgressHUD(2)
+                blockSelf.progressHUD?.mode = MBProgressHUDMode.Text
+                blockSelf.progressHUD?.detailsLabelText = dic!["data"] as! String
+                blockSelf.hideProgressHUD(2)
             }else{
                 KMLog("\(dic)")
-                self.hideProgressHUD()
+                blockSelf.hideProgressHUD()
             }
             
-            }) {(operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
-                self.progressHUD?.mode = MBProgressHUDMode.Text
-                self.progressHUD?.labelText = i18n("Failed to connect link to server!")
-                self.progressHUD?.detailsLabelText = error.localizedDescription
-                self.hideProgressHUD(2)
+            }) {[weak self](operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                if self == nil{
+                    return
+                }
+                let blockSelf = self!
+                blockSelf.progressHUD?.mode = MBProgressHUDMode.Text
+                blockSelf.progressHUD?.labelText = i18n("Failed to connect link to server!")
+                blockSelf.progressHUD?.detailsLabelText = error.localizedDescription
+                blockSelf.hideProgressHUD(2)
         }
     }
     
@@ -143,7 +151,7 @@ class TradeItemViewController: BasicViewController , UITableViewDelegate, UITabl
         tableView.dataSource = self
         tableView.tableFooterView = UIView(frame: CGRectZero)
         tableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
-        tableView.backgroundColor = RGBA(0, 0, 0, 0.3)
+        tableView.backgroundColor = RGBA(red: 0, green: 0, blue: 0, alpha: 0.3)
         self.view.addSubview(tableView)
         
     }
@@ -174,7 +182,11 @@ class TradeItemViewController: BasicViewController , UITableViewDelegate, UITabl
             self.progressHUD?.labelText = ""
             self.progressHUD?.detailsLabelText = ""
             self.progressHUD?.show(true)
-            manager.POST(APP_URL_SCAN_BAR_CODE, parameters: params, success: { (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+            manager.POST(APP_URL_SCAN_BAR_CODE, parameters: params, success: {[weak self] (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+                if self == nil{
+                    return
+                }
+                let blockSelf = self!
                 let dic = responseObj as? NSDictionary
                 let code = dic?["code"] as? NSInteger
                 if code != nil && code == 1{
@@ -182,35 +194,39 @@ class TradeItemViewController: BasicViewController , UITableViewDelegate, UITabl
                     model.totalCount = product.totalCount
                     model.scanCode = product.scanCode
                     
-                    self.hideProgressHUD()
+                    blockSelf.hideProgressHUD()
                     
                     if section == 1{
-                        let index = self.productArray.indexOfObject(product)
-                        self.productArray.insertObject(model, atIndex: index)
-                        let detailVC = ProductDetailViewController(product: model, productArray: self.productArray, fromTableView: self.tableView, pageDataType: ProductDetailPageDataType.Main, pageEditType: ProductDetailPageEditType.None)
-                        self.navigationController?.pushViewController(detailVC, animated: true)
+                        let index = blockSelf.productArray.indexOfObject(product)
+                        blockSelf.productArray.insertObject(model, atIndex: index)
+                        let detailVC = ProductDetailViewController(product: model, productArray: blockSelf.productArray, fromTableView: blockSelf.tableView, pageDataType: ProductDetailPageDataType.Main, pageEditType: ProductDetailPageEditType.None)
+                        blockSelf.navigationController?.pushViewController(detailVC, animated: true)
                         
                     }else if section == 2{
-                        let index = self.giftArray.indexOfObject(product)
-                        self.giftArray.insertObject(model, atIndex: index)
-                        let detailVC = ProductDetailViewController(product: model, productArray: self.giftArray, fromTableView: self.tableView, pageDataType: ProductDetailPageDataType.Gift, pageEditType: ProductDetailPageEditType.None)
-                        self.navigationController?.pushViewController(detailVC, animated: true)
+                        let index = blockSelf.giftArray.indexOfObject(product)
+                        blockSelf.giftArray.insertObject(model, atIndex: index)
+                        let detailVC = ProductDetailViewController(product: model, productArray: blockSelf.giftArray, fromTableView: blockSelf.tableView, pageDataType: ProductDetailPageDataType.Gift, pageEditType: ProductDetailPageEditType.None)
+                        blockSelf.navigationController?.pushViewController(detailVC, animated: true)
                     }
                     
                 }else if code != nil && code == 0{
-                    self.progressHUD?.mode = MBProgressHUDMode.Text
-                    self.progressHUD?.detailsLabelText = dic!["data"] as! String
-                    self.hideProgressHUD(2)
+                    blockSelf.progressHUD?.mode = MBProgressHUDMode.Text
+                    blockSelf.progressHUD?.detailsLabelText = dic!["data"] as! String
+                    blockSelf.hideProgressHUD(2)
                 }else{
                     KMLog("\(dic)")
-                    self.hideProgressHUD()
+                    blockSelf.hideProgressHUD()
                 }
                 
-                }, failure: {(operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
-                    self.progressHUD?.mode = MBProgressHUDMode.Text
-                    self.progressHUD?.labelText = i18n("Failed to connect link to server!")
-                    self.progressHUD?.detailsLabelText = error.localizedDescription
-                    self.hideProgressHUD(2)
+                }, failure: {[weak self](operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                    if self == nil{
+                        return
+                    }
+                    let blockSelf = self!
+                    blockSelf.progressHUD?.mode = MBProgressHUDMode.Text
+                    blockSelf.progressHUD?.labelText = i18n("Failed to connect link to server!")
+                    blockSelf.progressHUD?.detailsLabelText = error.localizedDescription
+                    blockSelf.hideProgressHUD(2)
             })
         }
     }
@@ -283,7 +299,7 @@ class TradeItemViewController: BasicViewController , UITableViewDelegate, UITabl
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = UIFactory.tableViewCellForTableView(tableView, cellIdentifier: TradeItemViewController.CellIdentifier, cellType: UITableViewCellStyle.Subtitle) { (tableViewCell: UITableViewCell!) -> Void in
+        let cell = UIFactory.tableViewCellForTableView(tableView, cellIdentifier: TradeItemViewController.CellIdentifier, cellType: UITableViewCellStyle.Subtitle) { (tableViewCell: UITableViewCell!) -> Void in
             
             tableViewCell!.backgroundColor = UIColor.clearColor()
             tableViewCell!.textLabel?.textColor = UIColor.whiteColor()

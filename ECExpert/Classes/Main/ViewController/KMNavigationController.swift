@@ -9,19 +9,23 @@
 import UIKit
 
 class KMNavigationController: UINavigationController {
-    
+        
     override init(rootViewController: UIViewController) {
         super.init(rootViewController: rootViewController)
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
-
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -32,7 +36,7 @@ class KMNavigationController: UINavigationController {
 //        self.navigationBar.barTintColor = KM_COLOR_MAIN
         UINavigationBar.appearance().barTintColor = KM_COLOR_MAIN
         
-        var titleTextDic: [String: AnyObject] = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        let titleTextDic: [String: AnyObject] = [NSForegroundColorAttributeName: UIColor.whiteColor()]
 //        self.navigationBar.titleTextAttributes = titleTextDic
         UINavigationBar.appearance().titleTextAttributes = titleTextDic
         
@@ -45,8 +49,8 @@ class KMNavigationController: UINavigationController {
     
     func swipeGesture(swipeGesture: UIGestureRecognizer){
         KMLog("swipeGesture")
-        let firstVC = self.viewControllers.first as! UIViewController
-        let lastVC = self.viewControllers.last as! UIViewController
+        let firstVC = self.viewControllers.first
+        let lastVC = self.viewControllers.last
         if lastVC != firstVC{
             if lastVC is BasicViewController{
                 (lastVC as! BasicViewController).goback()
@@ -64,8 +68,8 @@ class KMNavigationController: UINavigationController {
     
     // MARK: - 立方体翻转动画效果
     /**
-    :param: viewController <#viewController description#>
-    :param: animated       <#animated description#>
+    - parameter viewController: <#viewController description#>
+    - parameter animated:       <#animated description#>
     */
     override func pushViewController(viewController: UIViewController, animated: Bool) {
         let animation = CATransition()
@@ -89,7 +93,7 @@ class KMNavigationController: UINavigationController {
         return super.popViewControllerAnimated(animated)
     }
     
-    override func popToRootViewControllerAnimated(animated: Bool) -> [AnyObject]? {
+    override func popToRootViewControllerAnimated(animated: Bool) -> [UIViewController]? {
         let animation = CATransition()
         animation.delegate = self
         animation.duration = 0.3
@@ -109,5 +113,13 @@ class KMNavigationController: UINavigationController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    
+    // MARK : - 屏幕旋转， tabView不允许旋转
+    override func shouldAutorotate() -> Bool {
+        return true
+    }
+    
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.Portrait
+    }
 }

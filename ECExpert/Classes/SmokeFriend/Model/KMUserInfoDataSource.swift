@@ -72,7 +72,11 @@ class KMUserInfoDataSource: NSObject, RCIMUserInfoDataSource {
                         }else{
                             // 普通客户
                             // userId = "\(customerId)_\(customerVip)_0"
-                            AFNetworkingFactory.networkingManager().POST(APP_URL_CHECKVIP, parameters: ["customer_id": array[0], "customer_vip": array[1]], success: { (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+                            AFNetworkingFactory.networkingManager().POST(APP_URL_CHECKVIP, parameters: ["customer_id": array[0], "customer_vip": array[1]], success: { [weak self](operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+                                if self == nil{
+                                    return
+                                }
+                                let blockSelf = self!
                                 let root = responseObj as? NSDictionary
                                 let code = root?["code"] as? NSInteger
                                 if code != nil && code == 1{
@@ -83,12 +87,12 @@ class KMUserInfoDataSource: NSObject, RCIMUserInfoDataSource {
                                         name = customerDic["customer_name"] as! String
                                     }
                                     
-                                    var portraitUri = customerDic["customer_headimage"] as! String
+                                    let portraitUri = customerDic["customer_headimage"] as! String
                                     let rc = RCUserInfo(userId: userId, name: name, portrait: portraitUri)
                                     dataKeyValue["userId"] = rc.userId
                                     dataKeyValue["name"] = rc.name
                                     dataKeyValue["portraitUri"] = rc.portraitUri
-                                    self.dataSourceMap.setObject(dataKeyValue, forKey: userId)
+                                    blockSelf.dataSourceMap.setObject(dataKeyValue, forKey: userId)
                                     
                                     UserInfoManager.shareManager().addUserInfo(rc.userId, name: rc.name, portraitUri: rc.portraitUri)
                                     completion(rc)
@@ -112,7 +116,7 @@ class KMUserInfoDataSource: NSObject, RCIMUserInfoDataSource {
     
     func getNewestChatUserInfo(userId: String, completion: ((userInfoDic :NSDictionary, valueChanged: Bool) -> Void)!){
         let array = userId.componentsSeparatedByString("_")
-        var dic = NSMutableDictionary()
+        let dic = NSMutableDictionary()
         if array.count == 3{
             let userType = (array[2] as NSString).integerValue
             let coreDataUserInfoArray = UserInfoManager.shareManager().queryUserInfoById(userId)
@@ -128,7 +132,11 @@ class KMUserInfoDataSource: NSObject, RCIMUserInfoDataSource {
                 }else{
                     // 普通客户
                     // userId = "\(customerId)_\(customerVip)_0"
-                    AFNetworkingFactory.networkingManager().POST(APP_URL_CHECKVIP, parameters: ["customer_id": array[0], "customer_vip": array[1]], success: { (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+                    AFNetworkingFactory.networkingManager().POST(APP_URL_CHECKVIP, parameters: ["customer_id": array[0], "customer_vip": array[1]], success: { [weak self](operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+                        if self == nil{
+                            return
+                        }
+                        let blockSelf = self!
                         let root = responseObj as? NSDictionary
                         let code = root?["code"] as? NSInteger
                         if code != nil && code == 1{
@@ -139,7 +147,7 @@ class KMUserInfoDataSource: NSObject, RCIMUserInfoDataSource {
                             if name.isEmpty{
                                 name = customerDic["customer_name"] as! String
                             }
-                            var portraitUri = customerDic["customer_headimage"] as! String
+                            let portraitUri = customerDic["customer_headimage"] as! String
                             
                             if coreDataUserInfo.name != name || coreDataUserInfo.portraitUri != portraitUri{
                                 dic.setValue(userId, forKey: "userId")
@@ -148,7 +156,7 @@ class KMUserInfoDataSource: NSObject, RCIMUserInfoDataSource {
                                 
                                 valueChanged = true
                                 
-                                self.dataSourceMap.removeObjectForKey(userId)
+                                blockSelf.dataSourceMap.removeObjectForKey(userId)
                                 UserInfoManager.shareManager().updateUserInfo(userId, updateDic: dic)
                             }
                             

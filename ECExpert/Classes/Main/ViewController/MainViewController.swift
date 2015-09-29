@@ -52,6 +52,10 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
+    }
+    
     //MARK: - 组装界面
     
     private func getNavigation(viewController: UIViewController!, imageName: String!, title: String!) -> KMNavigationController{
@@ -75,14 +79,27 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
         self.showLoginViewController()
     }
     
+    // 进入投票界面
+    func voteAction(){
+        
+        let voteNav = getNavigation(VoteViewController(), imageName: "Me", title: i18n("vote"))
+        self.presentViewController(voteNav, animated: true) { () -> Void in
+            
+        }
+    }
+    
     /**
     根据登陆信息，判断界面需要显示那些view controller
     */
     func showLoginViewController(){
+        
+        // TODO: 投票功能，暂时不需要上线
+//        self.newsVC.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Compose, target: self, action: "voteAction")
+        
         // 根据AppDelegate 的 loginUserInfo 判断用户是否已经登陆
         let loginUserInfo = (UIApplication.sharedApplication().delegate as! AppDelegate).loginUserInfo
         var showVCArrays =  NSMutableArray()
-        let selectIndex = self.selectedIndex
+//        let selectIndex = self.selectedIndex
         if loginUserInfo == nil{
             if loginVC == nil{
                 self.loginVC = LoginViewController()
@@ -124,12 +141,8 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
             showVCArrays.addObject(emptyVC)
         }
         
-//        let dateVC = DatePickerViewController()
-//        let dateNav = self.getNavigation(dateVC, imageName: "Me", title: "Date")
-//        showVCArrays.addObject(dateNav)
-        
         if self.viewControllers == nil || !showVCArrays.isEqualToArray(self.viewControllers!){
-            self.viewControllers = showVCArrays as [AnyObject]
+            self.viewControllers = NSArray(array: showVCArrays) as? [UIViewController]
         }
         self.selectedIndex = selectedIndex
         
@@ -172,12 +185,16 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
         }
         
         // 获取token
-        AFNetworkingFactory.rongCloudNetTool().POST(APP_RONG_CLOUD_URL_GET_TOKEN, parameters: ["userId":userId], success: { (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+        AFNetworkingFactory.rongCloudNetTool().POST(APP_RONG_CLOUD_URL_GET_TOKEN, parameters: ["userId":userId], success: { [weak self](operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+            if self == nil{
+                return
+            }
+            let blockSelf = self!
             let root = responseObj as? NSDictionary
             let code = root?["code"] as? NSInteger
             if code != nil && code == 200{
                 let token = root!["token"] as! String
-                self.connectRongCloud(token)
+                blockSelf.connectRongCloud(token)
             }
             
             }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
@@ -190,9 +207,13 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
     
     // 连接RongCloud
     private func connectRongCloud(token: String){
-        RCIM.sharedRCIM().connectWithToken(token, success: { (userId: String!) -> Void in
+        RCIM.sharedRCIM().connectWithToken(token, success: { [weak self](userId: String!) -> Void in
+            if self == nil{
+                return
+            }
+            let blockSelf = self!
             KMLog("\(userId)")
-            self.canBeginChat = true
+            blockSelf.canBeginChat = true
             }, error: { (status: RCConnectErrorCode) -> Void in
                 KMLog("\(status)")
             }) { () -> Void in
@@ -287,5 +308,14 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    // MARK : - 屏幕旋转， tabView不允许旋转
+    override func shouldAutorotate() -> Bool {
+        return true
+    }
+    
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.Portrait // | UIInterfaceOrientationMask.PortraitUpsideDown | UIInterfaceOrientationMask.LandscapeLeft | UIInterfaceOrientationMask.LandscapeRight
+    }
 
 }

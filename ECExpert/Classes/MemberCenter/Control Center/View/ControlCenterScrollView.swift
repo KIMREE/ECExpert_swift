@@ -10,11 +10,11 @@ import UIKit
 
 class ControlCenterScrollView: UIScrollView {
     
-    override func touchesShouldCancelInContentView(view: UIView!) -> Bool {
+    override func touchesShouldCancelInContentView(view: UIView) -> Bool {
         return false
     }
     
-    override func touchesShouldBegin(touches: Set<NSObject>!, withEvent event: UIEvent!, inContentView view: UIView!) -> Bool {
+    override func touchesShouldBegin(touches: Set<UITouch>, withEvent event: UIEvent?, inContentView view: UIView) -> Bool {
         return true
     }
     
@@ -22,7 +22,7 @@ class ControlCenterScrollView: UIScrollView {
         super.init(frame: frame)
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     

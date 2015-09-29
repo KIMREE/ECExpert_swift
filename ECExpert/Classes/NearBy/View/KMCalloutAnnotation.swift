@@ -11,7 +11,7 @@ import UIKit
 class KMCalloutAnnotation:NSObject, MKAnnotation {
     
     var coordinate: CLLocationCoordinate2D
-    var title: String
+    var title: String?
     var image: UIImage
     var index: Int!
     

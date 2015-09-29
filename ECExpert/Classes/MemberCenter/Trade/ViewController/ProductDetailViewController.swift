@@ -46,7 +46,7 @@ class ProductDetailViewController: BasicViewController, UITableViewDataSource, U
         super.init(nibName: nil, bundle: nil)
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -76,7 +76,7 @@ class ProductDetailViewController: BasicViewController, UITableViewDataSource, U
     }
     
     func commitChanges(){
-        let totalCount = (textField.text as NSString).integerValue
+        let totalCount = NSString(string: textField.text!).integerValue
         product.totalCount = totalCount
         fromTableView.reloadData()
         self.navigationController?.popViewControllerAnimated(true)
@@ -86,12 +86,11 @@ class ProductDetailViewController: BasicViewController, UITableViewDataSource, U
         tableView = TPKeyboardAvoidingTableView(frame: getVisibleFrame()) as UITableView
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.backgroundColor = RGBA(0, 0, 0, 0.3)
+        tableView.backgroundColor = RGBA(red: 0, green: 0, blue: 0, alpha: 0.3)
         tableView.separatorStyle = UITableViewCellSeparatorStyle.None
         tableView.tableFooterView = UIView(frame: CGRectZero)
         
         self.view.addSubview(tableView)
-    
     }
     
     override func goback() {
@@ -110,7 +109,7 @@ class ProductDetailViewController: BasicViewController, UITableViewDataSource, U
     func changeProductCountAction(sender: AnyObject!){
         let btn = sender as! UIButton
         let tag = btn.tag
-        var totalCount = (textField.text as NSString).integerValue
+        var totalCount = NSString(string: textField.text!).integerValue
         
         if tag == ProductDetailViewController.AddButtonTag{
             totalCount++
@@ -140,7 +139,7 @@ class ProductDetailViewController: BasicViewController, UITableViewDataSource, U
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = UIFactory.tableViewCellForTableView(tableView, cellIdentifier: ProductDetailViewController.CellIdentifier, cellType: UITableViewCellStyle.Subtitle, cleanCellContentView: false) { (tableViewCell: UITableViewCell!) -> Void in
+        let cell = UIFactory.tableViewCellForTableView(tableView, cellIdentifier: ProductDetailViewController.CellIdentifier, cellType: UITableViewCellStyle.Subtitle, cleanCellContentView: false) { (tableViewCell: UITableViewCell!) -> Void in
             
             tableViewCell!.backgroundColor = UIColor.clearColor()
             
@@ -157,10 +156,12 @@ class ProductDetailViewController: BasicViewController, UITableViewDataSource, U
             
             tableViewCell!.contentView.addSubview(leftView)
             tableViewCell!.contentView.addSubview(rightView)
+            
+            tableViewCell!.selectionStyle = UITableViewCellSelectionStyle.None
         }
         
-        var leftView = cell?.contentView.viewWithTag(ProductDetailViewController.CellLeftTag)
-        var rightView = cell?.contentView.viewWithTag(ProductDetailViewController.CellRightTag)
+        let leftView = cell?.contentView.viewWithTag(ProductDetailViewController.CellLeftTag)
+        let rightView = cell?.contentView.viewWithTag(ProductDetailViewController.CellRightTag)
         
         for view in leftView!.subviews{
             view.removeFromSuperview()
@@ -225,7 +226,7 @@ class ProductDetailViewController: BasicViewController, UITableViewDataSource, U
             let textFrame = CGRectMake(minusFrame.origin.x + minusFrame.size.width, (rightView!.frame.size.height - 22) / 2.0, 60, 22)
             let addFrame = CGRectMake(textFrame.origin.x + textFrame.size.width, (rightView!.frame.size.height - 30) / 2.0, 30, 30)
             
-            let addButton = UIButton.buttonWithType(UIButtonType.ContactAdd) as! UIButton
+            let addButton = UIButton(type: UIButtonType.ContactAdd)
             addButton.frame = addFrame
             addButton.tag = ProductDetailViewController.AddButtonTag
             addButton.tintColor = UIColor.redColor()
@@ -238,7 +239,7 @@ class ProductDetailViewController: BasicViewController, UITableViewDataSource, U
             textField.text = rightLabel.text
             textField.textAlignment = NSTextAlignment.Center
             
-            let minusButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+            let minusButton = UIButton(type: UIButtonType.Custom)
             minusButton.frame = minusFrame
             minusButton.tag = ProductDetailViewController.MinusButtonTag
             minusButton.backgroundColor = UIColor.clearColor()

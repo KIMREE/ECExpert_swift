@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         /**
         *  崩溃信息监测,详情查看 http://www.infoq.com/cn/articles/crashlytics-crash-statistics-tools
         */
-        Fabric.with([Crashlytics()])
+        Fabric.with([Crashlytics.self()])
         
         // 初始化window
         self.window = UIWindow(frame: KM_FRAME_SCREEN_BOUNDS)
@@ -45,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // 在 info.plist 中，将 View controller-based status bar appearance 设为 NO
         // 启动界面也变成白色 ： 在 info.plist 中， Status bar style 设置为 UIStatusBarStyleLightContent
         // 默认的黑色（UIStatusBarStyleDefault）    白色（UIStatusBarStyleLightContent）
-        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: false)
+        // UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: false)
         
         //设置状态栏通知样式
         JDStatusBarNotification.setDefaultStyle { (style: JDStatusBarStyle!) -> JDStatusBarStyle! in
@@ -71,14 +71,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // 注册远程推送
         self.registerAPNS()
         
+        // 在 App 启动时注册百度云推送服务，需要提供 Apikey
+        BPush.registerChannel(launchOptions, apiKey: "5Gn0GP2BtXyqmjjT2rAGh9rS", pushMode: BPushMode.Production, withFirstAction: nil, withSecondAction: nil, withCategory: nil, isDebug: true)
         // 处理远程推送消息
         if launchOptions != nil{
-            var badge = UIApplication.sharedApplication().applicationIconBadgeNumber
-            UIApplication.sharedApplication().applicationIconBadgeNumber = --badge
-
-            let remoteInfo = launchOptions![UIApplicationLaunchOptionsRemoteNotificationKey] as! [NSObject : AnyObject]
-            managerRemoteInfo(remoteInfo)
+            let remoteInfo = launchOptions![UIApplicationLaunchOptionsRemoteNotificationKey] as? [NSObject : AnyObject]
+            if remoteInfo != nil{
+                KMLog("remote info: \(remoteInfo)")
+                
+                BPush.handleNotification(remoteInfo!)
+            }
         }
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         
         return true
     }
@@ -119,7 +123,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: - 获取本地版本号
     /**
-    :returns: 应用的本地版本号
+    - returns: 应用的本地版本号
     */
     func getLocalVersion() -> String? {
         let dic = bundleInfoDictionary()
@@ -130,14 +134,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - 检查更新
     func checkForUpdate(){
         let manager = AFNetworkingFactory.networkingManager()
-        manager.GET(APP_URL, parameters: nil, success: { (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+        manager.GET(APP_URL, parameters: nil, success: { [weak self](operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+            if self == nil{
+                return
+            }
+            let blockSelf = self!
             let remoteAppInfoDic = responseObj as? Dictionary<String, AnyObject>
             let remoteResultArray = remoteAppInfoDic?["results"] as? Array<AnyObject>
             let remoteAppInfo = remoteResultArray?.last as? Dictionary<String, AnyObject>
             let remoteVersionString = remoteAppInfo?["version"] as? String
-            let localVersion = self.getLocalVersion()
+            let localVersion = blockSelf.getLocalVersion()
             
-            if self.needUpdate(localVersion, remoteVersion: remoteVersionString){
+            if blockSelf.needUpdate(localVersion, remoteVersion: remoteVersionString){
                 let alertView = UIAlertView(title: i18n("There is a new version, do you want to update?"), message: "", delegate: nil, cancelButtonTitle: i18n("Update later"), otherButtonTitles: i18n("Update now"))
                 alertView.showAlertViewWithCompleteBlock({ (buttonIndex) -> Void in
                     if buttonIndex == 1 {
@@ -156,10 +164,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     版本号为 xx.xx.xx格式，需要分段进行比较
     
-    :param: localVersion  本地版本号
-    :param: remoteVersion 远程app store版本号
+    - parameter localVersion:  本地版本号
+    - parameter remoteVersion: 远程app store版本号
     
-    :returns: 是否需要跟新
+    - returns: 是否需要跟新
     */
     func needUpdate(localVersion: String?, remoteVersion: String?) -> Bool{
         var update = false
@@ -199,16 +207,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - 启动网络连接状况监听
     func startNetStatusListener(){
         let manager = AFNetworkingFactory.networkingManager()
-        manager.reachabilityManager.setReachabilityStatusChangeBlock { (status: AFNetworkReachabilityStatus) -> Void in
+        manager.reachabilityManager.setReachabilityStatusChangeBlock {[weak self] (status: AFNetworkReachabilityStatus) -> Void in
+            if self == nil{
+                return
+            }
+            let blockSelf = self!
             switch status{
             case .ReachableViaWiFi,.ReachableViaWWAN:
                 KMLog("net work well")
             case .Unknown, .NotReachable:
                 
-                self.hud!.detailsLabelText = i18n("Unable to connect to the network")
-                self.hud!.minShowTime = 2
-                self.hud!.showAnimated(true, whileExecutingBlock: { () -> Void in
-                    self.hud!.hide(true)
+                blockSelf.hud!.detailsLabelText = i18n("Unable to connect to the network")
+                blockSelf.hud!.minShowTime = 2
+                blockSelf.hud!.showAnimated(true, whileExecutingBlock: { () -> Void in
+                    blockSelf.hud!.hide(true)
                 })
             }
         }
@@ -222,7 +234,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let autoLogin = loginProof![APP_PATH_LOGIN_PROOF_AUTOLOGIN] as! Bool
             if autoLogin{
                 let manager = AFNetworkingFactory.networkingManager()
-                manager.POST(APP_URL_LOGIN, parameters: loginProof!, success: { [unowned self,loginProof] (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void  in
+                manager.POST(APP_URL_LOGIN, parameters: loginProof!, success: { [weak self,loginProof] (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void  in
+                    if self == nil{
+                        return
+                    }
+                    let blockSelf = self!
                     let basicDic = responseObj as? NSDictionary
                     let code = basicDic?["code"] as? NSInteger
                     if code != nil && code == 1{
@@ -232,9 +248,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         loginProof!.setValue(resultInfo["sid"], forKey: APP_PATH_LOGIN_PROOF_SID)
                         LocalStroge.sharedInstance().addObject(loginProof, fileName: APP_PATH_LOGIN_PROOF, searchPathDirectory: NSSearchPathDirectory.DocumentDirectory)
                         
-                        self.loadLoginUserInfo(loginProof!)
+                        blockSelf.loadLoginUserInfo(loginProof!)
                     }
-                    }, failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                    }, failure: {(operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
                         KMLog("\(error.localizedDescription)")
                 })
             }
@@ -244,16 +260,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: 获取登录用户的信息
     /**
-    :param: params 查询登录用户信息需要的参数
+    - parameter params: 查询登录用户信息需要的参数
     */
     func loadLoginUserInfo(params: NSDictionary!){
         let manager = AFNetworkingFactory.networkingManager()
-        manager.POST(APP_URL_LOGIN_USERINFO, parameters: params, success: { (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+        manager.POST(APP_URL_LOGIN_USERINFO, parameters: params, success: { [weak self](operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+            if self == nil{
+                return
+            }
+            let blockSelf = self!
             let basicDic = responseObj as? NSDictionary
             let code = basicDic?["code"] as? NSInteger
             if code != nil && code == 1{
                 let resultInfo = basicDic!["data"] as! Dictionary<String, AnyObject>
-                self.loginUserInfo = resultInfo
+                blockSelf.loginUserInfo = resultInfo
                 KMLog("\(resultInfo as NSDictionary)")
                 LocalStroge.sharedInstance().addObject(resultInfo, fileName: APP_PATH_LOGINUSER_INFO, searchPathDirectory: NSSearchPathDirectory.DocumentDirectory)
                 
@@ -267,59 +287,71 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - 注册远程推送
     func registerAPNS(){
         let application = UIApplication.sharedApplication()
-        if APP_SYS_DEVICE_VERSION >= 8{
-            let settings = UIUserNotificationSettings(forTypes: UIUserNotificationType.Badge | UIUserNotificationType.Sound | UIUserNotificationType.Alert, categories: nil)
+        if #available(iOS 8.0, *) {
+            let settings = UIUserNotificationSettings(forTypes: [UIUserNotificationType.Badge, UIUserNotificationType.Sound, UIUserNotificationType.Alert], categories: nil)
             application.registerUserNotificationSettings(settings)
-            application.registerForRemoteNotifications()
-        }else{
-            application.registerForRemoteNotificationTypes(UIRemoteNotificationType.Badge | UIRemoteNotificationType.Sound | UIRemoteNotificationType.Alert)
+//            application.registerForRemoteNotifications()
+        } else {
+            // Fallback on earlier versions
+            application.registerForRemoteNotificationTypes([UIRemoteNotificationType.Badge, UIRemoteNotificationType.Sound, UIRemoteNotificationType.Alert])
         }
     }
     
     // MARK: - 远程推送代理
+    @available(iOS 8.0, *)
     func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
         KMLog("didRegisterUserNotificationSettings : \(notificationSettings)")
+        application.registerForRemoteNotifications()
     }
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-        let pushToken = deviceToken.description.stringByReplacingOccurrencesOfString("<", withString: "").stringByReplacingOccurrencesOfString(">", withString: "")
+        // 融云
+        let pushToken = deviceToken.description.stringByReplacingOccurrencesOfString("<", withString: "").stringByReplacingOccurrencesOfString(">", withString: "").stringByReplacingOccurrencesOfString(" ", withString: "")
         RCIMClient.sharedRCIMClient().setDeviceToken(pushToken)
+        
+        // 百度
+        BPush.registerDeviceToken(deviceToken)
+        BPush.bindChannelWithCompleteHandler { (result: AnyObject!, error: NSError!) -> Void in
+            KMLog("result : \(result)")
+        }
         
         KMLog("\(deviceToken)    :    \(pushToken)")
     }
     
+    // 当 DeviceToken 获取失败时，系统会回调此方法
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
         KMLog("didFailToRegisterForRemoteNotificationsWithError : \(error.localizedDescription)")
     }
     
+    // App 收到推送的通知
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         KMLog("didReceiveRemoteNotification : \(userInfo)")
         
-        managerRemoteInfo(userInfo)
+        BPush.handleNotification(userInfo)
     }
     
-    // 处理远程推送消息
-    func managerRemoteInfo(remoteInfo: [NSObject : AnyObject]){
-        KMLog("\(remoteInfo)")
-//        let alertView = UIAlertView(title: "remote message", message: "\(remoteInfo)", delegate: nil, cancelButtonTitle: "OK")
-//        alertView.showAlertViewWithCompleteBlock { (buttonIndex) -> Void in
-//            
-//        }
-        
+    // 接收到本地通知
+    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
+        KMLog("本地通知")
+        BPush.showLocalNotificationAtFront(notification, identifierKey: nil)
     }
     
-    // MARK: 初始化融云SDK
+    // MARK: - 初始化融云SDK
     func setUpRongCloud(){
         RCIM.sharedRCIM().initWithAppKey(APP_RONG_CLOUD_KEY)
         
         // 判断聊天室是否存在
-        AFNetworkingFactory.rongCloudNetTool().POST(APP_RONG_CLOUD_URL_QUERY_CHATROOM, parameters: ["chatroomId":APP_RONG_CLOUD_CHATROOM_ID], success: { (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+        AFNetworkingFactory.rongCloudNetTool().POST(APP_RONG_CLOUD_URL_QUERY_CHATROOM, parameters: ["chatroomId":APP_RONG_CLOUD_CHATROOM_ID], success: { [weak self](operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+            if self == nil{
+                return
+            }
+            let blockSelf = self!
             let root = responseObj as? NSDictionary
             let code = root?["code"] as? NSInteger
             if code != nil && code == 200{
                 let chatRoomArray = root!["chatRooms"] as! NSArray
                 if chatRoomArray.count == 0 {
-                    self.createChatRoom(APP_RONG_CLOUD_CHATROOM_ID, chatroomName: APP_RONG_CLOUD_CHATROOM_NAME)
+                    blockSelf.createChatRoom(APP_RONG_CLOUD_CHATROOM_ID, chatroomName: APP_RONG_CLOUD_CHATROOM_NAME)
                 }else{
                     KMLog("query chatroom ok!")
                 }

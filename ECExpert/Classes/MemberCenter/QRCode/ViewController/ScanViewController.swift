@@ -46,7 +46,7 @@ class ScanViewController: BasicViewController, AVCaptureMetadataOutputObjectsDel
         super.init(nibName: nil, bundle: nil)
     }
 
-    required convenience init(coder aDecoder: NSCoder) {
+    required convenience init?(coder aDecoder: NSCoder) {
         self.init(scanType: ScanType.All, scanCompleteFunc: nil)
     }
 
@@ -67,7 +67,7 @@ class ScanViewController: BasicViewController, AVCaptureMetadataOutputObjectsDel
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        session.startRunning()
+        session?.startRunning()
     }
     
     func setUpView(){
@@ -75,21 +75,24 @@ class ScanViewController: BasicViewController, AVCaptureMetadataOutputObjectsDel
         device = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
         
         // 2.设置输入
-        var error: NSError?
-        input = AVCaptureDeviceInput(device: device, error: &error)
-        if error != nil{
+        do {
+            input = try AVCaptureDeviceInput(device: device)
+        } catch let error as NSError {
+            input = nil
+            
             self.progressHUD?.mode = MBProgressHUDMode.Text
-            self.progressHUD?.detailsLabelText = error?.localizedDescription
+            self.progressHUD?.detailsLabelText = error.localizedDescription
             self.progressHUD?.minShowTime = 2
             self.progressHUD?.showAnimated(true, whileExecutingBlock: { () -> Void in
                 
-            }, completionBlock: { () -> Void in
-                self.navigationController?.popViewControllerAnimated(true)
+                }, completionBlock: { () -> Void in
+                    self.navigationController?.popViewControllerAnimated(true)
             })
             return
         }
+
         
-        // 3. 设置输出
+        // 3. 设置输出, 以及设置扫描区域
         output = AVCaptureMetadataOutput()
         let visible = getVisibleFrame()
         let x: CGFloat = (visible.size.width - width) / 2.0
@@ -113,7 +116,11 @@ class ScanViewController: BasicViewController, AVCaptureMetadataOutputObjectsDel
         //    [_output setMetadataObjectTypes:@[AVMetadataObjectTypeQRCode]];
         switch scanType{
         case .All:
-            output.metadataObjectTypes = [AVMetadataObjectTypeUPCECode,AVMetadataObjectTypeCode39Code,AVMetadataObjectTypeCode39Mod43Code,AVMetadataObjectTypeEAN13Code,AVMetadataObjectTypeEAN8Code,AVMetadataObjectTypeCode93Code,AVMetadataObjectTypeCode128Code,AVMetadataObjectTypePDF417Code,AVMetadataObjectTypeQRCode,AVMetadataObjectTypeAztecCode,AVMetadataObjectTypeInterleaved2of5Code,AVMetadataObjectTypeITF14Code,AVMetadataObjectTypeDataMatrixCode]
+            if #available(iOS 8.0, *) {
+                output.metadataObjectTypes = [AVMetadataObjectTypeUPCECode,AVMetadataObjectTypeCode39Code,AVMetadataObjectTypeCode39Mod43Code,AVMetadataObjectTypeEAN13Code,AVMetadataObjectTypeEAN8Code,AVMetadataObjectTypeCode93Code,AVMetadataObjectTypeCode128Code,AVMetadataObjectTypePDF417Code,AVMetadataObjectTypeQRCode,AVMetadataObjectTypeAztecCode,AVMetadataObjectTypeInterleaved2of5Code,AVMetadataObjectTypeITF14Code,AVMetadataObjectTypeDataMatrixCode]
+            } else {
+                output.metadataObjectTypes = [AVMetadataObjectTypeUPCECode,AVMetadataObjectTypeCode39Code,AVMetadataObjectTypeCode39Mod43Code,AVMetadataObjectTypeEAN13Code,AVMetadataObjectTypeEAN8Code,AVMetadataObjectTypeCode93Code,AVMetadataObjectTypeCode128Code,AVMetadataObjectTypePDF417Code,AVMetadataObjectTypeQRCode,AVMetadataObjectTypeAztecCode]
+            }
         case .QRCode:
             output.metadataObjectTypes = [AVMetadataObjectTypeQRCode]
         case .BarCode:
@@ -127,7 +134,7 @@ class ScanViewController: BasicViewController, AVCaptureMetadataOutputObjectsDel
         self.view.layer.insertSublayer(preview, atIndex: 0)
         
         // 6. 设置遮掩层
-        let alphaColor = RGBA(0, 0, 0, 0.5)
+        let alphaColor = RGBA(red: 0, green: 0, blue: 0, alpha: 0.5)
         let topView = UIView(frame: CGRectMake(0, 0, KM_FRAME_SCREEN_WIDTH, y))
         topView.backgroundColor = alphaColor
         
@@ -192,7 +199,10 @@ class ScanViewController: BasicViewController, AVCaptureMetadataOutputObjectsDel
     // MARK: 闪光灯开关
     func light(){
         if device != nil && device.hasTorch{
-            device.lockForConfiguration(nil)
+            do {
+                try device.lockForConfiguration()
+            } catch _ {
+            }
             if device.torchMode == AVCaptureTorchMode.Off{
                 device.torchMode = AVCaptureTorchMode.On
             }else{

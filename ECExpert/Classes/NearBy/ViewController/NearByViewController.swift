@@ -75,15 +75,19 @@ class NearByViewController: BasicViewController, CLLocationManagerDelegate, KMAn
         }
         
         // 检测数据更新
-        netManager.GET(APP_URL_DEALER, parameters: nil, success: {(operation:AFHTTPRequestOperation!, responseObj:AnyObject!) -> Void in
+        netManager.GET(APP_URL_DEALER, parameters: nil, success: {[weak self](operation:AFHTTPRequestOperation!, responseObj:AnyObject!) -> Void in
+            if self == nil{
+                return
+            }
+            let blockSelf = self!
             let rootDic = responseObj as? NSDictionary
             let code = rootDic?["code"] as? Int
             if code != nil && code == 1{
                 let remoteDealerArray = DealerHelper.getMapShowDealerArray(rootDic?["data"] as! NSArray)
                 
                 if localDealerArray == nil || !remoteDealerArray.isEqualToArray(localDealerArray as! [AnyObject]){
-                    self.dealerArray = NSMutableArray(array: remoteDealerArray)
-                    self.reloadData()
+                    blockSelf.dealerArray = NSMutableArray(array: remoteDealerArray)
+                    blockSelf.reloadData()
                     LocalStroge.sharedInstance().deleteFile(APP_PATH_DEALER_INFO, searchPathDirectory: NSSearchPathDirectory.CachesDirectory)
                     LocalStroge.sharedInstance().addObject(remoteDealerArray, fileName: APP_PATH_DEALER_INFO, searchPathDirectory: NSSearchPathDirectory.CachesDirectory)
                 }
@@ -109,9 +113,11 @@ class NearByViewController: BasicViewController, CLLocationManagerDelegate, KMAn
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.distanceFilter = 10.0
         
-        if APP_SYS_DEVICE_VERSION >= 8.0{
+        if #available(iOS 8.0, *) {
             locationManager.requestWhenInUseAuthorization()
             locationManager.requestAlwaysAuthorization()
+        } else {
+            // Fallback on earlier versions
         }
     }
     
@@ -120,6 +126,7 @@ class NearByViewController: BasicViewController, CLLocationManagerDelegate, KMAn
         let mapFrame = getVisibleFrame()
         self.mapView = MKMapView(frame: mapFrame)
         mapView.mapType = MKMapType.Standard
+        mapView.zoomEnabled = true
         self.view.addSubview(self.mapView)
         
         // 设置代理
@@ -155,22 +162,24 @@ class NearByViewController: BasicViewController, CLLocationManagerDelegate, KMAn
     }
     
     // MARK: - CLLocationManagerDelegate
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         KMLog("didUpdateLocations")
         manager.stopUpdatingLocation()
     }
     
-    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         KMLog("\(error.localizedDescription)")
     }
     
-    func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         KMLog("didChangeAuthorizationStatus")
         switch status {
         case .NotDetermined:
-            if APP_SYS_DEVICE_VERSION >= 8.0{
-                locationManager.requestWhenInUseAuthorization()
+            if #available(iOS 8.0, *) {
                 locationManager.requestAlwaysAuthorization()
+                locationManager.requestWhenInUseAuthorization()
+            } else {
+                // Fallback on earlier versions
             }
         case .Restricted, .Denied:
             let alertView = UIAlertView(title: nil, message: i18n("Please open the location service!"), delegate: nil, cancelButtonTitle: i18n("Sure"))
@@ -201,10 +210,10 @@ class NearByViewController: BasicViewController, CLLocationManagerDelegate, KMAn
     
     func annotationManagerDidSelectCalloutWithIndex(index: Int!, calloutAnnotationView: KMCalloutAnnotationView!) {
         let data = self.dealerArray[index] as! NSDictionary
-        var dealer = NSMutableDictionary(dictionary: data)
+        let dealer = NSMutableDictionary(dictionary: data)
         if self.mapView.userLocation.location != nil{
             let dealerLocation = CLLocation(latitude: (dealer["dealer_lat"] as! NSString).doubleValue, longitude: (dealer["dealer_lng"] as! NSString).doubleValue)
-            let distance = self.mapView.userLocation.location.distanceFromLocation(dealerLocation)
+            let distance = self.mapView.userLocation.location!.distanceFromLocation(dealerLocation)
             dealer["dealer_distance"] = NSString(format: "%.3f", Double(distance / 1000.0))
         }
         
@@ -236,7 +245,7 @@ class NearByViewController: BasicViewController, CLLocationManagerDelegate, KMAn
     func dealerDetailShowCalloutInMapView(coordinate: CLLocationCoordinate2D) {
         var annotation: MKAnnotation!
         for item in self.mapView.annotations{
-            let anno = item as! MKAnnotation
+            let anno = item 
             if anno.coordinate.latitude == coordinate.latitude && anno.coordinate.longitude == coordinate.longitude{
                 annotation = anno
                 break

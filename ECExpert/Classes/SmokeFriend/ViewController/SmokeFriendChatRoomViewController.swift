@@ -29,7 +29,7 @@ class SmokeFriendChatRoomViewController: RCConversationViewController {
         *
         *  @param avatarStyle avatarStyle
         */
-        self.setMessageAvatarStyle(RCUserAvatarStyle._USER_AVATAR_CYCLE)
+        self.setMessageAvatarStyle(RCUserAvatarStyle.USER_AVATAR_CYCLE)
         
         super.viewDidLoad()
         

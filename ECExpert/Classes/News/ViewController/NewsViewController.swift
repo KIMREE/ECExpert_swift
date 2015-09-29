@@ -57,7 +57,7 @@ class NewsViewController: BasicViewController, UIWebViewDelegate, UIGestureRecog
         
         self.webView.addGestureRecognizer(singleTap)
         
-        self.basicTabBarFrame = self.tabBarController?.tabBar.frame
+        self.basicTabBarFrame = self.tabBarController?.tabBar.frame ?? CGRectMake(0, KM_FRAME_SCREEN_HEIGHT, KM_FRAME_SCREEN_WIDTH, 0)
         
         let activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
         activityIndicator.center = CGPointMake(self.view.frame.size.width / 2.0, self.view.frame.size.height / 2.0)
@@ -120,7 +120,7 @@ class NewsViewController: BasicViewController, UIWebViewDelegate, UIGestureRecog
         let toolBarFrame = CGRectMake(0, KM_FRAME_SCREEN_HEIGHT - KM_FRAME_VIEW_TOOLBAR_HEIGHT , KM_FRAME_SCREEN_WIDTH, KM_FRAME_VIEW_TOOLBAR_HEIGHT)
         self.toolBar = UIToolbar()
         toolBar.frame = toolBarFrame
-        toolBar.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleTopMargin
+        toolBar.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleTopMargin]
         toolBar.barStyle = UIBarStyle.Default
         toolBar.barTintColor = UIColor.whiteColor()
         toolBar.tintColor = KM_COLOR_MAIN
@@ -139,7 +139,7 @@ class NewsViewController: BasicViewController, UIWebViewDelegate, UIGestureRecog
         forwardButton.enabled = false
         
         let space = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
-        let array = [homeButton, space, stopLoadingButton, space, backButton, space, forwardButton, space, browserButton]
+        let array: [UIBarButtonItem] = [homeButton, space, stopLoadingButton, space, backButton, space, forwardButton, space, browserButton]
         self.toolBar.setItems(array, animated: true)
     }
     
@@ -185,10 +185,12 @@ class NewsViewController: BasicViewController, UIWebViewDelegate, UIGestureRecog
         
         self.tabBarItem.title = self.basicTitle
         self.currentURL = self.webView.request?.URL
+        
+        progressView.setProgress(1.0, animated: true)
     }
     
-    func webView(webView: UIWebView, didFailLoadWithError error: NSError) {
-        KMLog(error.localizedDescription)
+    func webView(webView: UIWebView, didFailLoadWithError error: NSError?) {
+        KMLog(error!.localizedDescription)
         
         self.finishLoad()
     }
@@ -198,7 +200,7 @@ class NewsViewController: BasicViewController, UIWebViewDelegate, UIGestureRecog
         backButton.enabled = self.webView.canGoBack
         forwardButton.enabled = self.webView.canGoForward
         
-        var newToolbarItems = NSMutableArray(array: self.toolBar.items!)
+        let newToolbarItems = NSMutableArray(array: self.toolBar.items!)
         let changeIndex = newToolbarItems.containsObject(reloadButton) ? newToolbarItems.indexOfObject(reloadButton) : newToolbarItems.indexOfObject(stopLoadingButton)
         
         if self.webView.loading{
@@ -207,7 +209,7 @@ class NewsViewController: BasicViewController, UIWebViewDelegate, UIGestureRecog
             newToolbarItems[changeIndex] = self.reloadButton
         }
         
-        self.toolBar.setItems(newToolbarItems as [AnyObject], animated: true)
+        self.toolBar.setItems( NSArray(array: newToolbarItems) as? [UIBarButtonItem], animated: true)
     }
     
     func finishLoad(){
@@ -218,7 +220,7 @@ class NewsViewController: BasicViewController, UIWebViewDelegate, UIGestureRecog
     func showTabBar(){
 //        self.tabBarController?.tabBar.hidden = false
         
-        var newFrame = self.basicTabBarFrame
+        let newFrame = self.basicTabBarFrame
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationDuration(0.5)
         self.tabBarController?.tabBar.frame = newFrame

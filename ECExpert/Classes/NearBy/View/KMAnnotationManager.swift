@@ -8,8 +8,8 @@
 
 import UIKit
 
-let KMAnnotationKey = "CustomAnnotation"
-let KMCalloutAnnotationKey = "CalloutView"
+private let KMAnnotationKey = "CustomAnnotation"
+private let KMCalloutAnnotationKey = "CalloutView"
 
 protocol KMAnnotationManagerDelegate: NSObjectProtocol{
     func annotationManagerNumersOfCalloutAnnotationViewForMap() -> Int
@@ -47,14 +47,14 @@ class KMAnnotationManager: NSObject, MKMapViewDelegate {
     func removeKMCalloutAnnotation(mapView: MKMapView!){
         for anno in mapView.annotations{
             if anno is KMCalloutAnnotation{
-                mapView.removeAnnotation(anno as! MKAnnotation)
+                mapView.removeAnnotation(anno )
             }
         }
     }
     
     // MARK: - MKMapViewDelegate
-    func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
-        if annotation! is KMAnnotation{
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation is KMAnnotation{
             let anno = annotation as! KMAnnotation
             var annotationView: MKAnnotationView? = mapView.dequeueReusableAnnotationViewWithIdentifier(KMAnnotationKey)
             if annotationView == nil{
@@ -64,7 +64,7 @@ class KMAnnotationManager: NSObject, MKMapViewDelegate {
                 annotationView?.userInteractionEnabled = true
             }
             return annotationView
-        }else if annotation! is KMCalloutAnnotation{
+        }else if annotation is KMCalloutAnnotation{
             let anno = annotation as! KMCalloutAnnotation
             var annotationView: KMCalloutAnnotationView? = mapView.dequeueReusableAnnotationViewWithIdentifier(KMCalloutAnnotationKey) as? KMCalloutAnnotationView
             if annotationView == nil{
@@ -86,23 +86,23 @@ class KMAnnotationManager: NSObject, MKMapViewDelegate {
         return nil
     }
     
-    func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
+    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
         let annotation = view.annotation
         if annotation! is KMAnnotation{
             removeKMCalloutAnnotation(mapView)
             let anno = annotation as! KMAnnotation
-            let calloutAnnotation = KMCalloutAnnotation(coordinate: anno.coordinate, title: anno.title, image: anno.image)
+            let calloutAnnotation = KMCalloutAnnotation(coordinate: anno.coordinate, title: anno.title!, image: anno.image)
             calloutAnnotation.index = anno.index
             mapView.addAnnotation(calloutAnnotation)
             mapView.setCenterCoordinate(anno.coordinate, animated: true)
         }
     }
     
-    func mapView(mapView: MKMapView!, didDeselectAnnotationView view: MKAnnotationView!) {
+    func mapView(mapView: MKMapView, didDeselectAnnotationView view: MKAnnotationView) {
         KMLog("didDeselectAnnotationView")
     }
     
-    func mapViewDidFinishRenderingMap(mapView: MKMapView!, fullyRendered: Bool) {
+    func mapViewDidFinishRenderingMap(mapView: MKMapView, fullyRendered: Bool) {
         KMLog("mapViewDidFinishRenderingMap")
     }
     

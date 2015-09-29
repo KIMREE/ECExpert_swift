@@ -46,14 +46,14 @@ class FeedbackViewController: BasicViewController, UITextViewDelegate {
         let w: CGFloat = scrollView.frame.size.width - 2 * x
         let h: CGFloat = 40
         
-        let label = UIFactory.labelWithFrame(CGRectMake(x, y, w, h), text: i18n("Please fill in your questions and suggestions"), textColor: RGB(47,48,48), fontSize: 15, numberOfLines: 2, fontName: "Arial-BoldItalicMT", textAlignment: NSTextAlignment.Left)
+        let label = UIFactory.labelWithFrame(CGRectMake(x, y, w, h), text: i18n("Please fill in your questions and suggestions"), textColor: RGB(47,green: 48,blue: 48), fontSize: 15, numberOfLines: 2, fontName: "Arial-BoldItalicMT", textAlignment: NSTextAlignment.Left)
         scrollView.addSubview(label)
         
         let feedbackH: CGFloat = 130
         feedbackInfoView = UITextView(frame: CGRectMake(x, y + h + 5, w, feedbackH))
         feedbackInfoView.layer.masksToBounds = true
         feedbackInfoView.layer.cornerRadius = 6
-        feedbackInfoView.backgroundColor = RGB(236,240,243)
+        feedbackInfoView.backgroundColor = RGB(236,green: 240,blue: 243)
         feedbackInfoView.autocorrectionType = UITextAutocorrectionType.No
         feedbackInfoView.autocapitalizationType = UITextAutocapitalizationType.None
         feedbackInfoView.returnKeyType = UIReturnKeyType.Done
@@ -61,7 +61,7 @@ class FeedbackViewController: BasicViewController, UITextViewDelegate {
         feedbackInfoView.delegate = self
         scrollView.addSubview(feedbackInfoView)
         
-        let submitButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        let submitButton = UIButton(type: UIButtonType.Custom)
         submitButton.frame = CGRectMake(x, feedbackInfoView.frame.origin.y + feedbackH + 10, w, h)
         submitButton.setTitle(i18n("Submit"), forState: UIControlState.Normal)
         submitButton.backgroundColor = KM_COLOR_BUTTON_MAIN
@@ -90,12 +90,16 @@ class FeedbackViewController: BasicViewController, UITextViewDelegate {
         }
         
         let params = ["question_content": feedbackInfo]
-        AFNetworkingFactory.networkingManager().POST(APP_URL_FEEDBACK, parameters: params, success: { (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+        AFNetworkingFactory.networkingManager().POST(APP_URL_FEEDBACK, parameters: params, success: {[weak self] (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+            if self == nil{
+                return
+            }
+            let blockSelf = self!
             let dic = responseObj as? NSDictionary
             let code = dic?["code"] as? NSInteger
             if code != nil && code == 1{
                 JDStatusBarNotification.showWithStatus(i18n("Successful submission!"), dismissAfter: 1)
-                self.navigationController?.popViewControllerAnimated(true)
+                blockSelf.navigationController?.popViewControllerAnimated(true)
             }else{
                 if dic?["data"] != nil{
                     JDStatusBarNotification.showWithStatus(dic?["data"] as? String ?? "", dismissAfter: 1)

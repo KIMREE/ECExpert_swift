@@ -37,14 +37,14 @@ extension UIAlertView: UIAlertViewDelegate{
     func showAlertViewWithCompleteBlock(alertViewComplete: CompleteAlertViewFunc! ){
         if alertViewComplete != nil{
             objc_removeAssociatedObjects(self)
-            objc_setAssociatedObject(self, &UIAlertView.key, CompleteAlertViewFuncClass(completeAlertViewFunc: alertViewComplete) as AnyObject, UInt(OBJC_ASSOCIATION_COPY))
+            objc_setAssociatedObject(self, &UIAlertView.key, CompleteAlertViewFuncClass(completeAlertViewFunc: alertViewComplete) as AnyObject, objc_AssociationPolicy.OBJC_ASSOCIATION_COPY)
             self.delegate = self
         }
         self.show()
     }
     
     public func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
-        var completeAlertViewFuncObj: CompleteAlertViewFuncClass? = objc_getAssociatedObject(self, &UIAlertView.key) as? CompleteAlertViewFuncClass
+        let completeAlertViewFuncObj: CompleteAlertViewFuncClass? = objc_getAssociatedObject(self, &UIAlertView.key) as? CompleteAlertViewFuncClass
         
         if completeAlertViewFuncObj != nil && completeAlertViewFuncObj?.completeAlertViewFunc != nil{
             completeAlertViewFuncObj!.completeAlertViewFunc!(buttonIndex: buttonIndex)

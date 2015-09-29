@@ -46,7 +46,7 @@ class TradeRecordViewController: BasicViewController, UITableViewDelegate, UITab
         super.init(nibName: nil, bundle: nil)
     }
     
-    required convenience init(coder aDecoder: NSCoder) {
+    required convenience init?(coder aDecoder: NSCoder) {
         self.init(tradeRecordType: TradeRecordType.Customer)
     }
 
@@ -69,9 +69,11 @@ class TradeRecordViewController: BasicViewController, UITableViewDelegate, UITab
         
         // refresh
         tableView.footer = MJRefreshAutoNormalFooter(refreshingTarget: self, refreshingAction: "refresh")
-        tableView.footer.beginRefreshing()
+        
         let footer = tableView.footer as! MJRefreshAutoNormalFooter
-        footer.stateLabel.textColor = UIColor.whiteColor()
+        footer.stateLabel!.textColor = UIColor.whiteColor()
+        
+        refresh()
     }
     
     func refresh(){
@@ -80,25 +82,36 @@ class TradeRecordViewController: BasicViewController, UITableViewDelegate, UITab
         self.progressHUD?.detailsLabelText = ""
         self.progressHUD?.show(true)
         
-        manager.POST(APP_URL_TRADE_RECORD, parameters: params, success: {(operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+        manager.POST(APP_URL_TRADE_RECORD, parameters: params, success: {[weak self](operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+            if self == nil{
+                return
+            }
+            let blockSelf = self!
             let dic = responseObj as? NSDictionary
             let code = dic?["code"] as? NSInteger
             if code != nil && code == 1{
                 let datas = dic!["data"] as! NSArray
-                self.recordArray.addObjectsFromArray(datas as [AnyObject])
+                blockSelf.recordArray.addObjectsFromArray(datas as [AnyObject])
                 
-                self.params.setValue(++self.pageNo, forKeyPath: "pageNo")
-                self.changeArryToShowType()
+                blockSelf.params.setValue(++blockSelf.pageNo, forKeyPath: "pageNo")
+                blockSelf.changeArryToShowType()
+                
+                blockSelf.tableView.footer.endRefreshing()
                 
             }else{
                 KMLog("\(responseObj)")
+                blockSelf.tableView.footer.noticeNoMoreData()
             }
-            self.tableView.footer.endRefreshing()
-            self.progressHUD?.hide(true)
             
-            }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
-            self.progressHUD?.hide(true)
-            self.tableView.footer.endRefreshing()
+            blockSelf.progressHUD?.hide(true)
+            
+            }) {[weak self] (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                if self == nil{
+                    return
+                }
+                let blockSelf = self!
+                blockSelf.progressHUD?.hide(true)
+                blockSelf.tableView.footer.endRefreshing()
         }
     }
     
@@ -154,7 +167,7 @@ class TradeRecordViewController: BasicViewController, UITableViewDelegate, UITab
         tableView = UITableView(frame: getVisibleFrame())
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.backgroundColor = RGBA(0, 0, 0, 0.3)
+        tableView.backgroundColor = RGBA(red: 0, green: 0, blue: 0, alpha: 0.3)
         tableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
         tableView.tableFooterView = UIView(frame: CGRectZero)
         
@@ -175,7 +188,7 @@ class TradeRecordViewController: BasicViewController, UITableViewDelegate, UITab
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = UIFactory.tableViewCellForTableView(tableView, cellIdentifier: TradeRecordViewController.CellIdentifier, cellType: UITableViewCellStyle.Subtitle) { (tableViewCell: UITableViewCell!) -> Void in
+        let cell = UIFactory.tableViewCellForTableView(tableView, cellIdentifier: TradeRecordViewController.CellIdentifier, cellType: UITableViewCellStyle.Subtitle) { (tableViewCell: UITableViewCell!) -> Void in
             tableViewCell!.backgroundColor = UIColor.clearColor()
             tableViewCell!.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
             

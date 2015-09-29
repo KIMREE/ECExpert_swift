@@ -39,12 +39,12 @@ class CustomerSettingViewController: BasicViewController, UITableViewDelegate, U
     }
     
     func setUpView(){
-        var tableFrame = getVisibleFrame()
+        let tableFrame = getVisibleFrame()
         
         tableView = UITableView(frame: tableFrame, style: UITableViewStyle.Grouped)
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.backgroundColor = RGBA(0, 0, 0, 0.3)
+        tableView.backgroundColor = RGBA(red: 0, green: 0, blue: 0, alpha: 0.3)
         tableView.tableFooterView = UIView(frame: CGRectZero)
         self.view.addSubview(tableView)
     }
@@ -94,7 +94,7 @@ class CustomerSettingViewController: BasicViewController, UITableViewDelegate, U
     }
     
     func showAbout(){
-        let statusH: CGFloat = 20
+//        let statusH: CGFloat = 20
         let bottomH: CGFloat = 60
         
         let aboutVC = UIViewController()
@@ -111,7 +111,7 @@ class CustomerSettingViewController: BasicViewController, UITableViewDelegate, U
         let emptyView = UIView(frame: CGRectMake(0, aboutVC.view.frame.size.height - bottomH, aboutVC.view.frame.size.width, bottomH))
         emptyView.backgroundColor = UIColor.whiteColor()
         
-        let backButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        let backButton = UIButton(type: UIButtonType.Custom)
         backButton.frame = CGRectMake(10, 10, emptyView.frame.size.width - 10 * 2, bottomH - 10 * 2)
         backButton.setTitle(i18n("Back"), forState: UIControlState.Normal)
         backButton.backgroundColor = KM_COLOR_BUTTON_MAIN
@@ -143,13 +143,16 @@ class CustomerSettingViewController: BasicViewController, UITableViewDelegate, U
         alertView.showAlertViewWithCompleteBlock {(buttonIndex) -> Void in
             if buttonIndex == 1{
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() -> Void in
-                    let cachePath = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.CachesDirectory, NSSearchPathDomainMask.UserDomainMask, true).first as! String
-                    let files = NSFileManager.defaultManager().subpathsAtPath(cachePath)
+                    let cachePath = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.CachesDirectory, NSSearchPathDomainMask.UserDomainMask, true).first
+                    let files = NSFileManager.defaultManager().subpathsAtPath(cachePath!)
                     if files != nil{
                         for item in files!{
-                            let path = cachePath.stringByAppendingPathComponent(item as! String)
+                            let path = cachePath!.stringByAppendingString("/").stringByAppendingString(item)
                             if NSFileManager.defaultManager().fileExistsAtPath(path){
-                                NSFileManager.defaultManager().removeItemAtPath(path, error: nil)
+                                do {
+                                    try NSFileManager.defaultManager().removeItemAtPath(path)
+                                } catch _ {
+                                }
                             }
                         }
                     }
@@ -185,7 +188,7 @@ class CustomerSettingViewController: BasicViewController, UITableViewDelegate, U
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = UIFactory.tableViewCellForTableView(tableView, cellIdentifier: CustomerSettingViewController.CellIdentifier, cellType: UITableViewCellStyle.Subtitle) { (tableViewCell: UITableViewCell!) -> Void in
+        let cell = UIFactory.tableViewCellForTableView(tableView, cellIdentifier: CustomerSettingViewController.CellIdentifier, cellType: UITableViewCellStyle.Subtitle) { (tableViewCell: UITableViewCell!) -> Void in
             
             tableViewCell.backgroundColor = UIColor.clearColor()
             tableViewCell.textLabel?.textColor = UIColor.whiteColor()
@@ -271,7 +274,7 @@ class CustomerSettingViewController: BasicViewController, UITableViewDelegate, U
         accountImageView.layer.masksToBounds = true
         accountImageView.layer.cornerRadius = imageW / 2.0
         accountImageView.layer.borderWidth = 4
-        accountImageView.layer.borderColor = RGBA(255, 255, 255, 0.9).CGColor
+        accountImageView.layer.borderColor = RGBA(red: 255, green: 255, blue: 255, alpha: 0.9).CGColor
         accountImageView.contentMode = UIViewContentMode.ScaleAspectFit
         accountImageView.sd_setImageWithURL(NSURL(string: imageUrl), placeholderImage: UIImage(named: "accountHeader"))
         view.addSubview(accountImageView)

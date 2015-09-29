@@ -50,7 +50,7 @@ class DealerViewController: BasicViewController {
         
         let headerViewH = h / 3.0
         let headerView = UIView(frame: CGRectMake(x, y, w, headerViewH))
-        headerView.backgroundColor = RGBA(0, 0, 0, 0.1)
+        headerView.backgroundColor = RGBA(red: 0, green: 0, blue: 0, alpha: 0.1)
         
         let imageW: CGFloat = 100
         let imageH: CGFloat = 100
@@ -61,7 +61,7 @@ class DealerViewController: BasicViewController {
         dealerImageView.backgroundColor = UIColor.clearColor()
         dealerImageView.layer.masksToBounds = true
         dealerImageView.layer.borderWidth = 3
-        dealerImageView.layer.borderColor = RGB(202, 201, 200).CGColor
+        dealerImageView.layer.borderColor = RGB(202, green: 201, blue: 200).CGColor
         dealerImageView.layer.cornerRadius = imageW / 2.0
         
         
@@ -97,18 +97,18 @@ class DealerViewController: BasicViewController {
         let cardHeight: CGFloat = contentView.frame.size.height / 2.0 - cardDistance
         let rowHeight: CGFloat = contentView.frame.size.height / 2.0
         let rowWidth: CGFloat = contentView.frame.size.width - 2 * cardDistance
-        let sizeSmall: CGFloat = 1.0
-        let sizeLarge: CGFloat = 1.2
+//        let sizeSmall: CGFloat = 1.0
+//        let sizeLarge: CGFloat = 1.2
         let clickViewTag = 11
         
         rowNum = 0
         let tradeCardFrame = CGRectMake(cardDistance, rowNum * rowHeight + cardDistance / 2.0, rowWidth, cardHeight)
-        let tradeCard = UIFactory.magnetViewWithFrame(tradeCardFrame, backgroundColor: RGB(59, 88, 158), imageName:"trade" , title: i18n("Trading"), clickViewTag: clickViewTag, clickViewWidth: 150)
+        let tradeCard = UIFactory.magnetViewWithFrame(tradeCardFrame, backgroundColor: RGB(59, green: 88, blue: 158), imageName:"trade" , title: i18n("Trading"), clickViewTag: clickViewTag, clickViewWidth: 150)
         tradeView = tradeCard.viewWithTag(clickViewTag)
         
         rowNum = 1
         let recordCardFrame = CGRectMake(cardDistance, rowNum * rowHeight + cardDistance / 2.0, rowWidth, cardHeight)
-        let recordCard = UIFactory.magnetViewWithFrame(recordCardFrame, backgroundColor: RGB(39, 178, 233), imageName:"traderecord" , title: i18n("Trading Record"), clickViewTag: clickViewTag, clickViewWidth: 150)
+        let recordCard = UIFactory.magnetViewWithFrame(recordCardFrame, backgroundColor: RGB(39, green: 178, blue: 233), imageName:"traderecord" , title: i18n("Trading Record"), clickViewTag: clickViewTag, clickViewWidth: 150)
         sellRecordView = recordCard.viewWithTag(clickViewTag)
         
         contentView.addSubview(tradeCard)
@@ -130,7 +130,7 @@ class DealerViewController: BasicViewController {
         dealerNameLabel.text = dealerName
         dealerEmailOrPhoneLabel.text = dealerPhoneOrEmail
         
-        var headerImageName = loginUserInfo!["customer_headimage"] as? String
+        let headerImageName = loginUserInfo!["customer_headimage"] as? String
         if headerImageName == nil || headerImageName!.isEmpty{
             dealerImageView.image = UIImage(named: "accountHeader")
         }else{

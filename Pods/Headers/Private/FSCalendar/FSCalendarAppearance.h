@@ -1,1 +1,0 @@
-../../../FSCalendar/Pod/Classes/FSCalendarAppearance.h

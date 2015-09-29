@@ -19,7 +19,7 @@ class GuideView: UIView , UIScrollViewDelegate{
         super.init(frame: KM_FRAME_SCREEN_BOUNDS)
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -50,7 +50,7 @@ class GuideView: UIView , UIScrollViewDelegate{
                 let buttonH: CGFloat = 40
                 let bottomPadding: CGFloat = 40
                 let buttonFrame = CGRectMake( (w - buttonW) / 2.0, h - buttonH - bottomPadding, buttonW, buttonH)
-                let button = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+                let button = UIButton(type: UIButtonType.Custom)
                 button.frame = buttonFrame
                 button.setTitle(i18n("Tap to enter"), forState: UIControlState.Normal)
                 button.addTarget(self, action: "showMainPage", forControlEvents: UIControlEvents.TouchUpInside)

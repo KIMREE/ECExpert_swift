@@ -21,7 +21,7 @@ class UITabBarTransitionAnimation:NSObject, UIViewControllerAnimatedTransitionin
         super.init()
     }
     
-    func transitionDuration(transitionContext: UIViewControllerContextTransitioning) -> NSTimeInterval {
+    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
         return 0.3
     }
     
@@ -36,7 +36,7 @@ class UITabBarTransitionAnimation:NSObject, UIViewControllerAnimatedTransitionin
         
         var fromTransform: CGAffineTransform!
         var toTransform: CGAffineTransform!
-        containerView.insertSubview(toViewController!.view!, aboveSubview: fromViewController!.view!)
+        containerView!.insertSubview(toViewController!.view!, aboveSubview: fromViewController!.view!)
         if toIndex > fromIndex {
             toViewController?.view.transform = CGAffineTransformMakeTranslation(KM_FRAME_SCREEN_WIDTH, 0)
             fromTransform = CGAffineTransformMakeTranslation(-KM_FRAME_SCREEN_WIDTH,0)

@@ -43,7 +43,7 @@ class RegisterViewController: BasicViewController {
             let rePwd   = tuple.third as! String
             
             var result = true
-            if count(account) < 5 || count(pwd) < 5 || count(rePwd) < 5 || (pwd != rePwd){
+            if account.characters.count < 5 || pwd.characters.count < 5 || rePwd.characters.count < 5 || (pwd != rePwd){
                 result = false
             }
             return result
@@ -78,7 +78,7 @@ class RegisterViewController: BasicViewController {
         
         containerView = UIView(frame: CGRectMake(x, y, w, h))
         scrollView.addSubview(containerView)
-        containerView.backgroundColor = RGBA(0, 0, 0, 0.3)
+        containerView.backgroundColor = RGBA(red: 0, green: 0, blue: 0, alpha: 0.3)
         
         var startH: CGFloat = 0
         let segmentedX: CGFloat = 0
@@ -88,7 +88,7 @@ class RegisterViewController: BasicViewController {
         segmented = UISegmentedControl(frame: CGRectMake(segmentedX, segmentedY, segmentedW, segmentedH))
         segmented.insertSegmentWithTitle(i18n("Customer Register"), atIndex: 0, animated: true)
         segmented.insertSegmentWithTitle(i18n("Dealer Register"), atIndex: 1, animated: true)
-        segmented.tintColor = RGB(163, 134, 130)
+        segmented.tintColor = RGB(163, green: 134, blue: 130)
         
         segmented.setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()], forState: UIControlState.Selected)
         segmented.setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()], forState: UIControlState.Disabled)
@@ -183,7 +183,7 @@ class RegisterViewController: BasicViewController {
         let agreeSize = agreeLabel.sizeThatFits(CGSizeZero)
         agreeLabel.frame = CGRectMake(agreeW, 0, agreeSize.width, agreeH)
         
-        agreeButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        agreeButton = UIButton(type: UIButtonType.Custom)
         agreeButton.frame = CGRectMake(agreeX, agreeY, agreeW + agreeSize.width, agreeH)
         
         agreeButton.addSubview(agreeImageView)
@@ -194,7 +194,7 @@ class RegisterViewController: BasicViewController {
         let agreementSize = agreementLabel.sizeThatFits(CGSizeZero)
         agreementLabel.frame = CGRectMake(0, 0, agreementSize.width, agreeH)
         
-        useAgreementButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        useAgreementButton = UIButton(type: UIButtonType.Custom)
         useAgreementButton.frame = CGRectMake( w - leftRightPadding - agreementSize.width, agreeY, agreementSize.width, agreeH)
         
         useAgreementButton.addSubview(agreementLabel)
@@ -206,7 +206,7 @@ class RegisterViewController: BasicViewController {
         let submitX: CGFloat = 0
         let submitY = startH + (h6 - submitH) / 2.0
         let submitW = w - 2 * submitX
-        submitButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        submitButton = UIButton(type: UIButtonType.Custom)
         submitButton.frame = CGRectMake(submitX, submitY, submitW, submitH)
         submitButton.setTitle(i18n("Register"), forState: UIControlState.Normal)
         submitButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
@@ -247,14 +247,14 @@ class RegisterViewController: BasicViewController {
         let webView = UIWebView(frame: CGRectMake(0, 0 + statusH, agreementVC.view.frame.size.width, agreementVC.view.frame.size.height - statusH - bottomH))
         webView.backgroundColor = UIColor.whiteColor()
         let htmlPath = NSBundle.mainBundle().pathForResource("agreement_strings", ofType: "html")
-        let htmlStr = NSString(contentsOfFile: htmlPath!, encoding: NSUTF8StringEncoding, error: nil)
+        let htmlStr = try? NSString(contentsOfFile: htmlPath!, encoding: NSUTF8StringEncoding)
         webView.loadHTMLString(htmlStr as! String, baseURL: NSURL(fileURLWithPath: htmlPath!) )
         agreementVC.view.addSubview(webView)
         
         let emptyView = UIView(frame: CGRectMake(0, agreementVC.view.frame.size.height - bottomH, agreementVC.view.frame.size.width, bottomH))
         emptyView.backgroundColor = UIColor.whiteColor()
         
-        let backButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        let backButton = UIButton(type: UIButtonType.Custom)
         backButton.frame = CGRectMake(10, 10, emptyView.frame.size.width - 10 * 2, bottomH - 10 * 2)
         backButton.setTitle(i18n("Back"), forState: UIControlState.Normal)
         backButton.backgroundColor = KM_COLOR_BUTTON_MAIN
@@ -289,13 +289,13 @@ class RegisterViewController: BasicViewController {
             return
         }
         
-        if count(account) < 5 {
+        if account!.characters.count < 5 {
             let alertView = UIAlertView(title: nil, message: i18n("UserName lengh must be greater than or equal to 5 numbers including letters!"), delegate: nil, cancelButtonTitle: i18n("Sure"))
             alertView.show()
             return
         }
         
-        if count(password) < 5 || count(rePassword) < 5{
+        if password!.characters.count < 5 || rePassword!.characters.count < 5{
             let alertView = UIAlertView(title: nil, message: i18n("Password lengh must be greater than or equal to 5 numbers including letters!"), delegate: nil, cancelButtonTitle: i18n("Sure"))
             alertView.show()
             return
@@ -307,12 +307,16 @@ class RegisterViewController: BasicViewController {
             return
         }
         
-        let params = ["username": account, "userpassword": password, "usertype": usertype]
+        let params = ["username": account!, "userpassword": password!, "usertype": usertype]
         progressHUD?.mode = MBProgressHUDMode.Indeterminate
         progressHUD?.labelText = ""
         progressHUD?.detailsLabelText = ""
         progressHUD?.show(true)
-        AFNetworkingFactory.networkingManager().POST(APP_URL_REGISTER, parameters: params, success: {(operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+        AFNetworkingFactory.networkingManager().POST(APP_URL_REGISTER, parameters: params, success: {[weak self](operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+            if self == nil{
+                return
+            }
+            let blockSelf = self!
             let dic = responseObj as? NSDictionary
             let code = dic?["code"] as? NSInteger
             if code != nil && code == 1{
@@ -323,21 +327,25 @@ class RegisterViewController: BasicViewController {
                 loginProof.setValue(false, forKey: APP_PATH_LOGIN_PROOF_REMEMBER)
                 loginProof.setValue(false, forKey: APP_PATH_LOGIN_PROOF_AUTOLOGIN)
                 LocalStroge.sharedInstance().addObject(loginProof, fileName: APP_PATH_LOGIN_PROOF, searchPathDirectory: NSSearchPathDirectory.DocumentDirectory)
-                self.progressHUD?.hide(true)
+                blockSelf.progressHUD?.hide(true)
                 
                 JDStatusBarNotification.showWithStatus(i18n("Registration success!"), dismissAfter: 2)
-                self.navigationController?.popViewControllerAnimated(true)
+                blockSelf.navigationController?.popViewControllerAnimated(true)
                 
             }else{
-                self.progressHUD?.mode = MBProgressHUDMode.Text
-                self.progressHUD?.detailsLabelText = (dic?["data"] ?? "") as! String
-                self.progressHUD?.hide(true, afterDelay: 2)
+                blockSelf.progressHUD?.mode = MBProgressHUDMode.Text
+                blockSelf.progressHUD?.detailsLabelText = (dic?["data"] ?? "") as! String
+                blockSelf.progressHUD?.hide(true, afterDelay: 2)
             }
             
-        }) {(operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
-            self.progressHUD?.mode = MBProgressHUDMode.Text
-            self.progressHUD?.detailsLabelText = error.localizedDescription
-            self.progressHUD?.hide(true, afterDelay: 2)
+        }) {[weak self](operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+            if self == nil{
+                return
+            }
+            let blockSelf = self!
+            blockSelf.progressHUD?.mode = MBProgressHUDMode.Text
+            blockSelf.progressHUD?.detailsLabelText = error.localizedDescription
+            blockSelf.progressHUD?.hide(true, afterDelay: 2)
         }
         
     }

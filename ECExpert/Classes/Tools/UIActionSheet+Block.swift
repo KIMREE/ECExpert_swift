@@ -29,14 +29,14 @@ extension UIActionSheet: UIActionSheetDelegate {
     func showActionSheetWithCompleteBlock(inView: UIView, completeActionSheetFunc: CompleteActionSheetFunc!){
         if completeActionSheetFunc != nil{
             objc_removeAssociatedObjects(self)
-            objc_setAssociatedObject(self, &UIActionSheet.key, CompleteActionSheetFuncClass(completeActionSheetFunc: completeActionSheetFunc) as AnyObject, UInt(OBJC_ASSOCIATION_COPY))
+            objc_setAssociatedObject(self, &UIActionSheet.key, CompleteActionSheetFuncClass(completeActionSheetFunc: completeActionSheetFunc) as AnyObject, objc_AssociationPolicy.OBJC_ASSOCIATION_COPY)
             self.delegate = self
         }
         self.showInView(inView)
     }
     
     public func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
-        var completeActionSheetFuncObj: CompleteActionSheetFuncClass? = objc_getAssociatedObject(self, &UIActionSheet.key) as? CompleteActionSheetFuncClass
+        let completeActionSheetFuncObj: CompleteActionSheetFuncClass? = objc_getAssociatedObject(self, &UIActionSheet.key) as? CompleteActionSheetFuncClass
         
         if completeActionSheetFuncObj != nil && completeActionSheetFuncObj?.completeActionSheetFunc != nil{
             completeActionSheetFuncObj!.completeActionSheetFunc!(buttonIndex: buttonIndex)

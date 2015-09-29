@@ -75,9 +75,10 @@ class SearchViewController: BasicViewController, UITableViewDataSource, UITableV
         self.view.addSubview(tableView)
         
         tableView.tableHeaderView = UIView(frame: CGRectZero)
+
+        tableView.footer =  MJRefreshAutoNormalFooter(refreshingTarget: self, refreshingAction: "refresh")
         
-        tableView.footer = MJRefreshAutoNormalFooter(refreshingTarget: self, refreshingAction: "refresh")
-        tableView.footer.beginRefreshing()
+        refresh()
     }
     
     // 上拉刷新
@@ -95,13 +96,15 @@ class SearchViewController: BasicViewController, UITableViewDataSource, UITableV
         
         // 注意： 这里在gcd里面对界面ui有影响，必须在主线程中执行， 如果在after执行过程中销毁了self，程序会崩溃
         dispatch_after(delay, dispatch_get_main_queue()) {() -> Void in
-            let totalPageNo: Int = self.tableViewDataArray.count % self.pageSize == 0 ?  self.tableViewDataArray.count / self.pageSize : self.tableViewDataArray.count % self.pageSize + 1
+            let totalPageNo: Int = (self.tableViewDataArray.count % self.pageSize == 0) ?  (self.tableViewDataArray.count / self.pageSize) : (self.tableViewDataArray.count / self.pageSize + 1)
             if self.pageNo < totalPageNo{
                 self.pageNo++
 //                self.tableView.reloadData()
                 self.tableViewReloadData()
+                self.tableView.footer.endRefreshing()
+            }else if self.pageNo >= totalPageNo{
+                self.tableView.footer.noticeNoMoreData()
             }
-            self.tableView.footer.endRefreshing()
             
             // 界面刷新完毕后， 返回按钮可以点击
             self.navigationItem.leftBarButtonItem?.enabled = true
@@ -111,7 +114,7 @@ class SearchViewController: BasicViewController, UITableViewDataSource, UITableV
     func setUpDistanceArray(){
         var unsorted = NSMutableArray()
         if dealerArray != nil && currentLocation.location != nil{
-            unsorted = DealerHelper.distanceFromCurrentLocation(currentLocation.location, dealerArray: dealerArray)
+            unsorted = DealerHelper.distanceFromCurrentLocation(currentLocation.location!, dealerArray: dealerArray)
             filterKeyArray = ["dealer_name","dealer_desc","dealer_address","dealer_distance"]
         }else{
             unsorted = NSMutableArray(array: dealerArray)
@@ -140,7 +143,7 @@ class SearchViewController: BasicViewController, UITableViewDataSource, UITableV
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {        
-        var cell = UIFactory.tableViewCellForTableView(tableView, cellIdentifier: SearchViewController.cellIdentifier, cellType: UITableViewCellStyle.Subtitle) {(tableViewCell: UITableViewCell!) -> Void in
+        let cell = UIFactory.tableViewCellForTableView(tableView, cellIdentifier: SearchViewController.cellIdentifier, cellType: UITableViewCellStyle.Subtitle) {(tableViewCell: UITableViewCell!) -> Void in
             // 调整显示cell imageview下面的分割线
             tableViewCell!.separatorInset = UIEdgeInsetsZero
             // 左边图片
@@ -150,13 +153,14 @@ class SearchViewController: BasicViewController, UITableViewDataSource, UITableV
             tableViewCell!.textLabel!.font = UIFont(name: "Arial-BoldItalicMT", size: 14)
             // subtitle
             tableViewCell!.detailTextLabel!.numberOfLines = 0
-            tableViewCell!.detailTextLabel!.textColor = RGB(26,188,156)
+            tableViewCell!.detailTextLabel!.textColor = RGB(26,green: 188,blue: 156)
             tableViewCell!.detailTextLabel!.font = UIFont.systemFontOfSize(14)
             // select background
             tableViewCell!.selectedBackgroundView = UIView(frame: tableViewCell!.frame)
-            tableViewCell!.selectedBackgroundView.backgroundColor = RGB(200, 200, 200)
+            tableViewCell!.selectedBackgroundView!.backgroundColor = RGB(200, green: 200, blue: 200)
         }
         
+        cell.imageView!.image = UIImage(named: "dealerSearch")
         let cellInfo = self.tableViewCellInfoWithIndexPath(indexPath)
         cell!.textLabel!.text = cellInfo.title
         cell!.detailTextLabel?.text = cellInfo.subtitle
@@ -195,13 +199,16 @@ class SearchViewController: BasicViewController, UITableViewDataSource, UITableV
         titleLabel.text = cellInfo.title
         
         let subtitleLabel = UILabel(frame: CGRectZero)
+        titleLabel.numberOfLines = 0
         subtitleLabel.font = UIFont.systemFontOfSize(14)
         subtitleLabel.text = cellInfo.subtitle
         
-        let titleSize = titleLabel.sizeThatFits(CGSizeMake(KM_FRAME_SCREEN_WIDTH - 60, 0))
-        let subtitleSize = subtitleLabel.sizeThatFits(CGSizeMake(KM_FRAME_SCREEN_WIDTH - 60, 0))
+        // image-width 50    padding-left 20    padding-right 20
+        let titleSize = titleLabel.sizeThatFits(CGSizeMake(KM_FRAME_SCREEN_WIDTH - 50 - 20 - 20, 0))
+        let subtitleSize = subtitleLabel.sizeThatFits(CGSizeMake(KM_FRAME_SCREEN_WIDTH - 50 - 20 - 20, 0))
         
-        var result = titleSize.height + subtitleSize.height + 30
+        // padding-top 15    padding-bottom 15
+        var result = titleSize.height + subtitleSize.height + 15 + 15
         if result < 44{
             result = 44
         }
@@ -261,7 +268,7 @@ class SearchViewController: BasicViewController, UITableViewDataSource, UITableV
                 }
             }
         }else{
-            array.addObjectsFromArray(dealerArrayWithDistance as! [AnyObject])
+            array.addObjectsFromArray(dealerArrayWithDistance as [AnyObject])
         }
         
         tableViewDataArray = array

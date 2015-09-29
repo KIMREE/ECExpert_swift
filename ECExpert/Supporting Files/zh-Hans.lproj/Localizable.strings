@@ -112,7 +112,7 @@
 "Goods List" = "商品列表";
 "Gift List" = "赠品列表";
 "Remove the selected data?" = "移除选中的数据?";
-"Connection way" = "联系途径";
+"Connection way" = "联系方式";
 "Please select the buyer" = "请选择买家";
 "Please select the goods" = "请选择商品";
 "Please select the gift" = "请选择赠品";
@@ -190,4 +190,5 @@
 // SmokeFriendChatRoomViewController
 "Smoking Friends" = "烟友会";
 
-
+// VoteViewController
+"vote" = "活动投票";

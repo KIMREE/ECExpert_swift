@@ -16,7 +16,7 @@ class KMCalloutAnnotationView: MKAnnotationView {
     private let bottomArrowH: CGFloat = 10
     private let radius: CGFloat = 6
     
-    override init!(annotation: MKAnnotation!, reuseIdentifier: String!) {
+    override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
     }
     
@@ -25,7 +25,7 @@ class KMCalloutAnnotationView: MKAnnotationView {
         self.backgroundColor = UIColor.clearColor()
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
@@ -43,7 +43,7 @@ class KMCalloutAnnotationView: MKAnnotationView {
         
         var fillColor = containerView.backgroundColor
         if fillColor == nil{
-            fillColor = RGB(0, 0, 0)
+            fillColor = RGB(0, green: 0, blue: 0)
             containerView.backgroundColor = fillColor
         }
         
@@ -78,10 +78,10 @@ class KMCalloutAnnotationView: MKAnnotationView {
     }
     
     override func drawRect(rect: CGRect) {
-        var context = UIGraphicsGetCurrentContext()
+        let context = UIGraphicsGetCurrentContext()
         CGContextSetLineWidth(context, 2)
         
-        self.drawPath(context, rect: rect)
+        self.drawPath(context!, rect: rect)
         CGContextFillPath(context);
         
         //yu mark
@@ -96,11 +96,10 @@ class KMCalloutAnnotationView: MKAnnotationView {
     
     private func drawPath(context: CGContextRef, rect: CGRect){
         let rect = rect
-        let radius: CGFloat = 6.0
         
         let minX = CGRectGetMinX(rect)
         let maxX = CGRectGetMaxX(rect)
-        let minY = CGRectGetMinY(rect)
+//        let minY = CGRectGetMinY(rect)
         let maxY = CGRectGetMaxY(rect)
         
         let minBottomArrowX = (maxX - minX - bottomArrowW) / 2.0

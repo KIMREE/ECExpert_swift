@@ -37,23 +37,31 @@ class UserInfoManager: NSObject {
             
             // 3. 添加一个持久化的数据库到存储调度
             // 3.1 建立数据库保存在沙盒的URL
-            let basicPath = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.CachesDirectory, NSSearchPathDomainMask.UserDomainMask, true).first as! NSString
-            let filePath = basicPath.stringByAppendingPathComponent(APP_PATH_CHAT_USERINFO)
+            let basicPath = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.CachesDirectory, NSSearchPathDomainMask.UserDomainMask, true).first
+            let filePath = basicPath!.stringByAppendingString("/").stringByAppendingString(APP_PATH_CHAT_USERINFO)
             let url = NSURL(fileURLWithPath: filePath)
             
             // 3.2 打开或者新建数据库文件
             // 如果文件不存在，则新建之后打开
             // 否者直接打开数据库
-            var error: NSError?
-            manager.persistentStoreCoordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil, error: &error)
-            if error == nil{
+            do {
+                try manager.persistentStoreCoordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil)
                 manager.managedObjectContext = NSManagedObjectContext()
                 manager.managedObjectContext.persistentStoreCoordinator = manager.persistentStoreCoordinator
-            }else{
-                KMLog("\(error?.localizedDescription)")
+                SingleManager.singleManager = manager
+            } catch let error as NSError {
+                KMLog("\(error.localizedDescription)")
+            } catch {
+                fatalError()
             }
-            
-            SingleManager.singleManager = manager
+//            if error == nil{
+//                manager.managedObjectContext = NSManagedObjectContext()
+//                manager.managedObjectContext.persistentStoreCoordinator = manager.persistentStoreCoordinator
+//            }else{
+//                KMLog("\(error?.localizedDescription)")
+//            }
+//            
+//            SingleManager.singleManager = manager
         })
         
         return SingleManager.singleManager
@@ -65,7 +73,7 @@ class UserInfoManager: NSObject {
         let request = NSFetchRequest(entityName: APP_CORE_DATA_ENTITY_NAME_USERINFO)
         request.predicate = predicate
         
-        let rs = managedObjectContext.executeFetchRequest(request, error: nil)
+        let rs = try? managedObjectContext.executeFetchRequest(request)
         if rs != nil{
             for u in rs!{
                 KMLog("\(u.userId) \(u.name) \(u.portraitUri)")
@@ -84,7 +92,12 @@ class UserInfoManager: NSObject {
             userInfo.name = name
             userInfo.portraitUri = portraitUri
             
-            return managedObjectContext.save(nil)
+            do {
+                try managedObjectContext.save()
+                return true
+            } catch _ {
+                return false
+            }
         }else{
             return updateUserInfo(userId, updateDic: ["name": name, "portraitUri": portraitUri])
         }
@@ -95,13 +108,18 @@ class UserInfoManager: NSObject {
         let request = NSFetchRequest(entityName: APP_CORE_DATA_ENTITY_NAME_USERINFO)
         request.predicate = NSPredicate(format: "userId = '\(userId)'")
         
-        let rs = managedObjectContext.executeFetchRequest(request, error: nil)
+        let rs = try? managedObjectContext.executeFetchRequest(request)
         if rs != nil{
             for u in rs!{
                 KMLog("\(u.userId) \(u.name) \(u.portraitUri)")
                 managedObjectContext.deleteObject(u as! NSManagedObject)
             }
-            result = managedObjectContext.save(nil)
+            do {
+                try managedObjectContext.save()
+                result = true
+            } catch _ {
+                result = false
+            }
         }
         
         return result
@@ -113,7 +131,7 @@ class UserInfoManager: NSObject {
         request.predicate = NSPredicate(format: "userId = '\(userId)'")
         
         if updateDic != nil && updateDic.count > 0{
-            let rs = managedObjectContext.executeFetchRequest(request, error: nil)
+            let rs = try? managedObjectContext.executeFetchRequest(request)
             if rs != nil{
                 for u in rs!{
                     KMLog("\(u.userId) \(u.name) \(u.portraitUri)")
@@ -122,7 +140,12 @@ class UserInfoManager: NSObject {
                     }
                 }
                 
-                result = managedObjectContext.save(nil)
+                do {
+                    try managedObjectContext.save()
+                    result = true
+                } catch _ {
+                    result = false
+                }
             }
         }
         

@@ -13,13 +13,13 @@ class UIFactory: NSObject {
     /**
     拼装label
     
-    :param: frame         frame
-    :param: text          label显示文本
-    :param: textColor     label文本显示颜色
-    :param: fontSize      label字体大小
-    :param: textAlignment label文本对其方式
+    - parameter frame:         frame
+    - parameter text:          label显示文本
+    - parameter textColor:     label文本显示颜色
+    - parameter fontSize:      label字体大小
+    - parameter textAlignment: label文本对其方式
     
-    :returns: 组装好的label
+    - returns: 组装好的label
     */
     class func labelWithFrame(frame: CGRect, text: String, textColor: UIColor, fontSize: CGFloat = UILabel().font.pointSize, numberOfLines: Int = 0, fontName: String = UILabel().font.fontName , textAlignment: NSTextAlignment = NSTextAlignment.Left) -> UILabel{
         let label = UILabel()
@@ -35,10 +35,10 @@ class UIFactory: NSObject {
     /**
     生成纯色图片
     
-    :param: color 图片颜色
-    :param: size  图片尺寸
+    - parameter color: 图片颜色
+    - parameter size:  图片尺寸
     
-    :returns: 纯色图片
+    - returns: 纯色图片
     */
     class func imageWithColor(color: UIColor!, size: CGSize) -> UIImage{
         let rect = CGRectMake(0, 0, size.width, size.height)
@@ -55,14 +55,14 @@ class UIFactory: NSObject {
     /**
     磁贴
     
-    :param: frame           磁贴的frame
-    :param: backgroundColor 磁贴背景色
-    :param: imageName       磁贴中心图片名称
-    :param: title           磁贴标题
-    :param: clickViewTag    磁贴中心可点击view的tag
-    :param: clickViewWidth  磁贴中心可点击view的width
+    - parameter frame:           磁贴的frame
+    - parameter backgroundColor: 磁贴背景色
+    - parameter imageName:       磁贴中心图片名称
+    - parameter title:           磁贴标题
+    - parameter clickViewTag:    磁贴中心可点击view的tag
+    - parameter clickViewWidth:  磁贴中心可点击view的width
     
-    :returns: 组装好的磁贴
+    - returns: 组装好的磁贴
     */
     class func magnetViewWithFrame(frame: CGRect, backgroundColor: UIColor, imageName: String, title: String, clickViewTag: Int, clickViewWidth: CGFloat = 100) -> MagnetView{
         let magnetView = MagnetView(frame: frame)
@@ -100,17 +100,17 @@ class UIFactory: NSObject {
     /**
     组装 tableviewcell
     
-    :param: tableView            celll隶属于tableview
-    :param: cellIdentifier       cell identifier
-    :param: cellType             cell type
-    :param: cleanTextAndImage    默认值为true, 每次获取后是否清理 textLabel, detailTextLabel, 以及 imageView 的内容
-    :param: cleanCellContentView 默认值为true, 每次获取到cell后，是否清理掉contentView里面的subview
-    :param: cellInitProperties   cell在初始化时，需要做的处理
+    - parameter tableView:            celll隶属于tableview
+    - parameter cellIdentifier:       cell identifier
+    - parameter cellType:             cell type
+    - parameter cleanTextAndImage:    默认值为true, 每次获取后是否清理 textLabel, detailTextLabel, 以及 imageView 的内容
+    - parameter cleanCellContentView: 默认值为true, 每次获取到cell后，是否清理掉contentView里面的subview
+    - parameter cellInitProperties:   cell在初始化时，需要做的处理
     
-    :returns: 根据传入参数处理后的cell
+    - returns: 根据传入参数处理后的cell
     */
     class func tableViewCellForTableView(tableView: UITableView, cellIdentifier: String, cellType: UITableViewCellStyle = UITableViewCellStyle.Subtitle, cleanTextAndImage: Bool = true, cleanCellContentView: Bool = true, cellInitProperties: (tableViewCell: UITableViewCell!) -> Void) -> UITableViewCell!{
-        var cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as? UITableViewCell
+        var cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier)
         if cell == nil{
             cell = UITableViewCell(style: cellType, reuseIdentifier: cellIdentifier)
             cellInitProperties(tableViewCell: cell!)
@@ -134,10 +134,10 @@ class UIFactory: NSObject {
     /**
     缩放图片
     
-    :param: image     被缩放的图片
-    :param: scaleSize 缩放的尺寸
+    - parameter image:     被缩放的图片
+    - parameter scaleSize: 缩放的尺寸
     
-    :returns: 缩放后的图片
+    - returns: 缩放后的图片
     */
     class func originImage(image: UIImage, scaleSize: CGSize) -> UIImage{
         UIGraphicsBeginImageContext(scaleSize)
@@ -150,11 +150,11 @@ class UIFactory: NSObject {
     /**
     向下箭头
     
-    :param: width     箭头宽度
-    :param: height    箭头高度
-    :param: fillColor 箭头颜色
+    - parameter width:     箭头宽度
+    - parameter height:    箭头高度
+    - parameter fillColor: 箭头颜色
     
-    :returns: 组装好的向下三角形箭头图片
+    - returns: 组装好的向下三角形箭头图片
     */
     class func bottomTriangleImage(width: CGFloat, height: CGFloat, fillColor: UIColor) -> UIImage!{
         struct SingleImage{
@@ -182,11 +182,11 @@ class UIFactory: NSObject {
     /**
     向左箭头
     
-    :param: width     箭头宽度
-    :param: height    箭头高度
-    :param: fillColor 箭头颜色
+    - parameter width:     箭头宽度
+    - parameter height:    箭头高度
+    - parameter fillColor: 箭头颜色
     
-    :returns: 组装的向左箭头图片
+    - returns: 组装的向左箭头图片
     */
     class func leftTriangleImage(width: CGFloat, height: CGFloat, fillColor: UIColor) -> UIImage!{
         struct SingleImage{
@@ -213,11 +213,11 @@ class UIFactory: NSObject {
     /**
     向右箭头
     
-    :param: width     箭头宽度
-    :param: height    箭头高度
-    :param: fillColor 箭头颜色
+    - parameter width:     箭头宽度
+    - parameter height:    箭头高度
+    - parameter fillColor: 箭头颜色
     
-    :returns: 组装的向右箭头图片
+    - returns: 组装的向右箭头图片
     */
     class func rightTriangleImage(width: CGFloat, height: CGFloat, fillColor: UIColor) -> UIImage!{
         struct SingleImage{

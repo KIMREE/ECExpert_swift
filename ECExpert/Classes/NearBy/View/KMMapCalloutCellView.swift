@@ -31,7 +31,7 @@ class KMMapCalloutCellView: UIView {
         titleLabel = UILabel(frame: centerFrame)
         titleLabel.textAlignment = NSTextAlignment.Center
         titleLabel.font = UIFont.systemFontOfSize(13)
-        titleLabel.textColor = RGB(26, 188, 156)
+        titleLabel.textColor = RGB(26, green: 188, blue: 156)
         
         rightArrow = UIImageView(frame: rightFrame)
         rightArrow.image = UIImage(named: "arrow")
@@ -43,7 +43,7 @@ class KMMapCalloutCellView: UIView {
         self.addSubview(rightArrow)
     }
 
-    required convenience init(coder aDecoder: NSCoder) {
+    required convenience init?(coder aDecoder: NSCoder) {
         self.init(frame: CGRectZero)
     }
 

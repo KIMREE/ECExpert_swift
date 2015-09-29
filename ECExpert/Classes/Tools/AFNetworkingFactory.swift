@@ -14,13 +14,13 @@ class AFNetworkingFactory: NSObject {
     生成 AFHTTPRequestOperationManager 类实例的工厂方法
     这里没有使用单例
     
-    :returns: AFHTTPRequestOperationManager 实例
+    - returns: AFHTTPRequestOperationManager 实例
     */
     class func networkingManager() -> AFHTTPRequestOperationManager! {
         let manager = AFHTTPRequestOperationManager()
         manager.requestSerializer = AFHTTPRequestSerializer()
         manager.responseSerializer = AFJSONResponseSerializer()
-        var contentTypes: Set = ["application/json", "text/json", "text/javascript","text/html"]
+        let contentTypes: Set = ["application/json", "text/json", "text/javascript","text/html", "application/x-javascript"]
         manager.responseSerializer.acceptableContentTypes = contentTypes
         manager.requestSerializer.timeoutInterval = 10
         return manager
@@ -35,7 +35,7 @@ class AFNetworkingFactory: NSObject {
             let manager = AFHTTPRequestOperationManager(baseURL: NSURL(string: APP_RONG_CLOUD_URL_BASE))            
             manager.requestSerializer = AFHTTPRequestSerializer()
             manager.responseSerializer = AFJSONResponseSerializer()
-            var contentTypes: Set = ["application/json", "text/json", "text/javascript","text/html"]
+            let contentTypes: Set = ["application/json", "text/json", "text/javascript","text/html"]
             manager.responseSerializer.acceptableContentTypes = contentTypes
             manager.requestSerializer.timeoutInterval = 10
             

@@ -97,7 +97,7 @@ class DealerDetailViewController: BasicViewController, UITableViewDataSource, UI
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = UIFactory.tableViewCellForTableView(tableView, cellIdentifier: DealerDetailViewController.cellIdentifier, cellType: UITableViewCellStyle.Subtitle, cleanTextAndImage: true, cleanCellContentView: true) { (tableViewCell: UITableViewCell!) -> Void in
+        let cell = UIFactory.tableViewCellForTableView(tableView, cellIdentifier: DealerDetailViewController.cellIdentifier, cellType: UITableViewCellStyle.Subtitle, cleanTextAndImage: true, cleanCellContentView: true) { (tableViewCell: UITableViewCell!) -> Void in
             
             tableViewCell!.selectionStyle = UITableViewCellSelectionStyle.None
             tableViewCell!.userInteractionEnabled = true
@@ -117,13 +117,13 @@ class DealerDetailViewController: BasicViewController, UITableViewDataSource, UI
             if row == 0{
                 cell!.contentView.addSubview(logoImageView)
             }else if row == 1{
-                cell!.textLabel?.textColor = RGB(26,188,156)
+                cell!.textLabel?.textColor = RGB(26,green: 188,blue: 156)
                 let addressDesc = i18n("Dealer address")
                 let dealerAddress = dealer["dealer_address"] as! String
                 let title = "\(addressDesc):\(dealerAddress)"
                 cell!.textLabel?.text = title
                 
-                cell!.detailTextLabel?.textColor = RGB(17,127,239)
+                cell!.detailTextLabel?.textColor = RGB(17,green: 127,blue: 239)
                 if let distance = getDealerDistance(){
                     let unit = i18n("km")
                     cell!.detailTextLabel?.text = "\(distance)\(unit)"
@@ -217,7 +217,7 @@ class DealerDetailViewController: BasicViewController, UITableViewDataSource, UI
                     dealerPhone = dealer["dealer_phone"] as! NSString
                 }
 
-                var phoneStr = "tel://\(dealerPhone)"
+                let phoneStr = "tel://\(dealerPhone)"
                 let phoneURL = NSURL(string: phoneStr)
                 
                 if uselessWebView == nil{

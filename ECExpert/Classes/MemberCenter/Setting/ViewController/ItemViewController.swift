@@ -31,7 +31,7 @@ class ItemViewController: BasicViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -92,14 +92,14 @@ class ItemViewController: BasicViewController {
         var url = APP_URL_EDITUSERINFO
         params.setObject(nickName, forKey: "customer_nickname")
         if itemName != i18n("Password"){
-            params.setObject(modifyField.text, forKey: itemKeyField)
+            params.setObject(modifyField.text!, forKey: itemKeyField)
         }else{
             url = APP_URL_CHANGEPASSWORD
             let pw = oldPasswordField.text
             let npw1 = newPasswordField.text
             let npw2 = rePasswordField.text
             
-            if count(pw) < 5 || count(npw1) < 5{
+            if pw!.characters.count < 5 || npw1!.characters.count < 5{
                 let alertView = UIAlertView(title: nil, message: i18n("Password lengh must be greater than or equal to 5 numbers including letters!"), delegate: nil, cancelButtonTitle: i18n("Sure"))
                 alertView.show()
                 return
@@ -111,16 +111,20 @@ class ItemViewController: BasicViewController {
                 return
             }
             
-            params.setObject(pw, forKey: "oldpassword")
-            params.setObject(npw1, forKey: "newpassword")
+            params.setObject(pw!, forKey: "oldpassword")
+            params.setObject(npw1!, forKey: "newpassword")
         }
         
-        manager.POST(url, parameters: params, success: {(operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+        manager.POST(url, parameters: params, success: {[weak self](operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+            if self == nil{
+                return
+            }
+            let blockSelf = self!
             let dic = responseObj as? NSDictionary
             let code = dic?["code"] as? NSInteger
             if code != nil && code! == 1{
                 JDStatusBarNotification.showWithStatus(i18n("Successful modification!"), dismissAfter: 2)
-                self.loadLoginUserInfo()
+                blockSelf.loadLoginUserInfo()
             }else if code != nil && code! == 0{
                 JDStatusBarNotification.showWithStatus(dic!["data"] as! String, dismissAfter: 2)
             }else{
@@ -136,7 +140,11 @@ class ItemViewController: BasicViewController {
     func loadLoginUserInfo(){
         let params = NSMutableDictionary()
         params.setObject(currentLoginUserInfo()!["usertype"]!, forKey: "usertype")
-        manager.POST(APP_URL_LOGIN_USERINFO, parameters: params, success: {(operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+        manager.POST(APP_URL_LOGIN_USERINFO, parameters: params, success: {[weak self](operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+            if self == nil{
+                return
+            }
+            let blockSelf = self!
             let basicDic = responseObj as? NSDictionary
             let code = basicDic?["code"] as? NSInteger
             if code != nil && code == 1{
@@ -145,7 +153,7 @@ class ItemViewController: BasicViewController {
                 LocalStroge.sharedInstance().addObject(resultInfo, fileName: APP_PATH_LOGINUSER_INFO, searchPathDirectory: NSSearchPathDirectory.DocumentDirectory)
                 
                 NSNotificationCenter.defaultCenter().postNotificationName(APP_NOTIFICATION_CHANGE_LOGINUSERINFO, object: nil)
-                self.goback()
+                blockSelf.goback()
                 
             }
             

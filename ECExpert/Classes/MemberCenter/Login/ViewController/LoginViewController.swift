@@ -153,7 +153,7 @@ class LoginViewController: BasicViewController {
         let remembeSize = rememberLabel.sizeThatFits(CGSizeZero)
         rememberLabel.frame = CGRectMake(0 + rememberW, 0, remembeSize.width, rememberH)
         
-        rememberButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        rememberButton = UIButton(type: UIButtonType.Custom)
         rememberButton.frame = CGRectMake(rememberX, rememberY, rememberW + remembeSize.width, rememberH)
         
         rememberButton.addSubview(rememberImageView)
@@ -164,7 +164,7 @@ class LoginViewController: BasicViewController {
         let forgotSize = forgotLabel.sizeThatFits(CGSizeZero)
         forgotLabel.frame = CGRectMake(0, 0, forgotSize.width, rememberH)
         
-        forgotButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        forgotButton = UIButton(type: UIButtonType.Custom)
         forgotButton.frame = CGRectMake(w - leftRightPadding - forgotSize.width, rememberY, forgotSize.width, rememberH)
         
         forgotButton.addSubview(forgotLabel)
@@ -176,7 +176,7 @@ class LoginViewController: BasicViewController {
         let buttonH: CGFloat = 30
         let radius: CGFloat = buttonH / 2.0
         let buttonY: CGFloat = startH + (h6 - buttonH) / 2.0
-        registerButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        registerButton = UIButton(type: UIButtonType.Custom)
         registerButton.frame = CGRectMake(leftRightPadding, buttonY, buttonW, buttonH)
         registerButton.setTitle(i18n("Register"), forState: UIControlState.Normal)
         registerButton.showsTouchWhenHighlighted = true
@@ -185,7 +185,7 @@ class LoginViewController: BasicViewController {
         registerButton.layer.masksToBounds = true
         registerButton.layer.cornerRadius = radius
         
-        loginButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        loginButton = UIButton(type: UIButtonType.Custom)
         loginButton.frame = CGRectMake(w / 2.0 + leftRightPadding / 2.0, buttonY, buttonW, buttonH)
         loginButton.setTitle(i18n("Login"), forState: UIControlState.Normal)
         loginButton.showsTouchWhenHighlighted = true
@@ -251,7 +251,7 @@ class LoginViewController: BasicViewController {
     /**
     记住密码
     
-    :param: sender <#sender description#>
+    - parameter sender: <#sender description#>
     */
     func remember(sender: AnyObject!){
         if self.rememberImageView.image == rememberImage {
@@ -264,7 +264,7 @@ class LoginViewController: BasicViewController {
     /**
     忘记密码
     
-    :param: sender <#sender description#>
+    - parameter sender: <#sender description#>
     */
     func forgot(sender: AnyObject!){
         KMLog("forgot")
@@ -273,11 +273,11 @@ class LoginViewController: BasicViewController {
     /**
     登录
     
-    :param: sender <#sender description#>
+    - parameter sender: <#sender description#>
     */
     func login(sender: AnyObject!){
-        let userName = accountField.text
-        let password = passwordField.text
+        let userName = accountField.text ?? ""
+        let password = passwordField.text ?? ""
         let remember = rememberImageView.image == rememberImage
         let userType = segmented.selectedSegmentIndex
         
@@ -289,8 +289,12 @@ class LoginViewController: BasicViewController {
             progressHUD?.show(true)
             
             loginButton.enabled = false
-            let params = ["username": userName, "userpassword": password, "usertype": userType]
-            manager.POST(APP_URL_LOGIN, parameters: params, success: {(operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+            let params:[String: AnyObject] = ["username": userName, "userpassword": password, "usertype": userType]
+            manager.POST(APP_URL_LOGIN, parameters: params, success: {[weak self](operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+                if self == nil{
+                    return
+                }
+                let blockSelf = self!
                 let dic = responseObj as? NSDictionary
                 let code = dic?["code"] as? NSInteger
                 if code != nil && code == 1{
@@ -303,20 +307,24 @@ class LoginViewController: BasicViewController {
                     loginProof.setValue((dic!["data"] as! NSDictionary)["sid"], forKey: APP_PATH_LOGIN_PROOF_SID)
                     LocalStroge.sharedInstance().addObject(loginProof, fileName: APP_PATH_LOGIN_PROOF, searchPathDirectory: NSSearchPathDirectory.DocumentDirectory)
                     
-                    self.loginButton.enabled = true
-                    self.loadLoginUserInfo(params)
+                    blockSelf.loginButton.enabled = true
+                    blockSelf.loadLoginUserInfo(params)
                     
                 }else{
-                    self.progressHUD?.mode = MBProgressHUDMode.Text
-                    self.progressHUD?.detailsLabelText = (dic?["data"] ?? "") as! String
-                    self.progressHUD?.hide(true, afterDelay: 2)
-                    self.loginButton.enabled = true
+                    blockSelf.progressHUD?.mode = MBProgressHUDMode.Text
+                    blockSelf.progressHUD?.detailsLabelText = (dic?["data"] ?? "") as! String
+                    blockSelf.progressHUD?.hide(true, afterDelay: 2)
+                    blockSelf.loginButton.enabled = true
                 }
-                }, failure: {(operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
-                    self.progressHUD?.mode = MBProgressHUDMode.Text
-                    self.progressHUD?.detailsLabelText = error.localizedDescription
-                    self.progressHUD?.hide(true, afterDelay: 2)
-                    self.loginButton.enabled = true
+                }, failure: {[weak self](operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                    if self == nil{
+                        return
+                    }
+                    let blockSelf = self!
+                    blockSelf.progressHUD?.mode = MBProgressHUDMode.Text
+                    blockSelf.progressHUD?.detailsLabelText = error.localizedDescription
+                    blockSelf.progressHUD?.hide(true, afterDelay: 2)
+                    blockSelf.loginButton.enabled = true
             })
             
         }else{
@@ -327,7 +335,11 @@ class LoginViewController: BasicViewController {
     
     // 获取登录用户信息
     func loadLoginUserInfo(params: NSDictionary!){
-        manager.POST(APP_URL_LOGIN_USERINFO, parameters: params, success: {(operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+        manager.POST(APP_URL_LOGIN_USERINFO, parameters: params, success: {[weak self](operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+            if self == nil{
+                return
+            }
+            let blockSelf = self!
             let basicDic = responseObj as? NSDictionary
             let code = basicDic?["code"] as? NSInteger
             if code != nil && code == 1{
@@ -337,22 +349,26 @@ class LoginViewController: BasicViewController {
                 (UIApplication.sharedApplication().delegate as! AppDelegate).loginUserInfo = resultInfo
                 LocalStroge.sharedInstance().addObject(resultInfo, fileName: APP_PATH_LOGINUSER_INFO, searchPathDirectory: NSSearchPathDirectory.DocumentDirectory)
                 
-                self.progressHUD?.hide(true)
+                blockSelf.progressHUD?.hide(true)
                 // TODO: 登录操作结束，跳转界面
                 NSNotificationCenter.defaultCenter().postNotificationName(APP_NOTIFICATION_LOGIN, object: nil)
                 
             }else{
-                self.progressHUD?.mode = MBProgressHUDMode.Text
-                self.progressHUD?.detailsLabelText = (basicDic?["data"] ?? "") as! String
-                self.progressHUD?.hide(true, afterDelay: 2)
+                blockSelf.progressHUD?.mode = MBProgressHUDMode.Text
+                blockSelf.progressHUD?.detailsLabelText = (basicDic?["data"] ?? "") as! String
+                blockSelf.progressHUD?.hide(true, afterDelay: 2)
             }
             
-            self.loginButton.enabled = true
-            }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
-                self.progressHUD?.mode = MBProgressHUDMode.Text
-                self.progressHUD?.detailsLabelText = error.localizedDescription
-                self.progressHUD?.hide(true, afterDelay: 2)
-                self.loginButton.enabled = true
+            blockSelf.loginButton.enabled = true
+            }) { [weak self](operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                if self == nil{
+                    return
+                }
+                let blockSelf = self!
+                blockSelf.progressHUD?.mode = MBProgressHUDMode.Text
+                blockSelf.progressHUD?.detailsLabelText = error.localizedDescription
+                blockSelf.progressHUD?.hide(true, afterDelay: 2)
+                blockSelf.loginButton.enabled = true
         }
     }
     
@@ -378,7 +394,7 @@ class LoginViewController: BasicViewController {
     /**
     注册
     
-    :param: sender <#sender description#>
+    - parameter sender: <#sender description#>
     */
     func register(sender: AnyObject!){
         let registerVC = RegisterViewController()

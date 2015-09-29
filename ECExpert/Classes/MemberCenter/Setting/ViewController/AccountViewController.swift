@@ -55,12 +55,12 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
     }
     
     func setUpView(){
-        var tableFrame = getVisibleFrame()
+        let tableFrame = getVisibleFrame()
         
         tableView = UITableView(frame: tableFrame, style: UITableViewStyle.Grouped)
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.backgroundColor = RGBA(0, 0, 0, 0.3)
+        tableView.backgroundColor = RGBA(red: 0, green: 0, blue: 0, alpha: 0.3)
         tableView.tableFooterView = UIView(frame: CGRectZero)
         self.view.addSubview(tableView)
     }
@@ -94,7 +94,7 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = UIFactory.tableViewCellForTableView(tableView, cellIdentifier: AccountViewController.CellIdentifier, cellType: UITableViewCellStyle.Value1) { (tableViewCell: UITableViewCell!) -> Void in
+        let cell = UIFactory.tableViewCellForTableView(tableView, cellIdentifier: AccountViewController.CellIdentifier, cellType: UITableViewCellStyle.Value1) { (tableViewCell: UITableViewCell!) -> Void in
             tableViewCell!.backgroundColor = UIColor.clearColor()
             tableViewCell!.textLabel?.font = UIFont.systemFontOfSize(15)
             tableViewCell!.textLabel?.textColor = UIColor.whiteColor()
@@ -199,7 +199,7 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
         photoView.layer.masksToBounds = true
         photoView.layer.cornerRadius = photoW / 2.0
         photoView.layer.borderWidth = 4
-        photoView.layer.borderColor = RGBA(240, 240, 240, 0.8).CGColor
+        photoView.layer.borderColor = RGBA(red: 240, green: 240, blue: 240, alpha: 0.8).CGColor
         photoView.sd_setImageWithURL(NSURL(string: imageUrl), placeholderImage: UIImage(named: "accountHeader"))
         
         tableView.userInteractionEnabled = true
@@ -253,7 +253,7 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
             pushSexPick()
         }else{
             let cell = self.tableView.cellForRowAtIndexPath(indexPath)
-            var itemName = cell!.textLabel!.text!
+            let itemName = cell!.textLabel!.text!
             var itemValue = ""
             var itemKeyField = ""
             let nickName = loginUserInfo!["customer_nickname"] as! String
@@ -319,27 +319,36 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
         self.progressHUD?.show(true)
         manager.POST(APP_URL_UPLOADUSERHEADER, parameters: nil, constructingBodyWithBlock: { (formData: AFMultipartFormData!) -> Void in
             formData.appendPartWithFileData(imageData, name: "customer_headimage", fileName: "head.jpeg", mimeType: "image/jpeg")
-            }, success: {(operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+            }, success: {[weak self](operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+                if self == nil{
+                    return
+                }
+                let blockSelf = self!
                 let dic = responseObj as? NSDictionary
                 let code = dic?["code"] as? NSInteger
                 if code != nil && code == 1{
-                    self.progressHUD?.hide(true)
-                    self.loadLoginUserInfo()
+                    blockSelf.progressHUD?.hide(true)
+                    blockSelf.loadLoginUserInfo()
                     
                 }else if code != nil && code == 0{
-                    self.progressHUD?.mode = MBProgressHUDMode.Text
-                    self.progressHUD?.detailsLabelText = dic!["data"] as! String
-                    self.hideProgressHUD(2)
+                    blockSelf.progressHUD?.mode = MBProgressHUDMode.Text
+                    blockSelf.progressHUD?.detailsLabelText = dic!["data"] as! String
+                    blockSelf.hideProgressHUD(2)
                 }else{
                     KMLog("\(dic)")
-                    self.hideProgressHUD()
+                    blockSelf.hideProgressHUD()
                 }
-            }) {(operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+            }) {[weak self](operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
                 KMLog(error.localizedDescription)
-                self.progressHUD?.mode = MBProgressHUDMode.Text
-                self.progressHUD?.labelText = i18n("Failed to connect link to server!")
-                self.progressHUD?.detailsLabelText = error.localizedDescription
-                self.hideProgressHUD(2)
+                
+                if self == nil{
+                    return
+                }
+                let blockSelf = self!
+                blockSelf.progressHUD?.mode = MBProgressHUDMode.Text
+                blockSelf.progressHUD?.labelText = i18n("Failed to connect link to server!")
+                blockSelf.progressHUD?.detailsLabelText = error.localizedDescription
+                blockSelf.hideProgressHUD(2)
         }
     }
     
@@ -347,7 +356,7 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
     func loadLoginUserInfo(){
         let params = NSMutableDictionary()
         params.setObject(currentLoginUserInfo()!["usertype"]!, forKey: "usertype")
-        manager.POST(APP_URL_LOGIN_USERINFO, parameters: params, success: { (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+        manager.POST(APP_URL_LOGIN_USERINFO, parameters: params, success: {(operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
             let basicDic = responseObj as? NSDictionary
             let code = basicDic?["code"] as? NSInteger
             if code != nil && code == 1{
@@ -359,13 +368,13 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
                 
             }
             
-            }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+            }) {  (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
                 KMLog(error.localizedDescription)
         }
     }
     
     // MARK: - UIImagePickerControllerDelegate
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         var photo = info[UIImagePickerControllerEditedImage] as! UIImage
         photo = UIFactory.originImage(photo, scaleSize: CGSizeMake(180, 180))
         
@@ -383,11 +392,11 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
         birthDayPickView = UIView(frame: frame)
         
         let width = frame.size.width
-        let height = frame.size.height
+//        let height = frame.size.height
         
         let buttonW: CGFloat = width / 2.0
         let cancelBtnFrame = CGRectMake(0, 0, buttonW, buttonH)
-        let cancelBtn = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        let cancelBtn = UIButton(type: UIButtonType.Custom)
         cancelBtn.frame = cancelBtnFrame
         cancelBtn.backgroundColor = KM_COLOR_MAIN
         cancelBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
@@ -397,7 +406,7 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
         cancelBtn.addTarget(self, action: "popBirthdayPick", forControlEvents: UIControlEvents.TouchUpInside)
         
         let saveBtnFrame = CGRectMake(0 + buttonW, 0, buttonW, buttonH)
-        let saveBtn = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        let saveBtn = UIButton(type: UIButtonType.Custom)
         saveBtn.frame = saveBtnFrame
         saveBtn.backgroundColor = KM_COLOR_MAIN
         saveBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
@@ -408,12 +417,12 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
         
         let datePickFrame = CGRectMake(0, 0 + buttonH, width, pickH)
         datePick = UIDatePicker()
-        datePick.backgroundColor = RGB(236,240,243)
+        datePick.backgroundColor = RGB(236,green: 240,blue: 243)
         datePick.datePickerMode = UIDatePickerMode.Date
         let currentDate = NSDate()
         let dateComponents = NSDateComponents()
         dateComponents.year = -18
-        let selectDate = NSCalendar.currentCalendar().dateByAddingComponents(dateComponents, toDate: currentDate, options: NSCalendarOptions.allZeros)
+        let selectDate = NSCalendar.currentCalendar().dateByAddingComponents(dateComponents, toDate: currentDate, options: NSCalendarOptions())
         datePick.setDate(selectDate!, animated: true)
         datePick.maximumDate = currentDate
         datePick.frame = datePickFrame
@@ -467,13 +476,17 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
         let birthDay = dateFormat.stringFromDate(datePick.date)
         
         let params = ["customer_nickname": nickName, "customer_birth": birthDay]
-        manager.POST(APP_URL_EDITUSERINFO, parameters: params, success: { (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+        manager.POST(APP_URL_EDITUSERINFO, parameters: params, success: { [weak self](operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+            if self == nil{
+                return
+            }
+            let blockSelf = self!
             let dic = responseObj as? NSDictionary
             let code = dic?["code"] as? NSInteger
             if code != nil && code! == 1{
                 JDStatusBarNotification.showWithStatus(i18n("Successful modification!"), dismissAfter: 2)
-                self.popBirthdayPick()
-                self.loadLoginUserInfo()
+                blockSelf.popBirthdayPick()
+                blockSelf.loadLoginUserInfo()
             }else if code != nil && code! == 0{
                 JDStatusBarNotification.showWithStatus(dic!["data"] as! String, dismissAfter: 2)
             }else{
@@ -495,11 +508,11 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
         sexPickView = UIView(frame: frame)
         
         let width = frame.size.width
-        let height = frame.size.height
+        _ = frame.size.height
         
         let buttonW: CGFloat = width / 2.0
         let cancelBtnFrame = CGRectMake(0, 0, buttonW, buttonH)
-        let cancelBtn = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        let cancelBtn = UIButton(type: UIButtonType.Custom)
         cancelBtn.frame = cancelBtnFrame
         cancelBtn.backgroundColor = KM_COLOR_MAIN
         cancelBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
@@ -509,7 +522,7 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
         cancelBtn.addTarget(self, action: "popSexPick", forControlEvents: UIControlEvents.TouchUpInside)
         
         let saveBtnFrame = CGRectMake(0 + buttonW, 0, buttonW, buttonH)
-        let saveBtn = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        let saveBtn = UIButton(type: UIButtonType.Custom)
         saveBtn.frame = saveBtnFrame
         saveBtn.backgroundColor = KM_COLOR_MAIN
         saveBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
@@ -520,7 +533,7 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
         
         let sexPickFrame = CGRectMake(0, 0 + buttonH, width, pickH)
         sexPick = UIPickerView()
-        sexPick.backgroundColor = RGB(236,240,243)
+        sexPick.backgroundColor = RGB(236,green: 240,blue: 243)
         sexPick.delegate = self
         sexPick.dataSource = self
         sexPick.frame = sexPickFrame
@@ -568,13 +581,17 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
         let nickName = loginUserInfo!["customer_nickname"] as! String
         
         let params = ["customer_nickname": nickName, "customer_sex": selectSex]
-        manager.POST(APP_URL_EDITUSERINFO, parameters: params, success: {(operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+        manager.POST(APP_URL_EDITUSERINFO, parameters: params, success: {[weak self](operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+            if self == nil{
+                return
+            }
+            let blockSelf = self!
             let dic = responseObj as? NSDictionary
             let code = dic?["code"] as? NSInteger
             if code != nil && code! == 1{
                 JDStatusBarNotification.showWithStatus(i18n("Successful modification!"), dismissAfter: 2)
-                self.popSexPick()
-                self.loadLoginUserInfo()
+                blockSelf.popSexPick()
+                blockSelf.loadLoginUserInfo()
             }else if code != nil && code! == 0{
                 JDStatusBarNotification.showWithStatus(dic!["data"] as! String, dismissAfter: 2)
             }else{
@@ -603,7 +620,7 @@ class AccountViewController: BasicViewController, UITableViewDataSource, UITable
         return 2
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if row == 0{
             return i18n("male")
         }else{

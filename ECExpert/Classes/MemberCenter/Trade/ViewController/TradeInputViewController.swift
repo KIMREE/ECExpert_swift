@@ -69,7 +69,7 @@ class TradeInputViewController: BasicViewController, UITableViewDelegate, UITabl
             dic["totalCount"] = product.totalCount
             tradeProducts.addObject(dic)
         }
-        let productJsonData = NSJSONSerialization.dataWithJSONObject(tradeProducts, options: NSJSONWritingOptions.PrettyPrinted, error: nil)
+        let productJsonData = try? NSJSONSerialization.dataWithJSONObject(tradeProducts, options: NSJSONWritingOptions.PrettyPrinted)
         if productJsonData != nil{
             let productJson = NSString(data: productJsonData!, encoding: NSUTF8StringEncoding)
             params["main_products"] = productJson
@@ -83,7 +83,7 @@ class TradeInputViewController: BasicViewController, UITableViewDelegate, UITabl
             dic["totalCount"] = gift.totalCount
             tradeGifts.addObject(dic)
         }
-        let giftJsonData = NSJSONSerialization.dataWithJSONObject(tradeGifts, options: NSJSONWritingOptions.PrettyPrinted, error: nil)
+        let giftJsonData = try? NSJSONSerialization.dataWithJSONObject(tradeGifts, options: NSJSONWritingOptions.PrettyPrinted)
         if giftJsonData != nil{
             let giftJson = NSString(data: giftJsonData!, encoding: NSUTF8StringEncoding)
             params["gift_products"] = giftJson
@@ -93,33 +93,41 @@ class TradeInputViewController: BasicViewController, UITableViewDelegate, UITabl
         self.progressHUD?.labelText = ""
         self.progressHUD?.detailsLabelText = ""
         self.progressHUD?.show(true)
-        manager.POST(APP_URL_TRADE_INPUT, parameters: params, success: { (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+        manager.POST(APP_URL_TRADE_INPUT, parameters: params, success: { [weak self](operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+            if self == nil{
+                return
+            }
+            let blockSelf = self!
             let dic = responseObj as? NSDictionary
             let code = dic?["code"] as? NSInteger
             if code != nil && code == 1{
-                self.progressHUD?.mode = MBProgressHUDMode.Text
-                self.progressHUD?.detailsLabelText = dic!["data"] as! String
-                self.progressHUD?.minShowTime = 2
-                self.progressHUD?.showAnimated(true, whileExecutingBlock: { () -> Void in
+                blockSelf.progressHUD?.mode = MBProgressHUDMode.Text
+                blockSelf.progressHUD?.detailsLabelText = dic!["data"] as! String
+                blockSelf.progressHUD?.minShowTime = 2
+                blockSelf.progressHUD?.showAnimated(true, whileExecutingBlock: { () -> Void in
                     
                 }, completionBlock: { () -> Void in
-                    self.navigationController?.popViewControllerAnimated(true)
+                    blockSelf.navigationController?.popViewControllerAnimated(true)
                 })
                 
             }else if code != nil && code == 0{
-                self.progressHUD?.mode = MBProgressHUDMode.Text
-                self.progressHUD?.detailsLabelText = dic!["data"] as! String
-                self.hideProgressHUD(2)
+                blockSelf.progressHUD?.mode = MBProgressHUDMode.Text
+                blockSelf.progressHUD?.detailsLabelText = dic!["data"] as! String
+                blockSelf.hideProgressHUD(2)
             }else{
                 KMLog("\(dic)")
-                self.hideProgressHUD()
+                blockSelf.hideProgressHUD()
             }
             
-            }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
-                self.progressHUD?.mode = MBProgressHUDMode.Text
-                self.progressHUD?.labelText = i18n("Failed to connect link to server!")
-                self.progressHUD?.detailsLabelText = error.localizedDescription
-                self.hideProgressHUD(2)
+            }) {[weak self] (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                if self == nil{
+                    return
+                }
+                let blockSelf = self!
+                blockSelf.progressHUD?.mode = MBProgressHUDMode.Text
+                blockSelf.progressHUD?.labelText = i18n("Failed to connect link to server!")
+                blockSelf.progressHUD?.detailsLabelText = error.localizedDescription
+                blockSelf.hideProgressHUD(2)
         }
     }
     
@@ -127,7 +135,7 @@ class TradeInputViewController: BasicViewController, UITableViewDelegate, UITabl
         tableView = UITableView(frame: getVisibleFrame())
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.backgroundColor = RGBA(0, 0, 0, 0.3)
+        tableView.backgroundColor = RGBA(red: 0, green: 0, blue: 0, alpha: 0.3)
         tableView.tableFooterView = UIView(frame: CGRectZero)
         
         self.view.addSubview(tableView)
@@ -172,7 +180,7 @@ class TradeInputViewController: BasicViewController, UITableViewDelegate, UITabl
         let buttonW: CGFloat = 30
         let buttonH: CGFloat = 30
         let buttonFrame = CGRectMake( KM_FRAME_SCREEN_WIDTH - buttonW - padding , (height - buttonH) / 2.0 , buttonW, buttonH)
-        let addButton = UIButton.buttonWithType(UIButtonType.ContactAdd) as! UIButton
+        let addButton = UIButton(type: UIButtonType.ContactAdd)
         addButton.frame = buttonFrame
         addButton.tintColor = UIColor.whiteColor()
         
@@ -219,38 +227,50 @@ class TradeInputViewController: BasicViewController, UITableViewDelegate, UITabl
             scanViewControlelr.goback()
             
             let jsonData = scanResult.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
-            var error: NSError?
-            let jsonDic = NSJSONSerialization.JSONObjectWithData(jsonData!, options: NSJSONReadingOptions.MutableLeaves, error: &error) as? NSDictionary
+            var jsonDic: NSDictionary!
+            do {
+                try jsonDic = (NSJSONSerialization.JSONObjectWithData(jsonData!, options: NSJSONReadingOptions.MutableLeaves) as? NSDictionary)!
+            } catch _ {
+                
+            }
             
             self.progressHUD?.mode = MBProgressHUDMode.Indeterminate
             self.progressHUD?.labelText = ""
             self.progressHUD?.detailsLabelText = ""
             self.progressHUD?.show(true)
-            if error == nil{
-                self.manager.POST(APP_URL_CHECKVIP, parameters: jsonDic, success: { (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+            if jsonDic != nil{
+                self.manager.POST(APP_URL_CHECKVIP, parameters: jsonDic, success: { [weak self](operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+                    if self == nil{
+                        return
+                    }
+                    let blockSelf = self!
                     let dic = responseObj as? NSDictionary
                     let code = dic?["code"] as? NSInteger
                     if code != nil && code == 1{
                         let customerDic = dic!["data"] as! NSDictionary
-                        self.customerArray.removeAllObjects()
-                        self.customerArray.addObject(customerDic)
+                        blockSelf.customerArray.removeAllObjects()
+                        blockSelf.customerArray.addObject(customerDic)
                         
-                        self.tableView.reloadData()
-                        self.hideProgressHUD()
+                        blockSelf.tableView.reloadData()
+                        blockSelf.hideProgressHUD()
                     }else if code != nil && code == 0{
-                        self.progressHUD?.mode = MBProgressHUDMode.Text
-                        self.progressHUD?.detailsLabelText = dic!["data"] as! String
-                        self.hideProgressHUD(2)
+                        blockSelf.progressHUD?.mode = MBProgressHUDMode.Text
+                        blockSelf.progressHUD?.detailsLabelText = dic!["data"] as! String
+                        blockSelf.hideProgressHUD(2)
                     }else{
                         KMLog("\(dic)")
-                        self.hideProgressHUD()
+                        blockSelf.hideProgressHUD()
                     }
                     
-                    }, failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
-                        self.progressHUD?.mode = MBProgressHUDMode.Text
-                        self.progressHUD?.labelText = i18n("Failed to connect link to server!")
-                        self.progressHUD?.detailsLabelText = error.localizedDescription
-                        self.hideProgressHUD(2)
+                    }, failure: { [weak self](operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                        if self == nil{
+                            return
+                        }
+                        let blockSelf = self!
+                        blockSelf.progressHUD?.mode = MBProgressHUDMode.Text
+                        blockSelf.progressHUD?.labelText = i18n("Failed to connect link to server!")
+                        blockSelf.progressHUD?.detailsLabelText = error.localizedDescription
+                        blockSelf.hideProgressHUD(2)
                 })
             }else{
                 self.progressHUD?.mode = MBProgressHUDMode.Text
@@ -289,7 +309,11 @@ class TradeInputViewController: BasicViewController, UITableViewDelegate, UITabl
                 self.progressHUD?.labelText = ""
                 self.progressHUD?.detailsLabelText = ""
                 self.progressHUD?.show(true)
-                self.manager.POST(APP_URL_SCAN_BAR_CODE, parameters: params, success: { (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+                self.manager.POST(APP_URL_SCAN_BAR_CODE, parameters: params, success: { [weak self](operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+                    if self == nil{
+                        return
+                    }
+                    let blockSelf = self!
                     let dic = responseObj as? NSDictionary
                     let code = dic?["code"] as? NSInteger
                     if code != nil && code == 1{
@@ -297,23 +321,27 @@ class TradeInputViewController: BasicViewController, UITableViewDelegate, UITabl
                         product.scanCode = scanResult
                         product.totalCount = 1
                         
-                        self.productArray.insertObject(product, atIndex: 0)
-                        self.tableView.reloadData()
-                        self.hideProgressHUD()
+                        blockSelf.productArray.insertObject(product, atIndex: 0)
+                        blockSelf.tableView.reloadData()
+                        blockSelf.hideProgressHUD()
                         
                     }else if code != nil && code == 0{
-                        self.progressHUD?.mode = MBProgressHUDMode.Text
-                        self.progressHUD?.detailsLabelText = dic!["data"] as! String
-                        self.hideProgressHUD(2)
+                        blockSelf.progressHUD?.mode = MBProgressHUDMode.Text
+                        blockSelf.progressHUD?.detailsLabelText = dic!["data"] as! String
+                        blockSelf.hideProgressHUD(2)
                     }else{
                         KMLog("\(dic)")
-                        self.hideProgressHUD()
+                        blockSelf.hideProgressHUD()
                     }
-                    }, failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
-                        self.progressHUD?.mode = MBProgressHUDMode.Text
-                        self.progressHUD?.labelText = i18n("Failed to connect link to server!")
-                        self.progressHUD?.detailsLabelText = error.localizedDescription
-                        self.hideProgressHUD(2)
+                    }, failure: { [weak self](operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                        if self == nil{
+                            return
+                        }
+                        let blockSelf = self!
+                        blockSelf.progressHUD?.mode = MBProgressHUDMode.Text
+                        blockSelf.progressHUD?.labelText = i18n("Failed to connect link to server!")
+                        blockSelf.progressHUD?.detailsLabelText = error.localizedDescription
+                        blockSelf.hideProgressHUD(2)
                 })
             }
         }
@@ -347,7 +375,11 @@ class TradeInputViewController: BasicViewController, UITableViewDelegate, UITabl
                 self.progressHUD?.labelText = ""
                 self.progressHUD?.detailsLabelText = ""
                 self.progressHUD?.show(true)
-                self.manager.POST(APP_URL_SCAN_BAR_CODE, parameters: params, success: {  (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+                self.manager.POST(APP_URL_SCAN_BAR_CODE, parameters: params, success: { [weak self] (operation: AFHTTPRequestOperation!, responseObj: AnyObject!) -> Void in
+                    if self == nil{
+                        return
+                    }
+                    let blockSelf = self!
                     let dic = responseObj as? NSDictionary
                     let code = dic?["code"] as? NSInteger
                     if code != nil && code == 1{
@@ -355,23 +387,27 @@ class TradeInputViewController: BasicViewController, UITableViewDelegate, UITabl
                         product.scanCode = scanResult
                         product.totalCount = 1
                         
-                        self.giftArray.insertObject(product, atIndex: 0)
-                        self.tableView.reloadData()
-                        self.hideProgressHUD()
+                        blockSelf.giftArray.insertObject(product, atIndex: 0)
+                        blockSelf.tableView.reloadData()
+                        blockSelf.hideProgressHUD()
                         
                     }else if code != nil && code == 0{
-                        self.progressHUD?.mode = MBProgressHUDMode.Text
-                        self.progressHUD?.detailsLabelText = dic!["data"] as! String
-                        self.hideProgressHUD(2)
+                        blockSelf.progressHUD?.mode = MBProgressHUDMode.Text
+                        blockSelf.progressHUD?.detailsLabelText = dic!["data"] as! String
+                        blockSelf.hideProgressHUD(2)
                     }else{
                         KMLog("\(dic)")
-                        self.hideProgressHUD()
+                        blockSelf.hideProgressHUD()
                     }
-                    }, failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
-                        self.progressHUD?.mode = MBProgressHUDMode.Text
-                        self.progressHUD?.labelText = i18n("Failed to connect link to server!")
-                        self.progressHUD?.detailsLabelText = error.localizedDescription
-                        self.hideProgressHUD(2)
+                    }, failure: {[weak self] (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                        if self == nil{
+                            return
+                        }
+                        let blockSelf = self!
+                        blockSelf.progressHUD?.mode = MBProgressHUDMode.Text
+                        blockSelf.progressHUD?.labelText = i18n("Failed to connect link to server!")
+                        blockSelf.progressHUD?.detailsLabelText = error.localizedDescription
+                        blockSelf.hideProgressHUD(2)
                 })
             }
         }
@@ -404,7 +440,7 @@ class TradeInputViewController: BasicViewController, UITableViewDelegate, UITabl
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = UIFactory.tableViewCellForTableView(tableView, cellIdentifier: TradeInputViewController.CellIdentifier, cellType: UITableViewCellStyle.Subtitle, cleanCellContentView: false) {  (tableViewCell: UITableViewCell!) -> Void in
+        let cell = UIFactory.tableViewCellForTableView(tableView, cellIdentifier: TradeInputViewController.CellIdentifier, cellType: UITableViewCellStyle.Subtitle, cleanCellContentView: false) {  (tableViewCell: UITableViewCell!) -> Void in
             
             tableViewCell?.backgroundColor = UIColor.clearColor()
             tableViewCell?.textLabel?.textColor = UIColor.whiteColor()
@@ -413,18 +449,18 @@ class TradeInputViewController: BasicViewController, UITableViewDelegate, UITabl
             let buttonW: CGFloat = 22
             let buttonH: CGFloat = 22
             let cellHeight = self.tableView(tableView, heightForRowAtIndexPath: indexPath)
-            let deleteButton = UIButton.buttonWithType(UIButtonType.Custom) as? UIButton
-            deleteButton!.frame = CGRectMake(KM_FRAME_SCREEN_WIDTH - 10 - buttonW - 30, (cellHeight - buttonH) / 2.0, buttonW, buttonH)
-            deleteButton!.tag = TradeInputViewController.DeleteButtonTag
-            deleteButton!.backgroundColor = UIColor.clearColor()
-            deleteButton!.setImage(UIImage(named: "button_minus"), forState: UIControlState.Normal)
-            deleteButton!.addTarget(self, action: "deleteSelectCellDataAction:", forControlEvents: UIControlEvents.TouchUpInside)
-            tableViewCell?.contentView.addSubview(deleteButton!)
+            let deleteButton = UIButton(type: UIButtonType.Custom)
+            deleteButton.frame = CGRectMake(KM_FRAME_SCREEN_WIDTH - 10 - buttonW - 30, (cellHeight - buttonH) / 2.0, buttonW, buttonH)
+            deleteButton.tag = TradeInputViewController.DeleteButtonTag
+            deleteButton.backgroundColor = UIColor.clearColor()
+            deleteButton.setImage(UIImage(named: "button_minus"), forState: UIControlState.Normal)
+            deleteButton.addTarget(self, action: "deleteSelectCellDataAction:", forControlEvents: UIControlEvents.TouchUpInside)
+            tableViewCell?.contentView.addSubview(deleteButton)
             
             tableViewCell?.selectionStyle = UITableViewCellSelectionStyle.None
         }
         
-        var deleteButton = cell?.contentView.viewWithTag(TradeInputViewController.DeleteButtonTag) as? UIButton
+        let deleteButton = cell?.contentView.viewWithTag(TradeInputViewController.DeleteButtonTag) as? UIButton
         deleteButton?.hidden = false
         cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
         
@@ -440,7 +476,7 @@ class TradeInputViewController: BasicViewController, UITableViewDelegate, UITabl
                     customerName = customer["customer_name"] as? String
                 }
                 let customerVip = customer["customer_vip"] as? String
-                var contact = customer["customer_phone"] as? String
+                let contact = customer["customer_phone"] as? String
                 
                 let connect = i18n("Connection way")
                 cell?.textLabel?.text = "\(customerName!)(\(connect):\(contact!))"

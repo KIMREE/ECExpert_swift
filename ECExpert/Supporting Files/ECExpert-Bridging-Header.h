@@ -11,10 +11,9 @@
 
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <MJRefresh/MJRefresh.h>
+#import <MJRefresh/MJRefreshFooter.h>
 #import <MJExtension/MJExtension.h>
 #import <AFNetworking/AFNetworking.h>
-
-#import <FSCalendar/FSCalendar.h>
 
 #import <MBProgressHUD/MBProgressHUD.h>
 #import <JDStatusBarNotification/JDStatusBarNotification.h>
@@ -37,14 +36,16 @@
 #import "ProductModel.h"
 #import "HeartRateTestViewController.h"
 
-// 日期选择需要下述2个
-#import "FSCalendar.h"
-#import "NSDate+FSExtension.h"
+// 百度推送
+#import "BPush.h"
 
 // 融云 SDK
 #import <RongIMKit/RongIMKit.h>
 
 // sha1
 #import <CommonCrypto/CommonHMAC.h>
+
+// html 解析
+#import <hpple/TFHpple.h>
 
 #endif

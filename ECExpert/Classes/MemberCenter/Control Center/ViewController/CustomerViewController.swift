@@ -58,7 +58,7 @@ class CustomerViewController: BasicViewController {
         // headerView
         
         let headerView = UIView(frame: CGRectMake(x, y, w, h / 4.0))
-        headerView.backgroundColor = RGBA(0, 0, 0, 0.1)
+        headerView.backgroundColor = RGBA(red: 0, green: 0, blue: 0, alpha: 0.1)
         
         let headerViewH = headerView.frame.size.height
         let imageW: CGFloat = 80
@@ -74,7 +74,7 @@ class CustomerViewController: BasicViewController {
         userImageView.backgroundColor = UIColor.clearColor()
         userImageView.layer.masksToBounds = true
         userImageView.layer.borderWidth = 3
-        userImageView.layer.borderColor = RGB(202, 201, 200).CGColor
+        userImageView.layer.borderColor = RGB(202, green: 201, blue: 200).CGColor
         userImageView.layer.cornerRadius = imageW / 2.0
         
         let userTagLabel = UIFactory.labelWithFrame(CGRectMake(20 + imageW + 5, (headerViewH - twoLabelDistance) / 2.0 - tagLabelH , tagLabelW, tagLabelH), text: i18n("User") + ":", textColor: UIColor.whiteColor(), fontSize: tagLabelFontSize, numberOfLines: 1)
@@ -119,27 +119,27 @@ class CustomerViewController: BasicViewController {
         // rowNum = 0
         rowNum = 0
         let vipCardFrame = CGRectMake(cardDistance, rowNum * rowHeight + cardDistance / 2.0 , (rowWidth - cardDistance) * sizeLarge / (sizeLarge + sizeSmall) , cardHeight)
-        let vipCard = UIFactory.magnetViewWithFrame(vipCardFrame, backgroundColor: RGB(241, 79, 89), imageName: "vipcard", title: i18n("Vip Card"), clickViewTag: clickViewTag)
+        let vipCard = UIFactory.magnetViewWithFrame(vipCardFrame, backgroundColor: RGB(241, green: 79, blue: 89), imageName: "vipcard", title: i18n("Vip Card"), clickViewTag: clickViewTag)
         vipCardView = vipCard.viewWithTag(clickViewTag)
         
         let shopCardFrame = CGRectMake(vipCardFrame.origin.x + vipCardFrame.size.width + cardDistance,rowNum * rowHeight + cardDistance / 2.0, (rowWidth - cardDistance) * sizeSmall / (sizeSmall + sizeLarge), cardHeight)
-        let shopCard = UIFactory.magnetViewWithFrame(shopCardFrame, backgroundColor: RGB(77, 167, 217), imageName: "products", title: i18n("Boutique"), clickViewTag: clickViewTag)
+        let shopCard = UIFactory.magnetViewWithFrame(shopCardFrame, backgroundColor: RGB(77, green: 167, blue: 217), imageName: "products", title: i18n("Boutique"), clickViewTag: clickViewTag)
         showProductsView = shopCard.viewWithTag(clickViewTag)
         
         // rowNum = 1
         rowNum = 1
         let nearByCardFrame = CGRectMake(cardDistance, rowNum * rowHeight + cardDistance / 2.0, rowWidth, cardHeight)
-        let nearByCard = UIFactory.magnetViewWithFrame(nearByCardFrame, backgroundColor: RGB(247, 191, 80), imageName: "shops", title: i18n("Experience"), clickViewTag: clickViewTag)
+        let nearByCard = UIFactory.magnetViewWithFrame(nearByCardFrame, backgroundColor: RGB(247, green: 191, blue: 80), imageName: "shops", title: i18n("Experience"), clickViewTag: clickViewTag)
         nearbyStoreView = nearByCard.viewWithTag(clickViewTag)
         
         // rowNum = 2
         rowNum = 2
         let recordFrame = CGRectMake(cardDistance, rowNum * rowHeight + cardDistance / 2.0, (rowWidth - cardDistance) * sizeSmall / (sizeSmall + sizeLarge), cardHeight)
-        let recordCard = UIFactory.magnetViewWithFrame(recordFrame, backgroundColor: RGB(131, 199, 92), imageName: "myrecord", title: i18n("Record"), clickViewTag: clickViewTag)
+        let recordCard = UIFactory.magnetViewWithFrame(recordFrame, backgroundColor: RGB(131, green: 199, blue: 92), imageName: "myrecord", title: i18n("Record"), clickViewTag: clickViewTag)
         recordView = recordCard.viewWithTag(clickViewTag)
         
         let feedBackFrame = CGRectMake(recordFrame.origin.x + recordFrame.size.width + cardDistance,rowNum * rowHeight + cardDistance / 2.0, (rowWidth - cardDistance) * sizeLarge / (sizeSmall + sizeLarge), cardHeight)
-        let feedBackCard = UIFactory.magnetViewWithFrame(feedBackFrame, backgroundColor: RGB(239, 97, 66), imageName: "feedback", title: i18n("Feedback"), clickViewTag: clickViewTag)
+        let feedBackCard = UIFactory.magnetViewWithFrame(feedBackFrame, backgroundColor: RGB(239, green: 97, blue: 66), imageName: "feedback", title: i18n("Feedback"), clickViewTag: clickViewTag)
         feedbackView = feedBackCard.viewWithTag(clickViewTag)
         
         contentView.addSubview(vipCard)
@@ -158,10 +158,10 @@ class CustomerViewController: BasicViewController {
         }
         userNameLabel.text = userName as? String
         
-        var vipNo = loginUserInfo!["customer_vip"] as? String
+        let vipNo = loginUserInfo!["customer_vip"] as? String
         vipNumberLabel.text = vipNo
         
-        var headerImageName = loginUserInfo!["customer_headimage"] as? String
+        let headerImageName = loginUserInfo!["customer_headimage"] as? String
         if headerImageName == nil || headerImageName!.isEmpty{
             userImageView.image = UIImage(named: "accountHeader")
         }else{
