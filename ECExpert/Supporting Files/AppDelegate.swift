@@ -72,7 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.registerAPNS()
         
         // 在 App 启动时注册百度云推送服务，需要提供 Apikey
-        BPush.registerChannel(launchOptions, apiKey: "5Gn0GP2BtXyqmjjT2rAGh9rS", pushMode: BPushMode.Production, withFirstAction: nil, withSecondAction: nil, withCategory: nil, isDebug: true)
+        BPush.registerChannel(launchOptions, apiKey: "5Gn0GP2BtXyqmjjT2rAGh9rS", pushMode: BPushMode.Production, withFirstAction: nil, withSecondAction: nil, withCategory: nil, isDebug: false)
         // 处理远程推送消息
         if launchOptions != nil{
             let remoteInfo = launchOptions![UIApplicationLaunchOptionsRemoteNotificationKey] as? [NSObject : AnyObject]
