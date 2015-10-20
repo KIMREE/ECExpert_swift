@@ -747,6 +747,11 @@
 					A18E5F6D1B291425005172E5 = {
 						CreatedOnToolsVersion = 6.3.2;
 						DevelopmentTeam = F6B8G7X29N;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					A18E5F7F1B291425005172E5 = {
 						CreatedOnToolsVersion = 6.3.2;
